@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="X.SuperResolution.Engine/X.SuperResolution.Engine.csproj" />
+  <Project Path="X.SuperResolution/X.SuperResolution.csproj" />
+</Solution>

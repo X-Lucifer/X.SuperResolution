@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="X.SuperResolution/App.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
+        <entry key="X.SuperResolution/Assets/Languages/en-US.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
+        <entry key="X.SuperResolution/Assets/Languages/zh-CN.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
+        <entry key="X.SuperResolution/Views/MainWindow.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

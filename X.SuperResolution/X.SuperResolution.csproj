@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>disable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <ApplicationIcon>Assets\logo.ico</ApplicationIcon>
+        <Deterministic>false</Deterministic>
+        <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+        <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+        <AssemblyVersion>1.0.*</AssemblyVersion>
+        <Copyright>Copyright © Lucifer All rights reserved.</Copyright>
+        <RepositoryUrl>https://github.com/X-Lucifer</RepositoryUrl>
+        <Company>X Lucifer</Company>
+        <Authors>Lucifer</Authors>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <EnableRequestDelegateGenerator>true</EnableRequestDelegateGenerator>
+        <AvaloniaCompileEnable>true</AvaloniaCompileEnable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="12.0.5"/>
+        <PackageReference Include="Avalonia.Desktop" Version="12.0.5"/>
+        <PackageReference Include="DiskInfoToolkit" Version="2.1.1"/>
+        <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6"/>
+        <PackageReference Include="ReactiveUI.Avalonia" Version="12.0.3"/>
+        <PackageReference Include="ReactiveUI.SourceGenerators" Version="3.1.0" PrivateAssets="all"/>
+        <PackageReference Include="ReactiveMarbles.ObservableEvents.SourceGenerator" Version="1.3.1" PrivateAssets="all"/>
+        <PackageReference Include="SkiaSharp" Version="4.148.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0"/>
+        <PackageReference Include="Splat.Avalonia.Autofac" Version="15.5.3"/>
+        <PackageReference Include="SukiUI" Version="7.0.1"/>
+        <PackageReference Include="Tmds.DBus.Protocol" Version="0.94.2"/>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\X.SuperResolution.Engine\X.SuperResolution.Engine.csproj"/>
+    </ItemGroup>
+</Project>

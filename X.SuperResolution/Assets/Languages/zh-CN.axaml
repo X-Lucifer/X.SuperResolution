@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="EngineName">算法引擎:</system:String>
+    <system:String x:Key="GpuDevice">GPU设备:</system:String>
+    <system:String x:Key="ModelPath">模型路径:</system:String>
+    <system:String x:Key="NoiseLevel">降噪级别:</system:String>
+    <system:String x:Key="TileSize">分块大小:</system:String>
+    <system:String x:Key="TTA_Mode">TTA模式:</system:String>
+    <system:String x:Key="OutputFormat">输出格式:</system:String>
+    <system:String x:Key="Scale">放大倍率:</system:String>
+    <system:String x:Key="ThreadCount">线程数量:</system:String>
+    <system:String x:Key="ModelName">模型名称:</system:String>
+    <system:String x:Key="Manufacturer">制造商:</system:String>
+    <system:String x:Key="UserName">用户名称:</system:String>
+    <system:String x:Key="SerialNumber">主板序号:</system:String>
+    <system:String x:Key="ProductName">产品名称:</system:String>
+    <system:String x:Key="CpuCore">内核数量:</system:String>
+    <system:String x:Key="Processor">处理器:</system:String>
+    <system:String x:Key="MemorySize">内存容量:</system:String>
+    <system:String x:Key="FileList">任务列表:</system:String>
+    <system:String x:Key="StartTask">开始任务</system:String>
+    <system:String x:Key="PauseTask">暂停任务</system:String>
+    <system:String x:Key="ResumeTask">继续任务</system:String>
+    <system:String x:Key="StopTask">停止任务</system:String>
+    <system:String x:Key="ClearTask">清空任务</system:String>
+    <system:String x:Key="ClearLog">清空日志</system:String>
+    <system:String x:Key="MainWindow">主窗口</system:String>
+    <system:String x:Key="Exit">退出</system:String>
+    <system:String x:Key="MainTitle">AI 超清修复</system:String>
+    <system:String x:Key="OpenFile">打开文件</system:String>
+    <system:String x:Key="FileSizeLimit">图片文件大小限制:50MB</system:String>
+    <system:String x:Key="FileFormat">支持格式:png,jpg,jpeg,webp</system:String>
+</ResourceDictionary>

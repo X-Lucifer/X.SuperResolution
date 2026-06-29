@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="EngineName">Engine:</system:String>
+    <system:String x:Key="GpuDevice">GPU Device:</system:String>
+    <system:String x:Key="ModelPath">ModelPath:</system:String>
+    <system:String x:Key="NoiseLevel">NoiseLevel:</system:String>
+    <system:String x:Key="TileSize">TileSize:</system:String>
+    <system:String x:Key="TTA_Mode">TTA Mode:</system:String>
+    <system:String x:Key="OutputFormat">OutputFormat:</system:String>
+    <system:String x:Key="Scale">Scale:</system:String>
+    <system:String x:Key="ThreadCount">ThreadCount:</system:String>
+    <system:String x:Key="ModelName">ModelName:</system:String>
+    <system:String x:Key="Manufacturer">Manufacturer:</system:String>
+    <system:String x:Key="UserName">User Name:</system:String>
+    <system:String x:Key="SerialNumber">Serial No.:</system:String>
+    <system:String x:Key="ProductName">Product Name:</system:String>
+    <system:String x:Key="MemorySize">Memory Size:</system:String>
+    <system:String x:Key="CpuCore">CPU Cores:</system:String>
+    <system:String x:Key="Processor">Processor:</system:String>
+    <system:String x:Key="FileList">Task List:</system:String>
+    <system:String x:Key="StartTask">Start Tasks</system:String>
+    <system:String x:Key="PauseTask">Pause Task</system:String>
+    <system:String x:Key="ResumeTask">Resume Task</system:String>
+    <system:String x:Key="StopTask">Stop Tasks</system:String>
+    <system:String x:Key="ClearTask">Clear Tasks</system:String>
+    <system:String x:Key="ClearLog">Clear Logs</system:String>
+    <system:String x:Key="MainWindow">Main Window</system:String>
+    <system:String x:Key="Exit">Exit</system:String>
+    <system:String x:Key="MainTitle">AI Super Resolution</system:String>
+    <system:String x:Key="OpenFile">Open Files</system:String>
+    <system:String x:Key="FileSizeLimit">SizeLimit: 50MB</system:String>
+    <system:String x:Key="FileFormat">Format:png,jpg,jpeg,webp</system:String>
+</ResourceDictionary>

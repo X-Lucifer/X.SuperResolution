@@ -1,0 +1,600 @@
+<suki:SukiWindow xmlns="https://github.com/avaloniaui"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:vm="using:X.SuperResolution.ViewModels"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+                 x:Class="X.SuperResolution.Views.MainWindow"
+                 x:DataType="vm:MainWindowViewModel"
+                 Icon="/Assets/logo.ico"
+                 Title="{DynamicResource MainTitle}"
+                 xmlns:views="clr-namespace:X.SuperResolution.Views"
+                 xmlns:suki="https://github.com/kikipoulet/SukiUI"
+                 xmlns:model="clr-namespace:X.SuperResolution.Model"
+                 WindowStartupLocation="CenterScreen"
+                 ShowBottomBorder="False" Width="1200" Height="820"
+                 ShowTitlebarBackground="True" IsTitleBarVisible="True"
+                 CanMaximize="False" CanResize="False" UseLayoutRounding="True"
+                 ExtendClientAreaToDecorationsHint="True" TitleFontSize="14">
+    <suki:SukiWindow.DataContext>
+        <vm:MainWindowViewModel />
+    </suki:SukiWindow.DataContext>
+    <suki:SukiWindow.LogoContent>
+        <Image Source="/Assets/logo.png" Height="48" Width="48" BlendMode="SoftLight">
+            <Image.Styles>
+                <Style Selector="Image">
+                    <Style.Animations>
+                        <Animation Duration="0:0:2.4" FillMode="Forward" IterationCount="Infinite" SpeedRatio="2">
+                            <KeyFrame Cue="0%">
+                                <Setter Property="Effect">
+                                    <DropShadowEffect BlurRadius="0"
+                                                      Opacity="0" />
+                                </Setter>
+                            </KeyFrame>
+                            <KeyFrame Cue="10%">
+                                <Setter Property="Effect">
+                                    <DropShadowEffect BlurRadius="1" Color="Red"
+                                                      Opacity="0.1" />
+                                </Setter>
+                            </KeyFrame>
+                            <KeyFrame Cue="20%">
+                                <Setter Property="Effect">
+                                    <DropShadowEffect BlurRadius="2" Color="Orange"
+                                                      Opacity="0.2" />
+                                </Setter>
+                            </KeyFrame>
+                            <KeyFrame Cue="30%">
+                                <Setter Property="Effect">
+                                    <DropShadowEffect BlurRadius="3" Color="Yellow"
+                                                      Opacity="0.3" />
+                                </Setter>
+                            </KeyFrame>
+                            <KeyFrame Cue="40%">
+                                <Setter Property="Effect">
+                                    <DropShadowEffect BlurRadius="4" Color="Green"
+                                                      Opacity="0.4" />
+                                </Setter>
+                            </KeyFrame>
+                            <KeyFrame Cue="50%">
+                                <Setter Property="Effect">
+                                    <DropShadowEffect BlurRadius="5" Color="DarkCyan"
+                                                      Opacity="0.5" />
+                                </Setter>
+                            </KeyFrame>
+                            <KeyFrame Cue="60%">
+                                <Setter Property="Effect">
+                                    <DropShadowEffect BlurRadius="6" Color="DodgerBlue"
+                                                      Opacity="0.6" />
+                                </Setter>
+                            </KeyFrame>
+                            <KeyFrame Cue="70%">
+                                <Setter Property="Effect">
+                                    <DropShadowEffect BlurRadius="7" Color="Purple"
+                                                      Opacity="0.7" />
+                                </Setter>
+                            </KeyFrame>
+                            <KeyFrame Cue="80%">
+                                <Setter Property="Effect">
+                                    <DropShadowEffect BlurRadius="8" Color="DarkGoldenrod"
+                                                      Opacity="0.8" />
+                                </Setter>
+                            </KeyFrame>
+                            <KeyFrame Cue="90%">
+                                <Setter Property="Effect">
+                                    <DropShadowEffect BlurRadius="9" Color="Goldenrod"
+                                                      Opacity="0.9" />
+                                </Setter>
+                            </KeyFrame>
+                            <KeyFrame Cue="100%">
+                                <Setter Property="Effect">
+                                    <DropShadowEffect BlurRadius="10" Color="Gold"
+                                                      Opacity="1" />
+                                </Setter>
+                            </KeyFrame>
+                        </Animation>
+                    </Style.Animations>
+                </Style>
+            </Image.Styles>
+        </Image>
+    </suki:SukiWindow.LogoContent>
+    <suki:SukiWindow.RightWindowTitleBarControls>
+        <HyperlinkButton ClickMode="Press" NavigateUri="https://github.com/X-Lucifer" Margin="10">
+            <Image Source="/Assets/github.png" Height="25" Width="25" />
+        </HyperlinkButton>
+        <ComboBox BorderThickness="0" Width="140" FontSize="12" SelectedValue="{Binding CurrentLang}"
+                  ItemsSource="{Binding LangList,Mode=TwoWay}" AutoScrollToSelectedItem="True"
+                  DisplayMemberBinding="{Binding Value ,Mode=TwoWay}"
+                  SelectedValueBinding="{Binding Key ,Mode=TwoWay}"
+                  x:CompileBindings="False"
+                  SelectionChanged="Lang_OnSelectionChanged" />
+    </suki:SukiWindow.RightWindowTitleBarControls>
+    <Grid ColumnDefinitions="6.8*,Auto,3.1*" RowDefinitions="6*,3,3*,3,Auto" Margin="0">
+        <Grid Row="0" Grid.Column="0">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="1*,3.5*,Auto,1*,3.5*">
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource EngineName}" FontSize="11"
+                               VerticalAlignment="Center"
+                               TextAlignment="Right" />
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1" ColumnSpan="4">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Spacing="20" Margin="15,10">
+                        <RadioButton Content="waifu2x"
+                                     GroupName="EngineGroup"
+                                     IsChecked="{Binding IsWaifu2x, Mode=TwoWay}"
+                                     Command="{Binding ChangeEngineCommand}" FontSize="11"
+                                     CommandParameter="{x:Static model:EngineType.waifu2x}" />
+                        <RadioButton Content="Real-ESRGAN"
+                                     GroupName="EngineGroup"
+                                     IsChecked="{Binding IsRealESRGAN, Mode=TwoWay}" FontSize="11"
+                                     Command="{Binding ChangeEngineCommand}"
+                                     CommandParameter="{x:Static model:EngineType.RealESRGAN}" />
+                        <RadioButton Content="srmd"
+                                     GroupName="EngineGroup"
+                                     IsChecked="{Binding IsSrmd, Mode=TwoWay}" FontSize="11"
+                                     Command="{Binding ChangeEngineCommand}"
+                                     CommandParameter="{x:Static model:EngineType.srmd}" />
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <TextBlock Text="{DynamicResource GpuDevice}" FontSize="11"
+                               VerticalAlignment="Center"
+                               TextAlignment="Right" />
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <ComboBox Margin="10,0"
+                              ItemsSource="{Binding GpuList, RelativeSource={RelativeSource AncestorType=views:MainWindow} ,Mode=TwoWay}"
+                              SelectedValue="{Binding SelectedGpuIndex}"
+                              AutoScrollToSelectedItem="True"
+                              DisplayMemberBinding="{Binding Value ,Mode=TwoWay}"
+                              SelectedValueBinding="{Binding Key ,Mode=TwoWay}" HorizontalAlignment="Stretch"
+                              FontSize="10"
+                              x:CompileBindings="False"
+                              VerticalAlignment="Center" />
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="2" RowSpan="5" Margin="10,0" />
+                <Grid Grid.Row="1" Grid.Column="3">
+                    <TextBlock
+                        Text="{DynamicResource OutputFormat}" FontSize="11"
+                        VerticalAlignment="Center"
+                        TextAlignment="Right" />
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="4">
+                    <ComboBox Margin="10,0"
+                              ItemsSource="{Binding CurrentEngineOption.output_formats ,Mode=TwoWay}" FontSize="10"
+                              SelectedIndex="{Binding CurrentSelectedOutputFormatIndex}"
+                              SelectedValue="{Binding CurrentSelectedOutputFormatIndex,Mode=TwoWay}"
+                              AutoScrollToSelectedItem="True"
+                              DisplayMemberBinding="{Binding Value ,Mode=TwoWay}"
+                              SelectedValueBinding="{Binding Key}" HorizontalAlignment="Stretch"
+                              x:CompileBindings="False"
+                              VerticalAlignment="Center" />
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="0">
+                    <TextBlock
+                        Text="{DynamicResource ModelPath}" FontSize="11"
+                        VerticalAlignment="Center"
+                        TextAlignment="Right" />
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <ComboBox Margin="10,0"
+                              ItemsSource="{Binding CurrentEngineOption.model_paths ,Mode=TwoWay}" FontSize="10"
+                              SelectedIndex="{Binding CurrentSelectedModelPathIndex}"
+                              SelectedValue="{Binding CurrentSelectedModelPathIndex,Mode=TwoWay}"
+                              AutoScrollToSelectedItem="True"
+                              DisplayMemberBinding="{Binding Value ,Mode=TwoWay}"
+                              SelectedValueBinding="{Binding Key}"
+                              x:CompileBindings="False"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="3">
+                    <TextBlock
+                        Text="{DynamicResource Scale}" FontSize="11"
+                        VerticalAlignment="Center"
+                        TextAlignment="Right" />
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="4">
+                    <ComboBox Margin="10,0"
+                              ItemsSource="{Binding CurrentEngineOption.scales ,Mode=TwoWay}" FontSize="10"
+                              SelectedIndex="{Binding CurrentSelectedScaleIndex}"
+                              SelectedValue="{Binding CurrentSelectedScaleIndex,Mode=TwoWay}"
+                              AutoScrollToSelectedItem="True"
+                              DisplayMemberBinding="{Binding Value ,Mode=TwoWay}"
+                              SelectedValueBinding="{Binding Key}"
+                              x:CompileBindings="False"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="0">
+                    <TextBlock
+                        Text="{DynamicResource NoiseLevel}" FontSize="11"
+                        VerticalAlignment="Center"
+                        TextAlignment="Right" />
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <ComboBox Margin="10,0"
+                              ItemsSource="{Binding CurrentEngineOption.noise_levels ,Mode=TwoWay}" FontSize="10"
+                              SelectedIndex="{Binding CurrentSelectedNoiseLevelIndex}"
+                              SelectedValue="{Binding CurrentSelectedNoiseLevelIndex,Mode=TwoWay}"
+                              AutoScrollToSelectedItem="True"
+                              DisplayMemberBinding="{Binding Value ,Mode=TwoWay}"
+                              SelectedValueBinding="{Binding Key}"
+                              x:CompileBindings="False"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                </Grid>
+
+                <Grid Grid.Row="3" Grid.Column="3">
+                    <TextBlock
+                        Text="{DynamicResource ThreadCount}" FontSize="11"
+                        VerticalAlignment="Center"
+                        TextAlignment="Right" />
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="4">
+                    <ComboBox Margin="10,0"
+                              ItemsSource="{Binding CurrentEngineOption.thread_counts ,Mode=TwoWay}" FontSize="10"
+                              SelectedIndex="{Binding CurrentSelectedThreadCountIndex}"
+                              SelectedValue="{Binding CurrentSelectedThreadCountIndex,Mode=TwoWay}"
+                              AutoScrollToSelectedItem="True"
+                              DisplayMemberBinding="{Binding Value ,Mode=TwoWay}"
+                              SelectedValueBinding="{Binding Key}"
+                              x:CompileBindings="False"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                </Grid>
+
+                <Grid Grid.Row="4" Grid.Column="0">
+                    <TextBlock
+                        Text="{DynamicResource TileSize}" FontSize="11"
+                        VerticalAlignment="Center"
+                        TextAlignment="Right" />
+                </Grid>
+                <Grid Grid.Row="4" Grid.Column="1">
+                    <ComboBox Margin="10,0"
+                              ItemsSource="{Binding CurrentEngineOption.tile_sizes ,Mode=TwoWay}" FontSize="10"
+                              SelectedIndex="{Binding CurrentSelectedTileSizeIndex}"
+                              SelectedValue="{Binding CurrentSelectedTileSizeIndex,Mode=TwoWay}"
+                              AutoScrollToSelectedItem="True"
+                              DisplayMemberBinding="{Binding Value ,Mode=TwoWay}"
+                              SelectedValueBinding="{Binding Key}"
+                              x:CompileBindings="False"
+                              HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                </Grid>
+
+                <Grid Grid.Row="4" Grid.Column="3">
+                    <TextBlock
+                        Text="{DynamicResource ModelName}" FontSize="11"
+                        VerticalAlignment="Center"
+                        TextAlignment="Right" IsVisible="{Binding HasModelNameOption}" />
+                </Grid>
+                <Grid Grid.Row="4" Grid.Column="4">
+                    <ComboBox Margin="10,0"
+                              ItemsSource="{Binding CurrentEngineOption.model_names ,Mode=TwoWay}" FontSize="10"
+                              SelectedIndex="{Binding CurrentSelectedModelNameIndex}"
+                              SelectedValue="{Binding CurrentSelectedModelNameIndex,Mode=TwoWay}"
+                              AutoScrollToSelectedItem="True"
+                              DisplayMemberBinding="{Binding Value ,Mode=TwoWay}"
+                              SelectedValueBinding="{Binding Key}" HorizontalAlignment="Stretch"
+                              x:CompileBindings="False"
+                              IsVisible="{Binding HasModelNameOption}"
+                              VerticalAlignment="Center" />
+                </Grid>
+                <Grid Grid.Row="5" Grid.Column="0">
+                    <TextBlock
+                        Text="{DynamicResource TTA_Mode}" FontSize="11"
+                        VerticalAlignment="Center"
+                        TextAlignment="Right" />
+                </Grid>
+                <Grid Grid.Row="5" Grid.Column="1">
+                    <ToggleSwitch Margin="10,0" VerticalAlignment="Center" FontSize="10"
+                                  IsChecked="{Binding TtaMode}" />
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="2">
+            <Grid RowDefinitions="4*,Auto,5.5*">
+                <Grid Grid.Row="0">
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="3*,7*"
+                          VerticalAlignment="Center" RowSpacing="11">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource Manufacturer}"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="11" />
+                        <SelectableTextBlock Grid.Row="0" Grid.Column="1"
+                                             Text="{Binding SysInfo.ManufacturerName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                             HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal"
+                                             Margin="5,0,0,0" FontStretch="Normal" FontSize="11" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource Processor}"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="11" />
+                        <SelectableTextBlock Grid.Row="1" Grid.Column="1"
+                                             Text="{Binding CpuInfo.Version, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                             HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal"
+                                             Margin="5,0,0,0" FontStretch="Normal" FontSize="11" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource CpuCore}"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="11" />
+                        <SelectableTextBlock Grid.Row="2" Grid.Column="1"
+                                             Text="{Binding CpuCore, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                             HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal"
+                                             Margin="5,0,0,0" FontStretch="Normal" FontSize="11" />
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource UserName}"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="11" />
+                        <SelectableTextBlock Grid.Row="3" Grid.Column="1"
+                                             Text="{Binding UserName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                             HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal"
+                                             Margin="5,0,0,0" FontStretch="Normal" FontSize="11" />
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource SerialNumber}"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="11" />
+                        <SelectableTextBlock Grid.Row="4" Grid.Column="1"
+                                             Text="{Binding SysInfo.SerialNumber, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                             HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal"
+                                             Margin="5,0,0,0" FontStretch="Normal" FontSize="11" />
+
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource ProductName}"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="11" />
+                        <SelectableTextBlock Grid.Row="5" Grid.Column="1"
+                                             Text="{Binding SysInfo.ProductName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                             HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal"
+                                             Margin="5,0,0,0" FontStretch="Normal" FontSize="11" />
+
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource MemorySize}"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="11" />
+                        <SelectableTextBlock Grid.Row="6" Grid.Column="1"
+                                             Text="{Binding MemorySize, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                             HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Normal"
+                                             Margin="5,0,0,0" FontStretch="Normal" FontSize="11" />
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1" Height="1">
+                    <Line StartPoint="0,0"
+                          EndPoint="1,0"
+                          Stroke="LightGray"
+                          StrokeThickness="0.5"
+                          StrokeDashArray="4,2"
+                          Stretch="UniformToFill" />
+                </Grid>
+                <ScrollViewer Grid.Row="2"
+                              HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                    <TextBox x:Name="InfoTextBox" TextChanged="InfoTextBox_OnTextChanged"
+                             IsReadOnly="True"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             Text="{Binding LogText, Mode=OneWay}"
+                             VerticalAlignment="Stretch"
+                             HorizontalAlignment="Stretch"
+                             BorderThickness="0"
+                             BorderBrush="Transparent"
+                             Background="Transparent"
+                             Margin="5"
+                             Padding="0" />
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid RowDefinitions="2.1*,Auto,7.8*">
+                <Grid Grid.Row="0">
+                    <TextBlock Grid.Row="0" Text="{DynamicResource FileList}"
+                               FontWeight="Bold"
+                               Margin="15 0"
+                               HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <TextBlock Grid.Row="0" Text="{Binding TaskList.Count}"
+                               FontWeight="Bold"
+                               Margin="15 0"
+                               HorizontalAlignment="Right" VerticalAlignment="Center" />
+                </Grid>
+                <Grid Grid.Row="1" Height="1">
+                    <Line StartPoint="0,0"
+                          EndPoint="1,0"
+                          Stroke="LightGray"
+                          StrokeThickness="0.5"
+                          StrokeDashArray="4,2"
+                          Stretch="UniformToFill" />
+                </Grid>
+                <!-- 文件列表 -->
+                <ScrollViewer Grid.Row="2"
+                              Margin="0,0,0,15"
+                              VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
+                    <ItemsControl ItemsSource="{Binding TaskList}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <suki:GlassCard Width="390"
+                                                Height="130"
+                                                Margin="8" HorizontalContentAlignment="Stretch">
+                                    <Grid>
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <!-- 左侧文件信息 -->
+                                            <StackPanel Grid.Column="0"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Center" Margin="8,0,0,0">
+                                                <TextBlock FontSize="14"
+                                                           FontWeight="DemiBold"
+                                                           Text="{Binding Name}"
+                                                           TextTrimming="PrefixCharacterEllipsis" MaxWidth="280"
+                                                           Foreground="{DynamicResource SukiHighText}" />
+
+                                                <TextBlock Margin="5,5,0,0"
+                                                           FontSize="11"
+                                                           Foreground="{DynamicResource SukiLowText}"
+                                                           TextTrimming="PrefixCharacterEllipsis" MaxWidth="280"
+                                                           Text="{Binding Path}" />
+                                            </StackPanel>
+
+                                            <!-- 右侧区域（进度条 + 状态文字） -->
+                                            <StackPanel Grid.Column="1"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal">
+                                                <Border Width="48"
+                                                        Height="48"
+                                                        CornerRadius="22"
+                                                        Margin="0,0,10,0"
+                                                        Background="#1AFFFFFF"
+                                                        BorderBrush="{DynamicResource SukiBorderBrush}"
+                                                        BorderThickness="1">
+                                                    <suki:CircleProgressBar Width="44"
+                                                                             Height="44"
+                                                                             StrokeWidth="5"
+                                                                             Value="{Binding Progress}">
+                                                        <TextBlock HorizontalAlignment="Center"
+                                                                   VerticalAlignment="Center"
+                                                                   FontSize="12"
+                                                                   FontWeight="DemiBold"
+                                                                   Text="{Binding Progress}"
+                                                                   Foreground="{DynamicResource SukiHighText}" />
+                                                    </suki:CircleProgressBar>
+                                                </Border>
+
+                                                <TextBlock Text="{Binding Status}" MinWidth="50"
+                                                           FontSize="12"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource SukiLowText}">
+                                                    <TextBlock.Styles>
+                                                        <Style Selector="TextBlock[Text=完成]">
+                                                            <Setter Property="Foreground" Value="LimeGreen" />
+                                                        </Style>
+                                                        <Style Selector="TextBlock[Text=失败]">
+                                                            <Setter Property="Foreground" Value="#CC3333" />
+                                                        </Style>
+                                                        <Style Selector="TextBlock[Text=已取消]">
+                                                            <Setter Property="Foreground" Value="Orange" />
+                                                        </Style>
+                                                        <Style Selector="TextBlock[Text=已暂停]">
+                                                            <Setter Property="Foreground" Value="Goldenrod" />
+                                                        </Style>
+                                                        <Style Selector="TextBlock[Text=正在取消...]">
+                                                            <Setter Property="Foreground" Value="Orange" />
+                                                        </Style>
+                                                    </TextBlock.Styles>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!-- 移除按钮（悬浮右上角） -->
+                                        <Button Content="×"
+                                                Width="20"
+                                                Height="20"
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Right"
+                                                Margin="0,2,2,0"
+                                                Padding="0"
+                                                FontSize="16"
+                                                FontWeight="Bold"
+                                                BorderThickness="0"
+                                                Foreground="#CC3333"
+                                                Background="Transparent"
+                                                Cursor="Hand"
+                                                x:CompileBindings="False"
+                                                Command="{Binding DataContext.RemoveTaskCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}" />
+                                    </Grid>
+                                </suki:GlassCard>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="2">
+            <Grid ColumnDefinitions="4.5*,Auto,4.5*">
+                <Grid Grid.Column="0">
+                    <StackPanel VerticalAlignment="Center"
+                                Spacing="20">
+                        <Button Content="{DynamicResource OpenFile}"
+                                Width="150"
+                                Height="40"
+                                CornerRadius="20"
+                                FontSize="14"
+                                Command="{Binding SelectFileCommand}"
+                                HorizontalAlignment="Center" />
+                        <TextBlock Text="{DynamicResource FileSizeLimit}"
+                                   Foreground="#666666"
+                                   FontSize="11"
+                                   HorizontalAlignment="Center" />
+                        <TextBlock Text="{DynamicResource FileFormat}"
+                                   Foreground="#666666"
+                                   FontSize="11"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Column="1" Width="1">
+                    <Line StartPoint="0,0"
+                          EndPoint="0,1"
+                          Stroke="LightGray"
+                          StrokeThickness="0.5"
+                          StrokeDashArray="4,2"
+                          Stretch="UniformToFill" />
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="8" VerticalAlignment="Center">
+                        <Button Grid.Row="0" Content="{DynamicResource StartTask}" VerticalAlignment="Center"
+                                HorizontalAlignment="Center" Margin="0,20,0,0" Padding="10,0"
+                                Height="40"
+                                Width="145"
+                                FontSize="14"
+                                Command="{Binding StartTaskCommand}"
+                                IsEnabled="{Binding CanStartTask}"
+                                Classes="Flat Large" />
+
+                        <Button Grid.Row="1" Content="{DynamicResource StopTask}" VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Height="40" Padding="10,0"
+                                Width="145"
+                                Command="{Binding CancelTaskCommand}"
+                                IsEnabled="{Binding CanCancelTask}"
+                                FontSize="14" Classes="Flat Large Danger" />
+
+                        <Button Grid.Row="2" Content="{DynamicResource ClearTask}" VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Height="40" Padding="10,0"
+                                Width="145"
+                                Command="{Binding ClearTaskCommand}"
+                                IsEnabled="{Binding CanClearTask}"
+                                FontSize="14" Classes="Flat Large Accent" />
+
+                        <Button Grid.Row="3" Content="{DynamicResource ClearLog}" VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Height="40" Padding="10,0"
+                                Width="145"
+                                Command="{Binding ClearLogCommand}"
+                                FontSize="14" Classes="Flat Large Warning" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1" RowSpan="3" Width="1">
+            <Line StartPoint="0,0"
+                  EndPoint="0,1"
+                  Stroke="LightGray"
+                  StrokeThickness="0.25"
+                  Stretch="UniformToFill" />
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0" ColumnSpan="3" Height="1">
+            <Line StartPoint="0,0"
+                  EndPoint="1,0"
+                  Stroke="LightGray"
+                  StrokeThickness="0.25"
+                  Stretch="UniformToFill" />
+        </Grid>
+        <Grid Grid.Row="3" Grid.Column="0" ColumnSpan="3" Height="1">
+            <Line StartPoint="0,0"
+                  EndPoint="1,0"
+                  Stroke="LightGray"
+                  StrokeThickness="0.25"
+                  Stretch="UniformToFill" />
+        </Grid>
+        <Grid Grid.Row="4" Grid.Column="0" ColumnSpan="3" MinHeight="45">
+            <TextBlock
+                Text="Copyright © Lucifer All rights reserved."
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="{DynamicResource SukiSecondaryText}"
+                FontSize="16" />
+        </Grid>
+    </Grid>
+    <suki:SukiWindow.Hosts>
+        <suki:SukiToastHost Manager="{Binding ToastManager}" />
+        <suki:SukiDialogHost Manager="{Binding DialogManager}" />
+    </suki:SukiWindow.Hosts>
+</suki:SukiWindow>
