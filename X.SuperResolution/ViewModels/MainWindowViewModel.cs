@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Text;
-using System.Linq;
 using System.Collections.Frozen;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -11,6 +10,7 @@ using SukiUI.Dialogs;
 using SukiUI.Toasts;
 using X.SuperResolution.Engine;
 using X.SuperResolution.Model;
+using X.SuperResolution.Services;
 using TaskItem = X.SuperResolution.Model.TaskItem;
 
 // ReSharper disable InconsistentNaming
@@ -24,6 +24,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private readonly StringBuilder _log_builder = new();
     private long _last_progress_tick;
     private NcnnTaskState? _last_native_state;
+    private readonly SettingsService _settingsService;
 
     private CancellationTokenSource _current_task_cts;
     private bool _stop_requested;
@@ -44,14 +45,21 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     public MainWindowViewModel()
+        : this(null, null, new SettingsService())
     {
     }
 
     /// <inheritdoc />
-    public MainWindowViewModel(ISukiDialogManager dialog_manager, ISukiToastManager toast_manager)
+    public MainWindowViewModel(
+        ISukiDialogManager dialog_manager,
+        ISukiToastManager toast_manager,
+        SettingsService settings_service)
     {
         _dialogManager = dialog_manager;
         _toastManager = toast_manager;
+        _settingsService = settings_service;
+        CurrentLang = _settingsService.Current.Language;
+        OutputDirectory = _settingsService.Current.OutputDirectory;
     }
 
     /// <summary>
@@ -202,7 +210,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [Reactive] private string outputDirectory = AppContext.BaseDirectory;
 
-    public static string CurrentLang => "zh-CN";
+    [Reactive] private string currentLang = "zh-CN";
 
     public EngineOption CurrentEngineOption => _engine_options[CurrentEngine];
 
@@ -322,12 +330,22 @@ public partial class MainWindowViewModel : ViewModelBase
             if (string.IsNullOrWhiteSpace(path)) return;
 
             OutputDirectory = path;
+            _settingsService.SetOutputDirectory(OutputDirectory);
             AppendLog($"输出目录已设置: {OutputDirectory}");
         }
         catch (Exception ex)
         {
             AppendLog($"[错误] 选择输出目录失败: {ex.Message}");
         }
+    }
+
+    public void ChangeLanguage(string language)
+    {
+        if (string.IsNullOrWhiteSpace(language))
+            return;
+
+        CurrentLang = language;
+        _settingsService.SetLanguage(language);
     }
 
     /// <summary>

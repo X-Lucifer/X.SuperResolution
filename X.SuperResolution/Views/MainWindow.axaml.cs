@@ -1,11 +1,13 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml.Styling;
 using LibreHardwareMonitor.Hardware;
 using LibreHardwareMonitor.Hardware.Gpu;
 using SukiUI;
 using SukiUI.Controls;
 using X.SuperResolution.Services;
+using X.SuperResolution.ViewModels;
+using static X.SuperResolution.Services.LocalizationService;
+
 // ReSharper disable StringLiteralTypo
 
 namespace X.SuperResolution.Views;
@@ -102,23 +104,17 @@ public partial class MainWindow : SukiWindow
 
     private void Lang_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var app_service = Application.Current!;
         var code = ((ComboBox)sender).SelectedValue!.ToString();
         if (string.IsNullOrWhiteSpace(code))
         {
             return;
         }
 
-        //切换语系
-        var lang_file = $"avares://{typeof(Program).Assembly.GetName().Name}/Assets/Languages/{code}.axaml";
-        var uri = new Uri(lang_file, UriKind.Absolute);
-        var data = new ResourceInclude(uri)
+        ApplyLanguage(code);
+        if (DataContext is MainWindowViewModel vm)
         {
-            Source = uri
-        };
-        app_service.Resources.MergedDictionaries[0] = data;
-        //切换主题控件语系
-        SukiTheme.GetInstance().Locale = code;
+            vm.ChangeLanguage(code);
+        }
     }
 
     private void InfoTextBox_OnTextChanged(object sender, TextChangedEventArgs e)

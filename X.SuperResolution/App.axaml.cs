@@ -4,6 +4,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using Splat;
+using X.SuperResolution.Services;
 using X.SuperResolution.ViewModels;
 using X.SuperResolution.Views;
 
@@ -27,6 +28,7 @@ public partial class App : Application
         }
 
         var vm = provider.GetRequiredService<MainWindowViewModel>();
+        LocalizationService.ApplyLanguage(vm.CurrentLang);
         desktop.MainWindow = new MainWindow
         {
             DataContext = vm
@@ -36,6 +38,7 @@ public partial class App : Application
 
     private static ServiceProvider ConfigureServices(IServiceCollection services)
     {
+        services.AddSingleton<SettingsService>();
         services.AddSingleton<MainWindowViewModel>();
         return services.BuildServiceProvider();
     }
