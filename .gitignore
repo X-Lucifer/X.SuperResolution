@@ -4,3 +4,6 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .vs/
+artifacts/
+installer/Generated.AppInfo.nsh
+installer/Generated.WizardImage.bmp
