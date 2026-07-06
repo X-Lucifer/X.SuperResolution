@@ -8,6 +8,7 @@
     <system:String x:Key="TileSize">分块大小:</system:String>
     <system:String x:Key="TTA_Mode">TTA模式:</system:String>
     <system:String x:Key="OutputFormat">输出格式:</system:String>
+    <system:String x:Key="OutputDirectory">输出目录:</system:String>
     <system:String x:Key="Scale">放大倍率:</system:String>
     <system:String x:Key="ThreadCount">线程数量:</system:String>
     <system:String x:Key="ModelName">模型名称:</system:String>

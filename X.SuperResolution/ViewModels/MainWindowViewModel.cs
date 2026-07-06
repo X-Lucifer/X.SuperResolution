@@ -38,6 +38,7 @@ public partial class MainWindowViewModel : ViewModelBase
         public string ThreadCount { get; init; }
         public string TileSize { get; init; }
         public string OutputFormat { get; init; }
+        public string OutputDirectory { get; init; }
         public string GpuId { get; init; }
         public int TtaMode { get; init; }
     }
@@ -199,6 +200,8 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [Reactive] private bool ttaMode;
 
+    [Reactive] private string outputDirectory = AppContext.BaseDirectory;
+
     public static string CurrentLang => "zh-CN";
 
     public EngineOption CurrentEngineOption => _engine_options[CurrentEngine];
@@ -298,6 +301,32 @@ public partial class MainWindowViewModel : ViewModelBase
         catch (Exception ex)
         {
             AppendLog($"[错误] 选择文件失败: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// 选择输出目录
+    /// </summary>
+    [ReactiveCommand]
+    private async Task SelectOutputDirectory(CancellationToken token)
+    {
+        try
+        {
+            var folders = await OpenFolderPickerAsync(OutputDirectory);
+            if (folders is not { Count: > 0 }) return;
+
+            var path = folders.First().Path.IsFile
+                ? folders.First().Path.LocalPath
+                : folders.First().Path.AbsolutePath;
+
+            if (string.IsNullOrWhiteSpace(path)) return;
+
+            OutputDirectory = path;
+            AppendLog($"输出目录已设置: {OutputDirectory}");
+        }
+        catch (Exception ex)
+        {
+            AppendLog($"[错误] 选择输出目录失败: {ex.Message}");
         }
     }
 
@@ -481,7 +510,7 @@ public partial class MainWindowViewModel : ViewModelBase
         CancellationToken cancellation_token)
     {
         var input_path = task.Path;
-        var output_dir = Path.Combine(AppContext.BaseDirectory, "output");
+        var output_dir = settings.OutputDirectory;
         Directory.CreateDirectory(output_dir);
 
         var file_name = Path.GetFileNameWithoutExtension(input_path);
@@ -525,6 +554,7 @@ public partial class MainWindowViewModel : ViewModelBase
             ThreadCount = GetCurrentValue(option.thread_counts, CurrentSelectedThreadCountIndex, "1:2:2"),
             TileSize = GetCurrentValue(option.tile_sizes, CurrentSelectedTileSizeIndex, "0"),
             OutputFormat = GetCurrentValue(option.output_formats, CurrentSelectedOutputFormatIndex, "png"),
+            OutputDirectory = OutputDirectory,
             GpuId = gpu_id,
             TtaMode = TtaMode ? 1 : 0
         };
@@ -551,6 +581,22 @@ public partial class MainWindowViewModel : ViewModelBase
         else if (!Directory.EnumerateFiles(settings.ModelPath, "*.param").Any())
         {
             AppendLog($"[错误] 模型目录中没有 .param 文件: {settings.ModelPath}");
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(settings.OutputDirectory))
+        {
+            AppendLog("[错误] 输出目录不能为空");
+            return false;
+        }
+
+        try
+        {
+            Directory.CreateDirectory(settings.OutputDirectory);
+        }
+        catch (Exception ex)
+        {
+            AppendLog($"[错误] 输出目录不可用: {settings.OutputDirectory} ({ex.Message})");
             return false;
         }
 
@@ -758,5 +804,24 @@ public partial class MainWindowViewModel : ViewModelBase
             ]
         });
         return files.Count > 0 ? files : [];
+    }
+
+    private static async Task<IReadOnlyCollection<IStorageFolder>> OpenFolderPickerAsync(string suggested_path)
+    {
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
+            desktop.MainWindow?.StorageProvider is not { } provider)
+            throw new NullReferenceException("Missing StorageProvider instance.");
+
+        IStorageFolder suggested_folder = null;
+        if (!string.IsNullOrWhiteSpace(suggested_path) && Directory.Exists(suggested_path))
+            suggested_folder = await provider.TryGetFolderFromPathAsync(suggested_path);
+
+        var folders = await provider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+        {
+            Title = "选择输出目录",
+            AllowMultiple = false,
+            SuggestedStartLocation = suggested_folder
+        });
+        return folders.Count > 0 ? folders : [];
     }
 }

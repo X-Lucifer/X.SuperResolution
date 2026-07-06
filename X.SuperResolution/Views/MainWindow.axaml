@@ -285,6 +285,33 @@
                     <ToggleSwitch Margin="10,0" VerticalAlignment="Center" FontSize="10"
                                   IsChecked="{Binding TtaMode}" />
                 </Grid>
+                <Grid Grid.Row="6" Grid.Column="0">
+                    <TextBlock
+                        Text="{DynamicResource OutputDirectory}" FontSize="11"
+                        VerticalAlignment="Center"
+                        TextAlignment="Right" />
+                </Grid>
+                <Grid Grid.Row="6" Grid.Column="1" ClipToBounds="True">
+                    <Button Command="{Binding SelectOutputDirectoryCommand}"
+                            Margin="13,0"
+                            FontSize="10"
+                            Height="32"
+                            MinWidth="0"
+                            Padding="8,4"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            ToolTip.Tip="{Binding OutputDirectory}">
+                        <Grid ColumnDefinitions="*">
+                            <TextBlock Text="{Binding OutputDirectory}"
+                                       Grid.Column="0"
+                                       Width="276"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
+                                       TextTrimming="PrefixCharacterEllipsis" />
+                        </Grid>
+                    </Button>
+                </Grid>
             </Grid>
         </Grid>
         <Grid Grid.Row="0" Grid.Column="2">

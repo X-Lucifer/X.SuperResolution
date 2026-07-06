@@ -8,6 +8,7 @@
     <system:String x:Key="TileSize">TileSize:</system:String>
     <system:String x:Key="TTA_Mode">TTA Mode:</system:String>
     <system:String x:Key="OutputFormat">OutputFormat:</system:String>
+    <system:String x:Key="OutputDirectory">Output Dir:</system:String>
     <system:String x:Key="Scale">Scale:</system:String>
     <system:String x:Key="ThreadCount">ThreadCount:</system:String>
     <system:String x:Key="ModelName">ModelName:</system:String>
