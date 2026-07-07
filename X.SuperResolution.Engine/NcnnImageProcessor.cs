@@ -157,7 +157,7 @@ public sealed class NcnnImageProcessingTask : IDisposable, IAsyncDisposable
     public void Cancel()
     {
         if (Volatile.Read(ref _disposed) != 0) return;
-        NcnnImageProc_CancelTask(TaskId);
+        _ = NcnnImageProc_CancelTask(TaskId);
     }
 
     private NcnnTaskState GetStatus()
@@ -206,8 +206,10 @@ public sealed class NcnnImageProcessingTask : IDisposable, IAsyncDisposable
         {
             NcnnImageProc_SetCallback(TaskId, null, IntPtr.Zero);
 
-            if (!IsTerminalState(_last_state))
-                NcnnImageProc_CancelTask(TaskId);
+            if (!IsTerminalState(_last_state)) 
+            {
+                _ = NcnnImageProc_CancelTask(TaskId);
+            }
 
             // The native wrapper sends the terminal callback before its runner thread
             // has fully returned, so destruction is intentionally deferred a little.

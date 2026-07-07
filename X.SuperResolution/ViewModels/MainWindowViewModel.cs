@@ -693,13 +693,13 @@ public partial class MainWindowViewModel : ViewModelBase
                 ? "已停止"
                 : ToTaskStatus(e.State);
 
-            if (_last_native_state != e.State)
+            var native_state_changed = _last_native_state != e.State;
+            if (native_state_changed)
             {
                 _last_native_state = e.State;
                 AppendLog($"引擎状态: {DescribeNativeState(e.State)}");
+                NotifyTaskControlStateChanged();
             }
-
-            NotifyTaskControlStateChanged();
         });
     }
 
