@@ -7,3 +7,4 @@ riderModule.iml
 artifacts/
 installer/Generated.AppInfo.nsh
 installer/Generated.WizardImage.bmp
+.agent/
