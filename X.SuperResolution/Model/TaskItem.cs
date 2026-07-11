@@ -1,9 +1,8 @@
-using ReactiveUI;
-using ReactiveUI.SourceGenerators;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace X.SuperResolution.Model;
 // ReSharper disable InconsistentNaming
-public partial class TaskItem : ReactiveObject
+public partial class TaskItem : ObservableObject
 {
     /// <summary>
     /// 文件id
@@ -23,18 +22,18 @@ public partial class TaskItem : ReactiveObject
     /// <summary>
     /// 文件路径
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     private string path;
 
     /// <summary>
     /// 进度 0-100
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     private int progress;
 
     /// <summary>
     /// 状态描述
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     private string status = "等待中";
 }

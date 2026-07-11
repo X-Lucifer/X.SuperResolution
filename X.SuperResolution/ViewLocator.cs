@@ -1,5 +1,4 @@
 using System.Collections.Concurrent;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;

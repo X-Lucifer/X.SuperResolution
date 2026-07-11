@@ -7,8 +7,6 @@ public sealed class AppSettings
     /// </summary>
     public string Language { get; set; } = "zh-CN";
 
-    private string _output_directory;
-
     /// <summary>
     /// 输出目录
     /// </summary>
@@ -16,16 +14,16 @@ public sealed class AppSettings
     {
         get
         {
-            if (string.IsNullOrWhiteSpace(_output_directory))
+            if (string.IsNullOrWhiteSpace(field))
             {
-                _output_directory = Path.Combine(AppContext.BaseDirectory, "output");
-                if (!Directory.Exists(_output_directory))
+                field = Path.Combine(AppContext.BaseDirectory, "output");
+                if (!Directory.Exists(field))
                 {
-                    Directory.CreateDirectory(_output_directory);
+                    Directory.CreateDirectory(field);
                 }
             }
-            return _output_directory;
+            return field;
         }
-        set => _output_directory = value;
+        set;
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Reflection;
 using Avalonia;
-using ReactiveUI.Avalonia;
-using X.SuperResolution.Services;
 using AppBuilder = Avalonia.AppBuilder;
 
 namespace X.SuperResolution;
@@ -27,15 +24,6 @@ internal static class Program
     private static AppBuilder BuildAvaloniaApp()
     {
         return AppBuilder.Configure<App>()
-                         .UseReactiveUI(builder =>
-                         {
-                             builder.WithViewsFromAssembly(Assembly.GetExecutingAssembly())
-                                    .UsingSplatModule(new AutofacSplatModule())
-                                    .UseCurrentSplatLocator()
-                                    .WithCoreServices()
-                                 ;
-                         })
-                         .RegisterReactiveUIViewsFromEntryAssembly()
                          .UsePlatformDetect()
                          .LogToTrace()
             ;

@@ -21,7 +21,7 @@ public enum EngineType
     /// <summary>
     /// Real-ESRGAN
     /// </summary>
-    [Description("Real-ESRGAN")] RealESRGAN = 1 << 1,
+    [Description("real-esrgan")] RealESRGAN = 1 << 1,
 
     /// <summary>
     /// srmd

@@ -4,13 +4,13 @@ using System.Collections.Frozen;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
-using ReactiveUI;
-using ReactiveUI.SourceGenerators;
-using SukiUI.Dialogs;
-using SukiUI.Toasts;
+using Avalonia.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using X.SuperResolution.Engine;
 using X.SuperResolution.Model;
 using X.SuperResolution.Services;
+using static X.SuperResolution.Engine.NcnnTaskState;
 using TaskItem = X.SuperResolution.Model.TaskItem;
 
 // ReSharper disable InconsistentNaming
@@ -21,7 +21,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private TaskItem _current_processing_task;
     private NcnnImageProcessor _processor;
     private NcnnImageProcessingTask _current_native_task;
-    private readonly StringBuilder _log_builder = new();
+    private readonly StringBuilder _log_builder = new StringBuilder();
     private long _last_progress_tick;
     private NcnnTaskState? _last_native_state;
     private readonly SettingsService _settingsService;
@@ -29,7 +29,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private CancellationTokenSource _current_task_cts;
     private bool _stop_requested;
 
-    private sealed class ProcessingSettings
+    sealed private class ProcessingSettings
     {
         public EngineType Engine { get; init; }
         public string ModelPath { get; init; }
@@ -45,18 +45,13 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     public MainWindowViewModel()
-        : this(null, null, new SettingsService())
+        : this(new SettingsService())
     {
     }
 
     /// <inheritdoc />
-    public MainWindowViewModel(
-        ISukiDialogManager dialog_manager,
-        ISukiToastManager toast_manager,
-        SettingsService settings_service)
+    public MainWindowViewModel(SettingsService settings_service)
     {
-        _dialogManager = dialog_manager;
-        _toastManager = toast_manager;
         _settingsService = settings_service;
         CurrentLang = _settingsService.Current.Language;
         OutputDirectory = _settingsService.Current.OutputDirectory;
@@ -167,88 +162,125 @@ public partial class MainWindowViewModel : ViewModelBase
             }
         }.ToFrozenDictionary();
 
-    [Reactive(
-        nameof(IsWaifu2x),
-        nameof(IsSrmd),
-        nameof(IsRealESRGAN),
-        nameof(HasModelNameOption),
-        nameof(CurrentEngineOption),
-        nameof(CurrentSelectedModelNameIndex),
-        nameof(CurrentSelectedModelPathIndex),
-        nameof(CurrentSelectedNoiseLevelIndex),
-        nameof(CurrentSelectedOutputFormatIndex),
-        nameof(CurrentSelectedTileSizeIndex),
-        nameof(CurrentSelectedThreadCountIndex)
-    )]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsWaifu2x))]
+    [NotifyPropertyChangedFor(nameof(IsSrmd))]
+    [NotifyPropertyChangedFor(nameof(IsRealESRGAN))]
+    [NotifyPropertyChangedFor(nameof(HasModelNameOption))]
+    [NotifyPropertyChangedFor(nameof(CurrentEngineOption))]
+    [NotifyPropertyChangedFor(nameof(CurrentSelectedModelNameIndex))]
+    [NotifyPropertyChangedFor(nameof(CurrentSelectedModelPathIndex))]
+    [NotifyPropertyChangedFor(nameof(CurrentSelectedNoiseLevelIndex))]
+    [NotifyPropertyChangedFor(nameof(CurrentSelectedOutputFormatIndex))]
+    [NotifyPropertyChangedFor(nameof(CurrentSelectedTileSizeIndex))]
+    [NotifyPropertyChangedFor(nameof(CurrentSelectedThreadCountIndex))]
     private EngineType currentEngine = EngineType.waifu2x;
 
-    public bool IsWaifu2x => CurrentEngine == EngineType.waifu2x;
+    public bool IsWaifu2x
+    {
+        get
+        {
+            return CurrentEngine == EngineType.waifu2x;
+        }
+    }
 
-    public bool IsSrmd => CurrentEngine == EngineType.srmd;
+    public bool IsSrmd
+    {
+        get
+        {
+            return CurrentEngine == EngineType.srmd;
+        }
+    }
 
-    public bool IsRealESRGAN => CurrentEngine == EngineType.RealESRGAN;
+    public bool IsRealESRGAN
+    {
+        get
+        {
+            return CurrentEngine == EngineType.RealESRGAN;
+        }
+    }
 
-    public bool HasModelNameOption => CurrentEngineOption.model_names.Count > 0;
+    public bool HasModelNameOption
+    {
+        get
+        {
+            return CurrentEngineOption.model_names.Count > 0;
+        }
+    }
 
-    [Reactive] private int currentSelectedNoiseLevelIndex;
+    [ObservableProperty] private int currentSelectedNoiseLevelIndex;
 
-    [Reactive] private int currentSelectedScaleIndex;
+    [ObservableProperty] private int currentSelectedScaleIndex;
 
-    [Reactive] private int currentSelectedModelPathIndex;
+    [ObservableProperty] private int currentSelectedModelPathIndex;
 
-    [Reactive] private int currentSelectedModelNameIndex;
+    [ObservableProperty] private int currentSelectedModelNameIndex;
 
-    [Reactive] private int currentSelectedOutputFormatIndex;
+    [ObservableProperty] private int currentSelectedOutputFormatIndex;
 
-    [Reactive] private int currentSelectedTileSizeIndex;
+    [ObservableProperty] private int currentSelectedTileSizeIndex;
 
-    [Reactive] private int currentSelectedThreadCountIndex;
+    [ObservableProperty] private int currentSelectedThreadCountIndex;
 
-    [Reactive] private int selectedGpuIndex;
+    [ObservableProperty] private int selectedGpuIndex;
 
-    [Reactive] private bool ttaMode;
+    [ObservableProperty] private bool ttaMode;
 
-    [Reactive] private string outputDirectory = AppContext.BaseDirectory;
+    [ObservableProperty] private string outputDirectory = AppContext.BaseDirectory;
 
-    [Reactive] private string currentLang = "zh-CN";
+    [ObservableProperty] private string currentLang = "zh-CN";
 
-    public EngineOption CurrentEngineOption => _engine_options[CurrentEngine];
+    public EngineOption CurrentEngineOption
+    {
+        get
+        {
+            return _engine_options[CurrentEngine];
+        }
+    }
 
-    [Reactive] private ISukiDialogManager _dialogManager;
-
-    [Reactive] private ISukiToastManager _toastManager;
-
-    [Reactive] private Dictionary<string, string> langList = new()
+    [ObservableProperty] private Dictionary<string, string> langList = new Dictionary<string, string>
     {
         { "zh-CN", "中文" },
         { "en-US", "English" }
     };
 
-    [Reactive] private ObservableCollection<TaskItem> taskList = [];
+    [ObservableProperty] private ObservableCollection<TaskItem> taskList = [];
 
     /// <summary>
     /// 日志文本
     /// </summary>
-    [Reactive] private string logText = string.Empty;
+    [ObservableProperty] private string logText = string.Empty;
 
     /// <summary>
     /// 是否正在处理任务
     /// </summary>
-    [Reactive] private bool isProcessing;
+    [ObservableProperty] private bool isProcessing;
 
     public bool CanStartTask
     {
         get { return !IsProcessing && TaskList.Any(task => !IsTaskCompleted(task)); }
     }
 
-    public bool CanCancelTask => IsProcessing && _current_task_cts != null;
+    public bool CanCancelTask
+    {
+        get
+        {
+            return IsProcessing && _current_task_cts != null;
+        }
+    }
 
-    public bool CanClearTask => !IsProcessing && TaskList.Count > 0;
+    public bool CanClearTask
+    {
+        get
+        {
+            return !IsProcessing && TaskList.Count > 0;
+        }
+    }
 
     /// <summary>
     /// 切换引擎
     /// </summary>
-    [ReactiveCommand]
+    [RelayCommand]
     private void ChangeEngine(EngineType type)
     {
         CurrentEngine = type;
@@ -264,7 +296,7 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// 选择文件
     /// </summary>
-    [ReactiveCommand]
+    [RelayCommand]
     private async Task SelectFile(CancellationToken token)
     {
         try
@@ -299,7 +331,10 @@ public partial class MainWindowViewModel : ViewModelBase
             // 按文件大小升序排列，小文件优先
             var sorted = TaskList.OrderBy(t => t.FileSize).ToList();
             TaskList.Clear();
-            foreach (var t in sorted) TaskList.Add(t);
+            foreach (var t in sorted)
+            {
+                TaskList.Add(t);
+            }
 
             if (added_count > 0)
                 AppendLog($"已添加 {added_count} 个文件");
@@ -315,7 +350,7 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// 选择输出目录
     /// </summary>
-    [ReactiveCommand]
+    [RelayCommand]
     private async Task SelectOutputDirectory(CancellationToken token)
     {
         try
@@ -351,7 +386,7 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// 开始处理任务
     /// </summary>
-    [ReactiveCommand]
+    [RelayCommand(CanExecute = nameof(CanStartTask))]
     private async Task StartTask(CancellationToken token)
     {
         if (!CanStartTask) return;
@@ -380,7 +415,7 @@ public partial class MainWindowViewModel : ViewModelBase
         try
         {
             EnsureProcessor();
-            AppendLog($"引擎已初始化: lucifer_ncnn_vulkan {NcnnImageProcessor.GetVersion()}");
+            AppendLog($"引擎已初始化: lucifer_ncnn_vulkan: {NcnnImageProcessor.GetVersion()}");
 
             foreach (var task in pending_tasks.Where(task => TaskList.Contains(task)))
             {
@@ -398,13 +433,13 @@ public partial class MainWindowViewModel : ViewModelBase
                 {
                     var result = await ProcessCurrentTaskAsync(task, settings, _current_task_cts.Token);
 
-                    if (result == NcnnTaskState.Completed)
+                    if (result == Completed)
                     {
                         task.Progress = 100;
                         task.Status = "完成";
                         AppendLog($"完成: {task.Name}");
                     }
-                    else if (result == NcnnTaskState.Cancelled)
+                    else if (result == Cancelled)
                     {
                         task.Status = _stop_requested ? "已停止" : "已取消";
                         AppendLog(_stop_requested ? $"已停止: {task.Name}" : $"已取消: {task.Name}");
@@ -457,7 +492,7 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// 取消当前处理队列
     /// </summary>
-    [ReactiveCommand]
+    [RelayCommand(CanExecute = nameof(CanCancelTask))]
     private void CancelTask()
     {
         if (!CanCancelTask) return;
@@ -484,7 +519,7 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// 清空任务列表
     /// </summary>
-    [ReactiveCommand]
+    [RelayCommand(CanExecute = nameof(CanClearTask))]
     private void ClearTask()
     {
         if (!CanClearTask) return;
@@ -497,7 +532,7 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// 清空日志
     /// </summary>
-    [ReactiveCommand]
+    [RelayCommand]
     private void ClearLog()
     {
         _log_builder.Clear();
@@ -508,7 +543,7 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// 移除单个任务
     /// </summary>
-    [ReactiveCommand]
+    [RelayCommand]
     private void RemoveTask(TaskItem task)
     {
         if (_current_processing_task == task)
@@ -643,7 +678,7 @@ public partial class MainWindowViewModel : ViewModelBase
             : Path.Combine(AppContext.BaseDirectory, model_path!);
     }
 
-    private NcnnTaskConfig CreateNativeTaskConfig(string input_path, string output_path, ProcessingSettings settings)
+    private static NcnnTaskConfig CreateNativeTaskConfig(string input_path, string output_path, ProcessingSettings settings)
     {
         var (jobs_load, jobs_proc, jobs_save) = ParseThreadCount(settings.ThreadCount);
 
@@ -676,20 +711,19 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         var now = Environment.TickCount64;
         var state_changed = _last_native_state != e.State;
-        if (!state_changed && e.State is not (NcnnTaskState.Completed or NcnnTaskState.Cancelled or NcnnTaskState.Failed
-                               )
-                           && now - Interlocked.Read(ref _last_progress_tick) < 50)
+        if (!state_changed && e.State is not (Completed or Cancelled or Failed) && now - Interlocked.Read(ref _last_progress_tick) < 50)
+        {
             return;
+        }
 
         Interlocked.Exchange(ref _last_progress_tick, now);
-
-        Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+        Dispatcher.UIThread.Post(() =>
         {
             var current_task = _current_processing_task;
             if (current_task == null) return;
 
             current_task.Progress = CalculateDisplayProgress(e);
-            current_task.Status = _stop_requested && e.State == NcnnTaskState.Cancelled
+            current_task.Status = _stop_requested && e.State == Cancelled
                 ? "已停止"
                 : ToTaskStatus(e.State);
 
@@ -697,7 +731,7 @@ public partial class MainWindowViewModel : ViewModelBase
             if (native_state_changed)
             {
                 _last_native_state = e.State;
-                AppendLog($"引擎状态: {DescribeNativeState(e.State)}");
+                AppendLog($"引擎状态: {ToTaskStatus(e.State)}");
                 NotifyTaskControlStateChanged();
             }
         });
@@ -716,14 +750,14 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private static int CalculateDisplayProgress(NcnnProgressChangedEventArgs e)
     {
-        if (e.State == NcnnTaskState.Completed) return 100;
+        if (e.State == Completed) return 100;
         if (e.Percent > 0) return e.Percent;
 
         return e.State switch
         {
-            NcnnTaskState.Loading => 5,
-            NcnnTaskState.Processing => 50,
-            NcnnTaskState.Saving => 90,
+            Loading => 5,
+            Processing => 50,
+            Saving => 90,
             _ => 0
         };
     }
@@ -732,29 +766,14 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         return state switch
         {
-            NcnnTaskState.Loading => "加载中",
-            NcnnTaskState.Processing => "处理中",
-            NcnnTaskState.Saving => "保存中",
-            NcnnTaskState.Completed => "已完成",
-            NcnnTaskState.Cancelled => "已取消",
-            NcnnTaskState.Paused => "已暂停",
-            NcnnTaskState.Failed => "失败",
+            Loading => "加载中",
+            Processing => "处理中",
+            Saving => "保存中",
+            Completed => "已完成",
+            Cancelled => "已取消",
+            Paused => "已暂停",
+            Failed => "失败",
             _ => "等待中"
-        };
-    }
-
-    private static string DescribeNativeState(NcnnTaskState state)
-    {
-        return state switch
-        {
-            NcnnTaskState.Loading => "加载中...",
-            NcnnTaskState.Processing => "处理中...",
-            NcnnTaskState.Saving => "正在保存...",
-            NcnnTaskState.Completed => "已完成",
-            NcnnTaskState.Cancelled => "已取消",
-            NcnnTaskState.Paused => "已暂停",
-            NcnnTaskState.Failed => "失败",
-            _ => state.ToString()
         };
     }
 
@@ -772,7 +791,6 @@ public partial class MainWindowViewModel : ViewModelBase
         return int.TryParse(value, out var result) ? result : fallback;
     }
 
-
     private static bool IsTaskCompleted(TaskItem task)
     {
         return task.Progress >= 100 || task.Status == "完成";
@@ -781,14 +799,19 @@ public partial class MainWindowViewModel : ViewModelBase
     private void MarkUnfinishedTasksStopped(TaskItem current_task = null)
     {
         foreach (var task in TaskList.Where(task => !IsTaskCompleted(task)))
+        {
             task.Status = ReferenceEquals(task, current_task) ? "正在停止" : "已停止";
+        }
     }
 
     private void NotifyTaskControlStateChanged()
     {
-        this.RaisePropertyChanged(nameof(CanStartTask));
-        this.RaisePropertyChanged(nameof(CanCancelTask));
-        this.RaisePropertyChanged(nameof(CanClearTask));
+        OnPropertyChanged(nameof(CanStartTask));
+        OnPropertyChanged(nameof(CanCancelTask));
+        OnPropertyChanged(nameof(CanClearTask));
+        StartTaskCommand.NotifyCanExecuteChanged();
+        CancelTaskCommand.NotifyCanExecuteChanged();
+        ClearTaskCommand.NotifyCanExecuteChanged();
     }
 
     private static string GetCurrentValue(Dictionary<int, string> dict, int index, string fallback = "")
@@ -805,9 +828,10 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private static async Task<IReadOnlyCollection<IStorageFile>> OpenFilePickerAsync()
     {
-        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
-            desktop.MainWindow?.StorageProvider is not { } provider)
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || desktop.MainWindow?.StorageProvider is not {} provider)
+        {
             throw new NullReferenceException("Missing StorageProvider instance.");
+        }
 
         var files = await provider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
@@ -816,7 +840,7 @@ public partial class MainWindowViewModel : ViewModelBase
             FileTypeFilter =
             [
                 new FilePickerFileType("Image") { Patterns = ["*.jpg", "*.jpeg", "*.png", "*.webp"] },
-                new FilePickerFileType(".jpeg") { Patterns = ["*.jpg", "*.jpeg"] },
+                new FilePickerFileType(".jpg") { Patterns = ["*.jpg", "*.jpeg"] },
                 new FilePickerFileType(".png") { Patterns = ["*.png"] },
                 new FilePickerFileType(".webp") { Patterns = ["*.webp"] }
             ]
@@ -826,13 +850,16 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private static async Task<IReadOnlyCollection<IStorageFolder>> OpenFolderPickerAsync(string suggested_path)
     {
-        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
-            desktop.MainWindow?.StorageProvider is not { } provider)
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || desktop.MainWindow?.StorageProvider is not {} provider)
+        {
             throw new NullReferenceException("Missing StorageProvider instance.");
+        }
 
         IStorageFolder suggested_folder = null;
         if (!string.IsNullOrWhiteSpace(suggested_path) && Directory.Exists(suggested_path))
+        {
             suggested_folder = await provider.TryGetFolderFromPathAsync(suggested_path);
+        }
 
         var folders = await provider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {

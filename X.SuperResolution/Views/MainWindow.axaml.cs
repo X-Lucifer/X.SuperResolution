@@ -1,8 +1,6 @@
-using Avalonia;
 using Avalonia.Controls;
 using LibreHardwareMonitor.Hardware;
 using LibreHardwareMonitor.Hardware.Gpu;
-using SukiUI;
 using SukiUI.Controls;
 using X.SuperResolution.Services;
 using X.SuperResolution.ViewModels;
@@ -61,7 +59,8 @@ public partial class MainWindow : SukiWindow
     {
         var computer = new Computer
         {
-            IsGpuEnabled = true
+            IsGpuEnabled = true,
+            IsCpuEnabled = true
         };
         try
         {
@@ -74,9 +73,15 @@ public partial class MainWindow : SukiWindow
             var hardware = computer.Hardware;
             if (hardware is { Count: > 0 })
             {
-                for (var i = 0; i < hardware.Count; i++)
+                var index = 0;
+                foreach (var item in hardware)
                 {
-                    gpu_list.Add(i, ((GenericGpu)hardware[i]).Name);
+                    if (item is not GenericGpu gpu)
+                    {
+                        continue;
+                    }
+                    gpu_list.Add(index, gpu.Name);
+                    index++;
                 }
             }
 
@@ -94,7 +99,7 @@ public partial class MainWindow : SukiWindow
         }
     }
 
-    private sealed class HardwareInfo
+    sealed private class HardwareInfo
     {
         public Dictionary<int, string> GpuList { get; init; }
         public SystemInformation SysInfo { get; init; }

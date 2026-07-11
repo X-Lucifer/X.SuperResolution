@@ -123,7 +123,7 @@
                                      IsChecked="{Binding IsWaifu2x, Mode=TwoWay}"
                                      Command="{Binding ChangeEngineCommand}" FontSize="11"
                                      CommandParameter="{x:Static model:EngineType.waifu2x}" />
-                        <RadioButton Content="Real-ESRGAN"
+                        <RadioButton Content="real-esrgan"
                                      GroupName="EngineGroup"
                                      IsChecked="{Binding IsRealESRGAN, Mode=TwoWay}" FontSize="11"
                                      Command="{Binding ChangeEngineCommand}"
@@ -620,8 +620,4 @@
                 FontSize="16" />
         </Grid>
     </Grid>
-    <suki:SukiWindow.Hosts>
-        <suki:SukiToastHost Manager="{Binding ToastManager}" />
-        <suki:SukiDialogHost Manager="{Binding DialogManager}" />
-    </suki:SukiWindow.Hosts>
 </suki:SukiWindow>

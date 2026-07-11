@@ -13,7 +13,11 @@ public class UpdateVisitor : IVisitor
     /// <inheritdoc />
     public void VisitComputer(IComputer computer)
     {
-        computer.Traverse(this);
+        foreach (var item in computer.Hardware)
+        {
+            item.Update();
+            item.Accept(this);
+        }
     }
 
     /// <inheritdoc />
@@ -22,6 +26,7 @@ public class UpdateVisitor : IVisitor
         hardware.Update();
         foreach (var item in hardware.SubHardware)
         {
+            item.Update();
             item.Accept(this);
         }
     }

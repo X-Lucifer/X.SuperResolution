@@ -3,15 +3,17 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
-using Splat;
 using X.SuperResolution.Services;
 using X.SuperResolution.ViewModels;
 using X.SuperResolution.Views;
+using static X.SuperResolution.Services.LocalizationService;
 
 namespace X.SuperResolution;
 
 public partial class App : Application
 {
+    private ServiceProvider _service_provider;
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -19,16 +21,15 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        var services = Locator.Current.GetService<IServiceCollection>();
-        var provider = ConfigureServices(services);
+        _service_provider = ConfigureServices();
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         if (ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
         {
             return;
         }
 
-        var vm = provider.GetRequiredService<MainWindowViewModel>();
-        LocalizationService.ApplyLanguage(vm.CurrentLang);
+        var vm = _service_provider.GetRequiredService<MainWindowViewModel>();
+        ApplyLanguage(vm.CurrentLang);
         desktop.MainWindow = new MainWindow
         {
             DataContext = vm
@@ -36,10 +37,11 @@ public partial class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
-    private static ServiceProvider ConfigureServices(IServiceCollection services)
+    private static ServiceProvider ConfigureServices()
     {
+        var services = new ServiceCollection();
         services.AddSingleton<SettingsService>();
-        services.AddSingleton<MainWindowViewModel>();
+        services.AddSingleton(x => new MainWindowViewModel(x.GetRequiredService<SettingsService>()));
         return services.BuildServiceProvider();
     }
 }
