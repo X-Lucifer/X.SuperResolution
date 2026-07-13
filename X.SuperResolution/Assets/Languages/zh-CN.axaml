@@ -20,6 +20,9 @@
     <system:String x:Key="Processor">处理器:</system:String>
     <system:String x:Key="MemorySize">内存容量:</system:String>
     <system:String x:Key="FileList">任务列表:</system:String>
+    <system:String x:Key="BatchStartTime">开始时间: </system:String>
+    <system:String x:Key="BatchElapsed">任务耗时: </system:String>
+    <system:String x:Key="SubTaskElapsed">耗时: </system:String>
     <system:String x:Key="StartTask">开始任务</system:String>
     <system:String x:Key="PauseTask">暂停任务</system:String>
     <system:String x:Key="ResumeTask">继续任务</system:String>

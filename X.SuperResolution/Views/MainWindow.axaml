@@ -110,7 +110,8 @@
     </suki:SukiWindow.RightWindowTitleBarControls>
     <Grid ColumnDefinitions="6.8*,Auto,3.1*" RowDefinitions="6*,3,3*,3,Auto" Margin="0">
         <Grid Row="0" Grid.Column="0">
-            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="1*,3.5*,Auto,1*,3.5*">
+            <Grid RowDefinitions="*,Auto,Auto">
+                <Grid Grid.Row="0" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="1*,3.5*,Auto,1*,3.5*">
                 <Grid Grid.Row="0" Grid.Column="0">
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource EngineName}" FontSize="11"
                                VerticalAlignment="Center"
@@ -312,6 +313,53 @@
                         </Grid>
                     </Button>
                 </Grid>
+                </Grid>
+                <Grid Grid.Row="1" Height="1">
+                    <Line StartPoint="0,0"
+                          EndPoint="1,0"
+                          Stroke="LightGray"
+                          StrokeThickness="0.5"
+                          StrokeDashArray="4,2"
+                          Stretch="UniformToFill" />
+                </Grid>
+                <Grid Grid.Row="2" ColumnDefinitions="*,*" Margin="16,8,16,10" MinHeight="40">
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Spacing="4">
+                        <TextBlock Text="{DynamicResource BatchStartTime}"
+                                   Width="86"
+                                   FontSize="11"
+                                   Foreground="{DynamicResource SukiLowText}"
+                                   TextAlignment="Right"
+                                   VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding BatchStartTimeText}"
+                                   Width="132"
+                                   FontSize="12"
+                                   FontWeight="DemiBold"
+                                   Foreground="{DynamicResource SukiHighText}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Spacing="4">
+                        <TextBlock Text="{DynamicResource BatchElapsed}"
+                                   Width="86"
+                                   FontSize="11"
+                                   Foreground="{DynamicResource SukiLowText}"
+                                   TextAlignment="Right"
+                                   VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding BatchElapsedText}"
+                                   Width="72"
+                                   FontSize="12"
+                                   FontWeight="DemiBold"
+                                   Foreground="{DynamicResource SukiHighText}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Grid>
         <Grid Grid.Row="0" Grid.Column="2">
@@ -428,25 +476,42 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <suki:GlassCard Width="390"
-                                                Height="130"
+                                                Height="145"
                                                 Margin="8" HorizontalContentAlignment="Stretch">
                                     <Grid>
                                         <Grid ColumnDefinitions="*,Auto">
                                             <!-- 左侧文件信息 -->
                                             <StackPanel Grid.Column="0"
                                                         HorizontalAlignment="Left"
-                                                        VerticalAlignment="Center" Margin="8,0,0,0">
+                                                        VerticalAlignment="Center" Margin="0">
                                                 <TextBlock FontSize="14"
                                                            FontWeight="DemiBold"
                                                            Text="{Binding Name}"
+                                                           TextAlignment="Left"
+                                                           HorizontalAlignment="Left"
                                                            TextTrimming="PrefixCharacterEllipsis" MaxWidth="280"
                                                            Foreground="{DynamicResource SukiHighText}" />
 
-                                                <TextBlock Margin="5,5,0,0"
+                                                <TextBlock Margin="0,5,0,0"
                                                            FontSize="11"
                                                            Foreground="{DynamicResource SukiLowText}"
+                                                           TextAlignment="Left"
+                                                           HorizontalAlignment="Left"
                                                            TextTrimming="PrefixCharacterEllipsis" MaxWidth="280"
                                                            Text="{Binding Path}" />
+
+                                                <StackPanel Orientation="Horizontal"
+                                                            Margin="0,6,0,0"
+                                                            Spacing="4"
+                                                            HorizontalAlignment="Left">
+                                                    <TextBlock Text="{DynamicResource SubTaskElapsed}"
+                                                               FontSize="11"
+                                                               Foreground="{DynamicResource SukiLowText}" />
+                                                    <TextBlock Text="{Binding ElapsedText}"
+                                                               FontSize="11"
+                                                               FontWeight="DemiBold"
+                                                               Foreground="{DynamicResource SukiHighText}" />
+                                                </StackPanel>
                                             </StackPanel>
 
                                             <!-- 右侧区域（进度条 + 状态文字） -->

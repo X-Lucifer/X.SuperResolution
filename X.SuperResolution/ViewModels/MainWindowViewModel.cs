@@ -25,9 +25,12 @@ public partial class MainWindowViewModel : ViewModelBase
     private long _last_progress_tick;
     private NcnnTaskState? _last_native_state;
     private readonly SettingsService _settingsService;
+    private readonly DispatcherTimer _processing_timer;
 
     private CancellationTokenSource _current_task_cts;
     private bool _stop_requested;
+    private DateTime? _batch_start_time;
+    private DateTime? _batch_finish_time;
 
     sealed private class ProcessingSettings
     {
@@ -55,6 +58,11 @@ public partial class MainWindowViewModel : ViewModelBase
         _settingsService = settings_service;
         CurrentLang = _settingsService.Current.Language;
         OutputDirectory = _settingsService.Current.OutputDirectory;
+        _processing_timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(1)
+        };
+        _processing_timer.Tick += OnProcessingTimerTick;
     }
 
     /// <summary>
@@ -252,6 +260,16 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty] private string logText = string.Empty;
 
     /// <summary>
+    /// 当前批次点击开始任务时的时间
+    /// </summary>
+    [ObservableProperty] private string batchStartTimeText = "--";
+
+    /// <summary>
+    /// 当前批次全部子任务累计耗时
+    /// </summary>
+    [ObservableProperty] private string batchElapsedText = "00:00:00";
+
+    /// <summary>
     /// 是否正在处理任务
     /// </summary>
     [ObservableProperty] private bool isProcessing;
@@ -405,6 +423,12 @@ public partial class MainWindowViewModel : ViewModelBase
             return;
         }
 
+        foreach (var task in pending_tasks)
+        {
+            task.ResetTiming();
+        }
+
+        StartBatchTiming(DateTime.Now);
         IsProcessing = true;
         _stop_requested = false;
         _current_task_cts = CancellationTokenSource.CreateLinkedTokenSource(token);
@@ -423,6 +447,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
                 task.Status = "处理中...";
                 task.Progress = 0;
+                task.StartTiming(DateTime.Now);
                 _current_processing_task = task;
                 _last_native_state = null;
                 NotifyTaskControlStateChanged();
@@ -465,6 +490,7 @@ public partial class MainWindowViewModel : ViewModelBase
                 }
                 finally
                 {
+                    task.StopTiming(DateTime.Now);
                     _current_processing_task = null;
                     _current_native_task = null;
                     NotifyTaskControlStateChanged();
@@ -483,6 +509,7 @@ public partial class MainWindowViewModel : ViewModelBase
             _current_task_cts = null;
 
             if (_stop_requested) MarkUnfinishedTasksStopped();
+            StopBatchTiming(DateTime.Now);
             IsProcessing = false;
             NotifyTaskControlStateChanged();
             AppendLog("----- 处理结束 -----");
@@ -525,6 +552,7 @@ public partial class MainWindowViewModel : ViewModelBase
         if (!CanClearTask) return;
 
         TaskList.Clear();
+        ResetBatchTiming();
         AppendLog("已清空任务列表");
         NotifyTaskControlStateChanged();
     }
@@ -707,6 +735,49 @@ public partial class MainWindowViewModel : ViewModelBase
         return _processor ??= new NcnnImageProcessor();
     }
 
+    private void StartBatchTiming(DateTime start_time)
+    {
+        _batch_start_time = start_time;
+        _batch_finish_time = null;
+        BatchStartTimeText = start_time.ToString("yyyy-MM-dd HH:mm:ss");
+        BatchElapsedText = FormatElapsed(TimeSpan.Zero);
+        _processing_timer.Start();
+    }
+
+    private void StopBatchTiming(DateTime finish_time)
+    {
+        if (_batch_start_time == null) return;
+
+        _batch_finish_time = finish_time;
+        UpdateTimingDisplays(finish_time);
+        _processing_timer.Stop();
+    }
+
+    private void ResetBatchTiming()
+    {
+        _processing_timer.Stop();
+        _batch_start_time = null;
+        _batch_finish_time = null;
+        BatchStartTimeText = "--";
+        BatchElapsedText = FormatElapsed(TimeSpan.Zero);
+    }
+
+    private void OnProcessingTimerTick(object sender, EventArgs e)
+    {
+        UpdateTimingDisplays(DateTime.Now);
+    }
+
+    private void UpdateTimingDisplays(DateTime now)
+    {
+        if (_batch_start_time != null)
+        {
+            var end_time = _batch_finish_time ?? now;
+            BatchElapsedText = FormatElapsed(end_time - _batch_start_time.Value);
+        }
+
+        _current_processing_task?.UpdateElapsed(now);
+    }
+
     private void OnNativeProgress(object sender, NcnnProgressChangedEventArgs e)
     {
         var now = Environment.TickCount64;
@@ -789,6 +860,14 @@ public partial class MainWindowViewModel : ViewModelBase
     private static int ParseInt(string value, int fallback)
     {
         return int.TryParse(value, out var result) ? result : fallback;
+    }
+
+    private static string FormatElapsed(TimeSpan elapsed)
+    {
+        if (elapsed < TimeSpan.Zero)
+            elapsed = TimeSpan.Zero;
+
+        return $"{(int)elapsed.TotalHours:00}:{elapsed.Minutes:00}:{elapsed.Seconds:00}";
     }
 
     private static bool IsTaskCompleted(TaskItem task)

@@ -20,6 +20,9 @@
     <system:String x:Key="CpuCore">CPU Cores:</system:String>
     <system:String x:Key="Processor">Processor:</system:String>
     <system:String x:Key="FileList">Task List:</system:String>
+    <system:String x:Key="BatchStartTime">Start: </system:String>
+    <system:String x:Key="BatchElapsed">Duration: </system:String>
+    <system:String x:Key="SubTaskElapsed">Duration: </system:String>
     <system:String x:Key="StartTask">Start Tasks</system:String>
     <system:String x:Key="PauseTask">Pause Task</system:String>
     <system:String x:Key="ResumeTask">Resume Task</system:String>
