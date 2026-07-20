@@ -335,7 +335,7 @@
                                    TextAlignment="Right"
                                    VerticalAlignment="Center" />
                         <TextBlock Text="{Binding BatchStartTimeText}"
-                                   Width="132"
+                                   Width="140"
                                    FontSize="12"
                                    FontWeight="DemiBold"
                                    Foreground="{DynamicResource SukiHighText}"
