@@ -8,6 +8,7 @@ $ErrorActionPreference = "Stop"
 $ScriptRoot = $PSScriptRoot
 $RepoRoot = (Resolve-Path -LiteralPath (Join-Path $ScriptRoot "..")).Path
 $ProjectPath = Join-Path $RepoRoot "X.SuperResolution\X.SuperResolution.csproj"
+$VcompResolver = Join-Path $ScriptRoot "Resolve-Vcomp140.ps1"
 $PublishDir = Join-Path $RepoRoot "X.SuperResolution\bin\$Configuration\win-x64\publish"
 $PackageDir = Join-Path $RepoRoot "artifacts\packages"
 $ArchivePath = Join-Path $PackageDir "X.SuperResolution-win-x64-thin.7z"
@@ -43,6 +44,7 @@ function Invoke-Checked {
 
 $DotNet = Require-Command "dotnet"
 $SevenZip = Require-Command "7z"
+$VcompPath = & $VcompResolver
 
 if (-not (Test-Path -LiteralPath $ProjectPath)) {
     throw "Project file not found: $ProjectPath"
@@ -70,6 +72,9 @@ Invoke-Checked $DotNet @(
     "/p:DebugSymbols=false",
     "/p:AvaloniaBuildServicesEnabled=false"
 )
+
+Write-Host "Adding Microsoft Visual C++ OpenMP runtime..."
+Copy-Item -LiteralPath $VcompPath -Destination (Join-Path $PublishDir "vcomp140.dll") -Force
 
 Write-Host "Removing model folders from thin publish output..."
 Get-ChildItem -LiteralPath $PublishDir -Directory |

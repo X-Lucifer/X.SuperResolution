@@ -5,17 +5,22 @@ This folder contains the NSIS installer script for packaging the published
 
 ## Prerequisites
 
-- .NET 8 SDK
+- .NET 10 SDK
+- Visual Studio Desktop development with C++ workload (provides the redistributable x64 `vcomp140.dll`)
 - NSIS installed and `makensis.exe` available in `PATH`
-- A Windows `win-x64` publish output
 
 ## Build Publish Output
 
 Run from the repository root:
 
 ```powershell
-dotnet publish X.SuperResolution\X.SuperResolution.csproj -c Release -r win-x64 --self-contained true
+.\scripts\publish-win-x64-full.ps1
 ```
+
+The publish script copies the redistributable Microsoft Visual C++ OpenMP
+runtime into the package. Do not replace it with a plain `dotnet publish`
+command, or the target computer may report that the native engine DLL was not
+found even though the engine DLL itself is present.
 
 The installer script reads files from this default publish directory:
 

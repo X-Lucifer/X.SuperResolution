@@ -17,7 +17,7 @@ public sealed class NcnnImageProcessor : IDisposable
 
     public static string GetVersion()
     {
-        SetDllDirectory(AppContext.BaseDirectory);
+        PrepareNativeDependencies();
         var pointer = NcnnImageProc_GetVersion();
         return pointer == IntPtr.Zero ? "unknown" : Marshal.PtrToStringUTF8(pointer) ?? "unknown";
     }
@@ -58,10 +58,21 @@ public sealed class NcnnImageProcessor : IDisposable
         {
             if (_reference_count == 0)
             {
-                SetDllDirectory(AppContext.BaseDirectory);
-                var result = NcnnImageProc_Init();
+                PrepareNativeDependencies();
+
+                int result;
+                try
+                {
+                    result = NcnnImageProc_Init();
+                }
+                catch (DllNotFoundException exception)
+                {
+                    throw new DllNotFoundException("缺少DLL运行库, 请使用完整安装包, 并安装最新的显卡驱动（需要 Vulkan 支持）", exception);
+                }
                 if (result != 0)
+                {
                     throw new InvalidOperationException($"NcnnImageProc_Init failed with code {result}");
+                }
             }
 
             _reference_count++;
@@ -375,6 +386,9 @@ internal delegate void NcnnProgressCallback(ref NcnnProgressInfoNative info, Int
 internal static partial class NcnnImageProcNative
 {
     private const string DllName = "lucifer_ncnn_vulkan";
+    private const string OpenMpRuntimeName = "vcomp140.dll";
+    private const string VulkanLoaderName = "vulkan-1.dll";
+
     [DllImport("kernel32", EntryPoint = "SetDllDirectoryW", SetLastError = true, CharSet = CharSet.Unicode)]
     private static extern bool SetDllDirectoryW(string path_name);
 
@@ -385,6 +399,40 @@ internal static partial class NcnnImageProcNative
 
         if (!SetDllDirectoryW(directory))
             throw new InvalidOperationException($"SetDllDirectoryW failed with Win32 error {Marshal.GetLastWin32Error()}");
+    }
+
+    public static void PrepareNativeDependencies()
+    {
+        if (!OperatingSystem.IsWindows())
+            throw new PlatformNotSupportedException("NCNN Vulkan 引擎当前只支持 Windows x64。");
+
+        if (RuntimeInformation.ProcessArchitecture != Architecture.X64)
+        {
+            throw new PlatformNotSupportedException(
+                $"NCNN Vulkan 引擎只支持 x64，当前进程架构为 {RuntimeInformation.ProcessArchitecture}。请使用 win-x64 发布包。");
+        }
+
+        SetDllDirectory(AppContext.BaseDirectory);
+
+        EnsureLoadable(
+            OpenMpRuntimeName,
+            "发布包缺少 Microsoft Visual C++ 运行库 , 请从 https://www.techpowerup.com/download/visual-c-redistributable-runtime-package-all-in-one/ 下载最新运行库");
+        EnsureLoadable(
+            VulkanLoaderName,
+            "系统缺少 Vulkan Loader (vulkan-1.dll)。请从显卡厂商官网下载并安装支持 Vulkan 的最新显卡驱动。");
+    }
+
+    private static void EnsureLoadable(string library_name, string error_message)
+    {
+        var app_local_path = Path.Combine(AppContext.BaseDirectory, library_name);
+        var loaded = File.Exists(app_local_path)
+            ? NativeLibrary.TryLoad(app_local_path, out var handle)
+            : NativeLibrary.TryLoad(library_name, out handle);
+
+        if (!loaded)
+            throw new DllNotFoundException(error_message);
+
+        NativeLibrary.Free(handle);
     }
 
     [DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]

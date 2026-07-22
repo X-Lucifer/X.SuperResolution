@@ -7,12 +7,14 @@
 > 不得将该程序用于任何商业及违法用途
 
 ## 注意事项:
+- 目标电脑需要安装支持 Vulkan 的 x64 显卡驱动；如果提示缺少 `vulkan-1.dll`，请从显卡厂商官网下载并更新驱动。
 - 模型文件需要和当前exe文件在同一个目录下, 且`不可更改`模型文件夹名称, 文件夹结构及模型说明参照: [FOLDER_STRUCTURE.md](https://github.com/X-Lucifer/X.SuperResolution/blob/main/FOLDER_STRUCTURE.md)
 - 软件处理完成的图片文件, 会在当前目录自动创建一个`output`文件夹, 所有输出的图片都放置在该目录
 
 ```
 X.SuperResolution/
 ├── X.SuperResolution.exe          			    # 主程序可执行文件
+├── vcomp140.dll                   			    # Microsoft Visual C++ OpenMP 运行库
 ├── models/                        			    # Real-ESRGAN 模型
 ├── models-cunet/                  			    # CUNet 模型（waifu2x 经典架构）
 ├── models-srmd/                   			    # SRMD 模型（超分辨率+噪声处理）
