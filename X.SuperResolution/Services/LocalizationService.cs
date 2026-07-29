@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Markup.Xaml.Styling;
-using SukiUI;
 
 namespace X.SuperResolution.Services;
 
@@ -19,6 +18,5 @@ public static class LocalizationService
         {
             Source = uri
         };
-        SukiTheme.GetInstance().Locale = language;
     }
 }

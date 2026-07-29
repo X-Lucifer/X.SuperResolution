@@ -1,0 +1,43 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- X SuperResolution: neutral graphite workspace + clear sky-blue actions. -->
+    <FontFamily x:Key="AppFontFamily">Segoe UI Variable Text, Microsoft YaHei UI</FontFamily>
+    <FontFamily x:Key="DataFontFamily">avares://X.SuperResolution/Assets/JetBrainsMono.ttf#JetBrains Mono NL</FontFamily>
+
+    <Color x:Key="AppBackgroundColor">#181A1D</Color>
+    <Color x:Key="TitleBarColor">#1C1F23</Color>
+    <Color x:Key="SurfaceColor">#22262B</Color>
+    <Color x:Key="ElevatedSurfaceColor">#2A2F35</Color>
+    <Color x:Key="SubtleSurfaceColor">#1E2227</Color>
+    <Color x:Key="BorderColor">#383F47</Color>
+    <Color x:Key="BorderStrongColor">#4B5560</Color>
+    <Color x:Key="PrimaryColor">#68AFFF</Color>
+    <Color x:Key="PrimaryHoverColor">#86BFFF</Color>
+    <Color x:Key="AccentColor">#55D6C2</Color>
+    <Color x:Key="TextPrimaryColor">#F7F9FB</Color>
+    <Color x:Key="TextSecondaryColor">#B4BEC9</Color>
+    <Color x:Key="TextTertiaryColor">#7F8A96</Color>
+    <Color x:Key="DangerColor">#FF6F7D</Color>
+    <Color x:Key="WarningColor">#F2C96B</Color>
+    <Color x:Key="SuccessColor">#49D6A4</Color>
+
+    <SolidColorBrush x:Key="AppBackgroundBrush" Color="{StaticResource AppBackgroundColor}" />
+    <SolidColorBrush x:Key="TitleBarBrush" Color="{StaticResource TitleBarColor}" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}" />
+    <SolidColorBrush x:Key="ElevatedSurfaceBrush" Color="{StaticResource ElevatedSurfaceColor}" />
+    <SolidColorBrush x:Key="SubtleSurfaceBrush" Color="{StaticResource SubtleSurfaceColor}" />
+    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
+    <SolidColorBrush x:Key="BorderStrongBrush" Color="{StaticResource BorderStrongColor}" />
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="{StaticResource PrimaryHoverColor}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}" />
+    <SolidColorBrush x:Key="TextTertiaryBrush" Color="{StaticResource TextTertiaryColor}" />
+    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
+    <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}" />
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
+    <SolidColorBrush x:Key="PrimaryTintBrush" Color="#2968AFFF" />
+    <SolidColorBrush x:Key="AccentTintBrush" Color="#2455D6C2" />
+    <SolidColorBrush x:Key="DangerTintBrush" Color="#24FF6F7D" />
+</ResourceDictionary>

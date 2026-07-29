@@ -1,7 +1,9 @@
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
 using LibreHardwareMonitor.Hardware;
 using LibreHardwareMonitor.Hardware.Gpu;
-using SukiUI.Controls;
 using X.SuperResolution.Services;
 using X.SuperResolution.ViewModels;
 using static X.SuperResolution.Services.LocalizationService;
@@ -10,7 +12,7 @@ using static X.SuperResolution.Services.LocalizationService;
 
 namespace X.SuperResolution.Views;
 
-public partial class MainWindow : SukiWindow
+public partial class MainWindow : Window
 {
     /// <summary>
     /// GPU列表
@@ -44,7 +46,6 @@ public partial class MainWindow : SukiWindow
 
     public MainWindow()
     {
-        InitializeComponent();
         UserName = Environment.UserName;
         CpuCore = Environment.ProcessorCount;
 
@@ -53,6 +54,7 @@ public partial class MainWindow : SukiWindow
         SysInfo = result.SysInfo;
         CpuInfo = result.CpuInfo;
         MemorySize = result.MemorySize;
+        InitializeComponent();
     }
 
     private static HardwareInfo DetectHardware()
@@ -122,8 +124,45 @@ public partial class MainWindow : SukiWindow
         }
     }
 
-    private void InfoTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+    private void TitleBar_OnPointerPressed(object sender, PointerPressedEventArgs e)
     {
-        InfoTextBox.CaretIndex = InfoTextBox.Text?.Length ?? 0;
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+        {
+            return;
+        }
+
+        if (e.ClickCount == 2)
+        {
+            ToggleMaximizedState();
+            return;
+        }
+
+        BeginMoveDrag(e);
+    }
+
+    private void MinimizeButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        WindowState = WindowState.Minimized;
+    }
+
+    private void MaximizeButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        ToggleMaximizedState();
+    }
+
+    private void CloseButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        Close();
+    }
+
+    private void ToggleMaximizedState()
+    {
+        WindowState = WindowState == WindowState.Maximized
+            ? WindowState.Normal
+            : WindowState.Maximized;
+
+        var is_maximized = WindowState == WindowState.Maximized;
+        MaximizeIcon.IsVisible = !is_maximized;
+        RestoreIcon.IsVisible = is_maximized;
     }
 }

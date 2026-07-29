@@ -1,0 +1,216 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:X.SuperResolution.ViewModels"
+             xmlns:model="using:X.SuperResolution.Model"
+             x:Class="X.SuperResolution.Controls.TaskWorkspace"
+             x:DataType="vm:MainWindowViewModel">
+    <Border Classes="Card">
+        <Grid RowDefinitions="Auto,1,*,1,Auto">
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="18,16">
+                <StackPanel Spacing="4">
+                    <TextBlock Classes="Eyebrow" Text="{DynamicResource WorkspaceQueue}" />
+                    <StackPanel Orientation="Horizontal" Spacing="9">
+                        <TextBlock Classes="SectionTitle" Text="{DynamicResource FileList}" />
+                        <Border Padding="8,2"
+                                CornerRadius="4"
+                                Background="{DynamicResource ElevatedSurfaceBrush}"
+                                VerticalAlignment="Center">
+                            <TextBlock Text="{Binding TaskList.Count}"
+                                       Classes="Data"
+                                       FontSize="10"
+                                       Foreground="{DynamicResource TextSecondaryBrush}" />
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Classes="PrimaryAction HeaderAction"
+                        Command="{Binding SelectFileCommand}"
+                        VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="＋" FontSize="17" VerticalAlignment="Center" />
+                        <TextBlock Text="{DynamicResource OpenFile}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            <Border Grid.Row="1" Background="{DynamicResource BorderBrush}" />
+
+            <Grid Grid.Row="2">
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Spacing="10"
+                            IsHitTestVisible="False"
+                            Opacity="0.32">
+                    <Border Width="56" Height="56"
+                            CornerRadius="6"
+                            BorderBrush="{DynamicResource BorderStrongBrush}"
+                            BorderThickness="1">
+                        <TextBlock Text="IMG"
+                                   Classes="Data"
+                                   FontSize="11"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" />
+                    </Border>
+                    <TextBlock Text="{DynamicResource QueueHint}"
+                               Classes="Muted"
+                               HorizontalAlignment="Center" />
+                </StackPanel>
+
+                <ScrollViewer Margin="14,12"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalContentAlignment="Stretch">
+                    <ItemsControl ItemsSource="{Binding TaskList}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="8" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="model:TaskItem">
+                                <Border Classes="TaskItem" Padding="13,11">
+                                    <Grid ColumnDefinitions="42,*,118,34" ColumnSpacing="13">
+                                        <Border Width="40" Height="40"
+                                                CornerRadius="5"
+                                                Background="{DynamicResource PrimaryTintBrush}"
+                                                VerticalAlignment="Center">
+                                            <TextBlock Text="IMG"
+                                                       Classes="Data"
+                                                       FontSize="9"
+                                                       FontWeight="Bold"
+                                                       Foreground="{DynamicResource PrimaryHoverBrush}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" />
+                                        </Border>
+
+                                        <StackPanel Grid.Column="1"
+                                                    Spacing="4"
+                                                    VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Name}"
+                                                       FontSize="13"
+                                                       FontWeight="SemiBold"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       ToolTip.Tip="{Binding Name}" />
+                                            <TextBlock Text="{Binding Path}"
+                                                       Classes="Tertiary Data"
+                                                       FontSize="9"
+                                                       TextTrimming="PrefixCharacterEllipsis"
+                                                       ToolTip.Tip="{Binding Path}" />
+                                            <ProgressBar Classes="TaskProgress"
+                                                         Minimum="0"
+                                                         Maximum="100"
+                                                         Value="{Binding Progress}" />
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="2"
+                                                    Spacing="4"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Center">
+                                            <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Right"
+                                                        Spacing="5">
+                                                <TextBlock Text="{Binding Progress}"
+                                                           Classes="Data"
+                                                           FontSize="12"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource PrimaryHoverBrush}" />
+                                                <TextBlock Text="%"
+                                                           FontSize="10"
+                                                           Foreground="{DynamicResource TextTertiaryBrush}" />
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding Status}"
+                                                       FontSize="11"
+                                                       HorizontalAlignment="Right"
+                                                       Foreground="{DynamicResource TextSecondaryBrush}">
+                                                <TextBlock.Styles>
+                                                    <Style Selector="TextBlock[Text=完成]">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SuccessBrush}" />
+                                                    </Style>
+                                                    <Style Selector="TextBlock[Text=已完成]">
+                                                        <Setter Property="Foreground" Value="{DynamicResource SuccessBrush}" />
+                                                    </Style>
+                                                    <Style Selector="TextBlock[Text=失败]">
+                                                        <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+                                                    </Style>
+                                                    <Style Selector="TextBlock[Text=已取消]">
+                                                        <Setter Property="Foreground" Value="{DynamicResource WarningBrush}" />
+                                                    </Style>
+                                                    <Style Selector="TextBlock[Text=已停止]">
+                                                        <Setter Property="Foreground" Value="{DynamicResource WarningBrush}" />
+                                                    </Style>
+                                                    <Style Selector="TextBlock[Text=已暂停]">
+                                                        <Setter Property="Foreground" Value="{DynamicResource WarningBrush}" />
+                                                    </Style>
+                                                </TextBlock.Styles>
+                                            </TextBlock>
+                                            <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Right"
+                                                        Spacing="4">
+                                                <TextBlock Text="{DynamicResource SubTaskElapsed}"
+                                                           Classes="Tertiary"
+                                                           FontSize="9" />
+                                                <TextBlock Text="{Binding ElapsedText}"
+                                                           Classes="Data Muted"
+                                                           FontSize="9" />
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <Button Grid.Column="3"
+                                                Classes="IconAction GhostAction"
+                                                Content="×"
+                                                FontSize="17"
+                                                Foreground="{DynamicResource TextTertiaryBrush}"
+                                                ToolTip.Tip="{DynamicResource RemoveTask}"
+                                                Command="{Binding DataContext.RemoveTaskCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}"
+                                                x:CompileBindings="False" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+
+            <Border Grid.Row="3" Background="{DynamicResource BorderBrush}" />
+
+            <Grid Grid.Row="4"
+                  RowDefinitions="Auto,10,Auto"
+                  Margin="16,12">
+                <StackPanel Orientation="Horizontal"
+                            Spacing="7"
+                            VerticalAlignment="Center">
+                    <Border Width="7" Height="7"
+                            CornerRadius="4"
+                            Background="{DynamicResource AccentBrush}" />
+                    <TextBlock Text="{DynamicResource FileFormat}"
+                               Classes="Muted"
+                               FontSize="10" />
+                    <TextBlock Text="·" Classes="Tertiary" />
+                    <TextBlock Text="{DynamicResource FileSizeLimit}"
+                               Classes="Muted"
+                               FontSize="10" />
+                </StackPanel>
+
+                <UniformGrid Grid.Row="2"
+                             Columns="3"
+                             Rows="1"
+                             ColumnSpacing="8">
+                    <Button Classes="GhostAction ActionButton"
+                            Content="{DynamicResource ClearTask}"
+                            Command="{Binding ClearTaskCommand}"
+                            IsEnabled="{Binding CanClearTask}" />
+                    <Button Classes="DangerAction ActionButton"
+                            Content="{DynamicResource StopTask}"
+                            Command="{Binding CancelTaskCommand}"
+                            IsEnabled="{Binding CanCancelTask}" />
+                    <Button Classes="PrimaryAction ActionButton"
+                            Content="{DynamicResource StartTask}"
+                            Command="{Binding StartTaskCommand}"
+                            IsEnabled="{Binding CanStartTask}" />
+                </UniformGrid>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

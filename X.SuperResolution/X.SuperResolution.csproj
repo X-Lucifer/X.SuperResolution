@@ -31,13 +31,13 @@
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="12.1.0" />
         <PackageReference Include="Avalonia.Desktop" Version="12.1.0" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.0" />
         <PackageReference Include="DiskInfoToolkit" Version="2.1.2" />
         <PackageReference Include="HarfBuzzSharp" Version="14.2.1.1" />
         <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
         <PackageReference Include="SkiaSharp" Version="4.150.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
-        <PackageReference Include="SukiUI" Version="7.0.1"/>
         <PackageReference Include="Tmds.DBus.Protocol" Version="0.94.2"/>
     </ItemGroup>
     <ItemGroup>

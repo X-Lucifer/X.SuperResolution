@@ -1,0 +1,193 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:X.SuperResolution.ViewModels"
+             xmlns:views="using:X.SuperResolution.Views"
+             x:Class="X.SuperResolution.Controls.ActivityPanel"
+             x:DataType="vm:MainWindowViewModel">
+    <UserControl.Styles>
+        <Style Selector="TextBlock.SystemLabel">
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="TextAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,14,0" />
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="12">
+        <Border Grid.Row="0" Classes="Card" Padding="18">
+            <Grid RowDefinitions="Auto,18,Auto">
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                    <StackPanel Spacing="4">
+                        <TextBlock Classes="Eyebrow" Text="{DynamicResource RunMonitor}" />
+                        <TextBlock Classes="SectionTitle" Text="{DynamicResource BatchStatus}" />
+                    </StackPanel>
+                    <Border Grid.Column="1"
+                            Padding="9,5"
+                            CornerRadius="4"
+                            Background="{DynamicResource AccentTintBrush}"
+                            VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Border Width="6" Height="6"
+                                    CornerRadius="3"
+                                    Background="{DynamicResource AccentBrush}"
+                                    VerticalAlignment="Center" />
+                            <TextBlock Text="VULKAN"
+                                       Classes="Data"
+                                       FontSize="9"
+                                       Foreground="{DynamicResource AccentBrush}" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="2" ColumnDefinitions="*,1,*">
+                    <StackPanel Grid.Column="0" Spacing="6">
+                        <TextBlock Text="{DynamicResource BatchElapsed}"
+                                   Classes="FieldLabel" />
+                        <TextBlock Text="{Binding BatchElapsedText}"
+                                   Classes="Data"
+                                   FontSize="25"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                    </StackPanel>
+                    <Border Grid.Column="1"
+                            Background="{DynamicResource BorderBrush}"
+                            Margin="13,0" />
+                    <StackPanel Grid.Column="2"
+                                Spacing="6"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="{DynamicResource BatchStartTime}"
+                                   Classes="FieldLabel" />
+                        <TextBlock Text="{Binding BatchStartTimeText}"
+                                   Classes="Data"
+                                   FontSize="10"
+                                   TextWrapping="Wrap"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Classes="Card" Padding="18">
+            <Grid RowDefinitions="Auto,15,Auto">
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                    <StackPanel Spacing="4">
+                        <TextBlock Classes="Eyebrow" Text="{DynamicResource DeviceProfile}" />
+                        <TextBlock Classes="SectionTitle" Text="{DynamicResource SystemInfo}" />
+                    </StackPanel>
+                    <Border Grid.Column="1"
+                            Width="32"
+                            Height="32"
+                            CornerRadius="4"
+                            Background="{DynamicResource ElevatedSurfaceBrush}"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="HW"
+                                   Classes="Data"
+                                   FontSize="9"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" />
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="2"
+                      ColumnDefinitions="88,*"
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                      RowSpacing="8">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource Manufacturer}" />
+                    <SelectableTextBlock Grid.Row="0" Grid.Column="1"
+                                         Text="{Binding SysInfo.ManufacturerName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                         TextTrimming="CharacterEllipsis"
+                                         FontSize="11"
+                                         x:CompileBindings="False" />
+
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               Classes="FieldLabel SystemLabel"
+                               Text="{DynamicResource ProductName}"
+                               VerticalAlignment="Top" />
+                    <SelectableTextBlock Grid.Row="1" Grid.Column="1"
+                                         Text="{Binding SysInfo.ProductName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                         TextWrapping="Wrap"
+                                         ToolTip.Tip="{Binding SysInfo.ProductName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                         VerticalAlignment="Top"
+                                         FontSize="11"
+                                         x:CompileBindings="False" />
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource Processor}" />
+                    <SelectableTextBlock Grid.Row="2" Grid.Column="1"
+                                         Text="{Binding CpuInfo.Version, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                         TextTrimming="CharacterEllipsis"
+                                         ToolTip.Tip="{Binding CpuInfo.Version, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                         FontSize="11"
+                                         x:CompileBindings="False" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource CpuCore}" />
+                    <SelectableTextBlock Grid.Row="3" Grid.Column="1"
+                                         Text="{Binding CpuCore, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                         Classes="Data"
+                                         FontSize="11"
+                                         x:CompileBindings="False" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource MemorySize}" />
+                    <SelectableTextBlock Grid.Row="4" Grid.Column="1"
+                                         Text="{Binding MemorySize, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                         Classes="Data"
+                                         FontSize="11"
+                                         x:CompileBindings="False" />
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource UserName}" />
+                    <SelectableTextBlock Grid.Row="5" Grid.Column="1"
+                                         Text="{Binding UserName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                         FontSize="11"
+                                         x:CompileBindings="False" />
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource SerialNumber}" />
+                    <SelectableTextBlock Grid.Row="6" Grid.Column="1"
+                                         Text="{Binding SysInfo.SerialNumber, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                         Classes="Data"
+                                         TextTrimming="CharacterEllipsis"
+                                         FontSize="10"
+                                         x:CompileBindings="False" />
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="2" Classes="Card" MinHeight="170">
+            <Grid RowDefinitions="Auto,1,*">
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="16,12,8,10">
+                    <StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center">
+                        <Border Width="7" Height="7"
+                                CornerRadius="4"
+                                Background="{DynamicResource PrimaryBrush}" />
+                        <TextBlock Text="{DynamicResource ActivityLog}"
+                                   FontSize="13"
+                                   FontWeight="SemiBold" />
+                    </StackPanel>
+                    <Button Grid.Column="1"
+                            Classes="GhostAction"
+                            Content="{DynamicResource ClearLog}"
+                            MinHeight="30"
+                            Padding="10,4"
+                            FontSize="10"
+                            Command="{Binding ClearLogCommand}" />
+                </Grid>
+                <Border Grid.Row="1" Background="{DynamicResource BorderBrush}" />
+                <TextBox Grid.Row="2"
+                         x:Name="InfoTextBox"
+                         TextChanged="InfoTextBox_OnTextChanged"
+                         Text="{Binding LogText, Mode=OneWay}"
+                         IsReadOnly="True"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         BorderThickness="0"
+                         CornerRadius="0,0,5,5"
+                         Padding="15,12"
+                         FontFamily="{DynamicResource DataFontFamily}"
+                         FontSize="10"
+                         Foreground="{DynamicResource TextSecondaryBrush}"
+                         Background="{DynamicResource SubtleSurfaceBrush}" />
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
