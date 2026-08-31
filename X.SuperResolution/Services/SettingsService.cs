@@ -43,6 +43,20 @@ public sealed class SettingsService
         Save();
     }
 
+    public void SetTheme(string theme)
+    {
+        var normalized_theme = string.Equals(theme, "Dark", StringComparison.OrdinalIgnoreCase)
+            ? "Dark"
+            : "Light";
+        if (Current.Theme == normalized_theme)
+        {
+            return;
+        }
+
+        Current.Theme = normalized_theme;
+        Save();
+    }
+
     public void SetOutputDirectory(string output_directory)
     {
         if (string.IsNullOrWhiteSpace(output_directory) || Current.OutputDirectory == output_directory)

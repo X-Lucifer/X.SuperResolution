@@ -1,76 +1,140 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- Airy, low-saturation palette: mint for action, sky for context, peach for warmth. -->
     <FontFamily x:Key="AppFontFamily">Segoe UI Variable Text, Microsoft YaHei UI</FontFamily>
     <FontFamily x:Key="DataFontFamily">avares://X.SuperResolution/Assets/JetBrainsMono.ttf#JetBrains Mono NL</FontFamily>
 
-    <Color x:Key="AppBackgroundColor">#F4F8FB</Color>
-    <Color x:Key="TitleBarColor">#FBFDFE</Color>
-    <Color x:Key="SurfaceColor">#FFFFFF</Color>
-    <Color x:Key="ElevatedSurfaceColor">#F1F6F8</Color>
-    <Color x:Key="SubtleSurfaceColor">#F8FAFC</Color>
-    <Color x:Key="HoverSurfaceColor">#EDF5F7</Color>
-    <Color x:Key="ComboHoverSurfaceColor">#F0F9F6</Color>
-    <Color x:Key="BorderColor">#E1EBF0</Color>
-    <Color x:Key="BorderStrongColor">#C9DCE4</Color>
+    <ResourceDictionary.ThemeDictionaries>
+        <!-- Daylight studio: airy mint, cool sky and restrained peach. -->
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#F4F8FB" />
+            <SolidColorBrush x:Key="TitleBarBrush" Color="#FBFDFE" />
+            <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="ElevatedSurfaceBrush" Color="#F1F6F8" />
+            <SolidColorBrush x:Key="SubtleSurfaceBrush" Color="#F8FAFC" />
+            <SolidColorBrush x:Key="HoverSurfaceBrush" Color="#EDF5F7" />
+            <SolidColorBrush x:Key="ComboHoverSurfaceBrush" Color="#F0F9F6" />
+            <SolidColorBrush x:Key="PressedSurfaceBrush" Color="#E7F0F3" />
+            <SolidColorBrush x:Key="SelectionSurfaceBrush" Color="#E8F5F1" />
+            <SolidColorBrush x:Key="BorderBrush" Color="#E5EDF1" />
+            <SolidColorBrush x:Key="BorderStrongBrush" Color="#CDDBE2" />
 
-    <Color x:Key="PrimaryColor">#58AF95</Color>
-    <Color x:Key="PrimaryHoverColor">#459B82</Color>
-    <Color x:Key="PrimaryPressedColor">#3D896F</Color>
-    <Color x:Key="PrimaryDisabledColor">#DDEBE6</Color>
-    <Color x:Key="AccentColor">#73A7E8</Color>
-    <Color x:Key="PeachColor">#F19CA6</Color>
-    <Color x:Key="TextPrimaryColor">#304557</Color>
-    <Color x:Key="TextSecondaryColor">#6C8090</Color>
-    <Color x:Key="TextTertiaryColor">#96A7B3</Color>
-    <Color x:Key="DangerColor">#D06D79</Color>
-    <Color x:Key="WarningColor">#C58B47</Color>
-    <Color x:Key="SuccessColor">#4FA58B</Color>
-    <Color x:Key="PressedSurfaceColor">#E7F0F3</Color>
-    <Color x:Key="SelectionSurfaceColor">#E8F5F1</Color>
-    <Color x:Key="DangerSurfaceColor">#FFF4F5</Color>
-    <Color x:Key="DangerPressedSurfaceColor">#F8E7EA</Color>
+            <SolidColorBrush x:Key="PrimaryBrush" Color="#58AF95" />
+            <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#459B82" />
+            <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#3D896F" />
+            <SolidColorBrush x:Key="PrimaryDisabledBrush" Color="#DDEBE6" />
+            <SolidColorBrush x:Key="PrimaryContentBrush" Color="#14372D" />
+            <SolidColorBrush x:Key="AccentBrush" Color="#73A7E8" />
+            <SolidColorBrush x:Key="PeachBrush" Color="#F19CA6" />
 
-    <SolidColorBrush x:Key="AppBackgroundBrush" Color="{StaticResource AppBackgroundColor}" />
-    <SolidColorBrush x:Key="TitleBarBrush" Color="{StaticResource TitleBarColor}" />
-    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}" />
-    <SolidColorBrush x:Key="ElevatedSurfaceBrush" Color="{StaticResource ElevatedSurfaceColor}" />
-    <SolidColorBrush x:Key="SubtleSurfaceBrush" Color="{StaticResource SubtleSurfaceColor}" />
-    <SolidColorBrush x:Key="HoverSurfaceBrush" Color="{StaticResource HoverSurfaceColor}" />
-    <SolidColorBrush x:Key="ComboHoverSurfaceBrush" Color="{StaticResource ComboHoverSurfaceColor}" />
-    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
-    <SolidColorBrush x:Key="BorderStrongBrush" Color="{StaticResource BorderStrongColor}" />
-    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
-    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="{StaticResource PrimaryHoverColor}" />
-    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="{StaticResource PrimaryPressedColor}" />
-    <SolidColorBrush x:Key="PrimaryDisabledBrush" Color="{StaticResource PrimaryDisabledColor}" />
-    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
-    <SolidColorBrush x:Key="PeachBrush" Color="{StaticResource PeachColor}" />
-    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
-    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}" />
-    <SolidColorBrush x:Key="TextTertiaryBrush" Color="{StaticResource TextTertiaryColor}" />
-    <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
-    <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}" />
-    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
-    <SolidColorBrush x:Key="PressedSurfaceBrush" Color="{StaticResource PressedSurfaceColor}" />
-    <SolidColorBrush x:Key="SelectionSurfaceBrush" Color="{StaticResource SelectionSurfaceColor}" />
-    <SolidColorBrush x:Key="DangerSurfaceBrush" Color="{StaticResource DangerSurfaceColor}" />
-    <SolidColorBrush x:Key="DangerPressedSurfaceBrush" Color="{StaticResource DangerPressedSurfaceColor}" />
-    <!-- Neutralize Fluent's inner ComboBoxItem state layer; the app template paints the single outer surface. -->
-    <SolidColorBrush x:Key="ComboBoxItemBackgroundPointerOver" Color="Transparent" />
-    <SolidColorBrush x:Key="ComboBoxItemBackgroundPressed" Color="Transparent" />
-    <SolidColorBrush x:Key="ComboBoxItemBackgroundSelected" Color="Transparent" />
-    <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPointerOver" Color="Transparent" />
-    <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPressed" Color="Transparent" />
-    <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedDisabled" Color="Transparent" />
-    <SolidColorBrush x:Key="PrimaryTintBrush" Color="#1858AF95" />
-    <SolidColorBrush x:Key="AccentTintBrush" Color="#1973A7E8" />
-    <SolidColorBrush x:Key="PeachTintBrush" Color="#1AF19CA6" />
-    <SolidColorBrush x:Key="DangerTintBrush" Color="#18D06D79" />
+            <SolidColorBrush x:Key="TextPrimaryBrush" Color="#304557" />
+            <SolidColorBrush x:Key="TextSecondaryBrush" Color="#6C8090" />
+            <SolidColorBrush x:Key="TextTertiaryBrush" Color="#96A7B3" />
+            <SolidColorBrush x:Key="DangerBrush" Color="#D06D79" />
+            <SolidColorBrush x:Key="WarningBrush" Color="#C58B47" />
+            <SolidColorBrush x:Key="SuccessBrush" Color="#4FA58B" />
 
-    <LinearGradientBrush x:Key="HeroGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
-        <GradientStop Offset="0" Color="#EBF9F4" />
-        <GradientStop Offset="0.58" Color="#F3F8FD" />
-        <GradientStop Offset="1" Color="#FFF5F6" />
-    </LinearGradientBrush>
+            <SolidColorBrush x:Key="DangerSurfaceBrush" Color="#FFF4F5" />
+            <SolidColorBrush x:Key="DangerPressedSurfaceBrush" Color="#F8E7EA" />
+            <SolidColorBrush x:Key="DangerBorderBrush" Color="#F0D4D8" />
+            <SolidColorBrush x:Key="DangerBorderHoverBrush" Color="#E9C1C7" />
+            <SolidColorBrush x:Key="DangerBorderPressedBrush" Color="#E4B6BE" />
+            <SolidColorBrush x:Key="WindowCloseHoverBrush" Color="#D9606C" />
+            <SolidColorBrush x:Key="WindowClosePressedBrush" Color="#B84F5B" />
+            <SolidColorBrush x:Key="OnDangerBrush" Color="#FFFFFF" />
+
+            <SolidColorBrush x:Key="PrimaryTintBrush" Color="#1858AF95" />
+            <SolidColorBrush x:Key="AccentTintBrush" Color="#1973A7E8" />
+            <SolidColorBrush x:Key="PeachTintBrush" Color="#1AF19CA6" />
+            <SolidColorBrush x:Key="DangerTintBrush" Color="#18D06D79" />
+            <SolidColorBrush x:Key="SuccessTintBrush" Color="#184FA58B" />
+            <SolidColorBrush x:Key="PeachBorderBrush" Color="#43F19CA6" />
+            <SolidColorBrush x:Key="AccentBorderBrush" Color="#4073A7E8" />
+
+            <SolidColorBrush x:Key="ThemeToggleTrackBrush" Color="#EEF4F6" />
+            <SolidColorBrush x:Key="ThemeToggleTrackHoverBrush" Color="#E7F0F2" />
+            <SolidColorBrush x:Key="ThemeToggleThumbBrush" Color="#FFF2BF" />
+            <SolidColorBrush x:Key="ThemeToggleActiveIconBrush" Color="#A66B25" />
+            <SolidColorBrush x:Key="ThemeToggleInactiveIconBrush" Color="#8EA1AA" />
+
+            <!-- Fluent ComboBoxItem layers are neutralized; the app template owns the state surface. -->
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundPointerOver" Color="Transparent" />
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundPressed" Color="Transparent" />
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundSelected" Color="Transparent" />
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPointerOver" Color="Transparent" />
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPressed" Color="Transparent" />
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedDisabled" Color="Transparent" />
+
+            <LinearGradientBrush x:Key="HeroGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+                <GradientStop Offset="0" Color="#EBF9F4" />
+                <GradientStop Offset="0.58" Color="#F3F8FD" />
+                <GradientStop Offset="1" Color="#FFF5F6" />
+            </LinearGradientBrush>
+        </ResourceDictionary>
+
+        <!-- Night studio: soft midnight blue, misty slate and restrained periwinkle. -->
+        <ResourceDictionary x:Key="Dark">
+            <SolidColorBrush x:Key="AppBackgroundBrush" Color="#11141C" />
+            <SolidColorBrush x:Key="TitleBarBrush" Color="#151923" />
+            <SolidColorBrush x:Key="SurfaceBrush" Color="#1A1F2B" />
+            <SolidColorBrush x:Key="ElevatedSurfaceBrush" Color="#202636" />
+            <SolidColorBrush x:Key="SubtleSurfaceBrush" Color="#181D28" />
+            <SolidColorBrush x:Key="HoverSurfaceBrush" Color="#252C3B" />
+            <SolidColorBrush x:Key="ComboHoverSurfaceBrush" Color="#252D40" />
+            <SolidColorBrush x:Key="PressedSurfaceBrush" Color="#2C3447" />
+            <SolidColorBrush x:Key="SelectionSurfaceBrush" Color="#2B3550" />
+            <SolidColorBrush x:Key="BorderBrush" Color="#29303F" />
+            <SolidColorBrush x:Key="BorderStrongBrush" Color="#394356" />
+
+            <SolidColorBrush x:Key="PrimaryBrush" Color="#91A8F7" />
+            <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#A6B8FF" />
+            <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#7C96EB" />
+            <SolidColorBrush x:Key="PrimaryDisabledBrush" Color="#353E57" />
+            <SolidColorBrush x:Key="PrimaryContentBrush" Color="#151B30" />
+            <SolidColorBrush x:Key="AccentBrush" Color="#7CCCE8" />
+            <SolidColorBrush x:Key="PeachBrush" Color="#F0A7B5" />
+
+            <SolidColorBrush x:Key="TextPrimaryBrush" Color="#EDF0F7" />
+            <SolidColorBrush x:Key="TextSecondaryBrush" Color="#B6BECE" />
+            <SolidColorBrush x:Key="TextTertiaryBrush" Color="#7F899D" />
+            <SolidColorBrush x:Key="DangerBrush" Color="#F18F9F" />
+            <SolidColorBrush x:Key="WarningBrush" Color="#E8B66E" />
+            <SolidColorBrush x:Key="SuccessBrush" Color="#71C7AC" />
+
+            <SolidColorBrush x:Key="DangerSurfaceBrush" Color="#39262F" />
+            <SolidColorBrush x:Key="DangerPressedSurfaceBrush" Color="#4A2D38" />
+            <SolidColorBrush x:Key="DangerBorderBrush" Color="#69414E" />
+            <SolidColorBrush x:Key="DangerBorderHoverBrush" Color="#85515F" />
+            <SolidColorBrush x:Key="DangerBorderPressedBrush" Color="#9A5E6C" />
+            <SolidColorBrush x:Key="WindowCloseHoverBrush" Color="#CA5868" />
+            <SolidColorBrush x:Key="WindowClosePressedBrush" Color="#A94553" />
+            <SolidColorBrush x:Key="OnDangerBrush" Color="#FFFFFF" />
+
+            <SolidColorBrush x:Key="PrimaryTintBrush" Color="#2C91A8F7" />
+            <SolidColorBrush x:Key="AccentTintBrush" Color="#287CCCE8" />
+            <SolidColorBrush x:Key="PeachTintBrush" Color="#26F0A7B5" />
+            <SolidColorBrush x:Key="DangerTintBrush" Color="#2AF18F9F" />
+            <SolidColorBrush x:Key="SuccessTintBrush" Color="#2871C7AC" />
+            <SolidColorBrush x:Key="PeachBorderBrush" Color="#66F0A7B5" />
+            <SolidColorBrush x:Key="AccentBorderBrush" Color="#607CCCE8" />
+
+            <SolidColorBrush x:Key="ThemeToggleTrackBrush" Color="#202638" />
+            <SolidColorBrush x:Key="ThemeToggleTrackHoverBrush" Color="#293149" />
+            <SolidColorBrush x:Key="ThemeToggleThumbBrush" Color="#394B74" />
+            <SolidColorBrush x:Key="ThemeToggleActiveIconBrush" Color="#D3E1FF" />
+            <SolidColorBrush x:Key="ThemeToggleInactiveIconBrush" Color="#7E89A1" />
+
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundPointerOver" Color="Transparent" />
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundPressed" Color="Transparent" />
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundSelected" Color="Transparent" />
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPointerOver" Color="Transparent" />
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPressed" Color="Transparent" />
+            <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedDisabled" Color="Transparent" />
+
+            <LinearGradientBrush x:Key="HeroGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+                <GradientStop Offset="0" Color="#252B48" />
+                <GradientStop Offset="0.58" Color="#1D2B40" />
+                <GradientStop Offset="1" Color="#332633" />
+            </LinearGradientBrush>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

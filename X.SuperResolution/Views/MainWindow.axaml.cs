@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using LibreHardwareMonitor.Hardware;
@@ -55,6 +56,7 @@ public partial class MainWindow : Window
         CpuInfo = result.CpuInfo;
         MemorySize = result.MemorySize;
         InitializeComponent();
+        ThemeToggle.IsChecked = Application.Current?.RequestedThemeVariant == Avalonia.Styling.ThemeVariant.Dark;
     }
 
     private static HardwareInfo DetectHardware()
@@ -121,6 +123,16 @@ public partial class MainWindow : Window
         if (DataContext is MainWindowViewModel vm)
         {
             vm.ChangeLanguage(code);
+        }
+    }
+
+    private void ThemeToggle_OnClick(object sender, RoutedEventArgs e)
+    {
+        var theme = ((ToggleButton)sender).IsChecked == true ? "Dark" : "Light";
+        App.ApplyTheme(theme);
+        if (DataContext is MainWindowViewModel vm)
+        {
+            vm.ChangeTheme(theme);
         }
     }
 

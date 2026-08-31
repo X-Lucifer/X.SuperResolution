@@ -2,6 +2,7 @@ using System.Text;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
 using Microsoft.Extensions.DependencyInjection;
 using X.SuperResolution.Services;
 using X.SuperResolution.ViewModels;
@@ -30,11 +31,24 @@ public partial class App : Application
 
         var vm = _service_provider.GetRequiredService<MainWindowViewModel>();
         ApplyLanguage(vm.CurrentLang);
+        ApplyTheme(vm.CurrentTheme);
         desktop.MainWindow = new MainWindow
         {
             DataContext = vm
         };
         base.OnFrameworkInitializationCompleted();
+    }
+
+    public static void ApplyTheme(string theme)
+    {
+        if (Current is not App app)
+        {
+            return;
+        }
+
+        app.RequestedThemeVariant = string.Equals(theme, "Dark", StringComparison.OrdinalIgnoreCase)
+            ? ThemeVariant.Dark
+            : ThemeVariant.Light;
     }
 
     private static ServiceProvider ConfigureServices()

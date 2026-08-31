@@ -53,6 +53,7 @@
     <system:String x:Key="Maximize">Maximize or restore</system:String>
     <system:String x:Key="PipelineReady">NCNN / Vulkan pipeline ready</system:String>
     <system:String x:Key="Language">Interface language</system:String>
+    <system:String x:Key="ThemeToggleLabel">Switch between light and dark theme</system:String>
     <system:String x:Key="EnhanceTab">Enhance</system:String>
     <system:String x:Key="ActivityTab">Activity</system:String>
     <system:String x:Key="StudioTitle">Bring every image into focus</system:String>

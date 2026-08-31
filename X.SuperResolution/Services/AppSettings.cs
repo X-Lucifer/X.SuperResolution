@@ -8,6 +8,11 @@ public sealed class AppSettings
     public string Language { get; set; } = "zh-CN";
 
     /// <summary>
+    /// 界面主题（Light / Dark）
+    /// </summary>
+    public string Theme { get; set; } = "Light";
+
+    /// <summary>
     /// 输出目录
     /// </summary>
     public string OutputDirectory

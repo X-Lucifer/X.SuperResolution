@@ -10,7 +10,7 @@
                     Padding="24,20"
                     Background="{DynamicResource HeroGradientBrush}"
                     BorderBrush="{DynamicResource BorderBrush}"
-                    BorderThickness="0,0,0,1">
+                    BorderThickness="0,0,0,0.5">
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="18">
                     <StackPanel Spacing="5">
                         <StackPanel Orientation="Horizontal" Spacing="9">
@@ -21,7 +21,7 @@
                                     CornerRadius="9"
                                     Background="{DynamicResource SurfaceBrush}"
                                     BorderBrush="{DynamicResource BorderBrush}"
-                                    BorderThickness="1">
+                                    BorderThickness="0.75">
                                 <StackPanel Orientation="Horizontal" Spacing="5">
                                     <TextBlock Text="{Binding TaskList.Count}"
                                                Classes="Data"
@@ -68,23 +68,23 @@
                                 VerticalAlignment="Bottom"
                                 CornerRadius="18"
                                 Background="{DynamicResource PeachTintBrush}"
-                                BorderBrush="#43F19CA6"
-                                BorderThickness="1" />
+                                BorderBrush="{DynamicResource PeachBorderBrush}"
+                                BorderThickness="0.75" />
                         <Border Width="76" Height="76"
                                 Margin="25,0,0,14"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Bottom"
                                 CornerRadius="20"
                                 Background="{DynamicResource AccentTintBrush}"
-                                BorderBrush="#4073A7E8"
-                                BorderThickness="1" />
+                                BorderBrush="{DynamicResource AccentBorderBrush}"
+                                BorderThickness="0.75" />
                         <Border Width="74" Height="74"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"
                                 CornerRadius="20"
                                 Background="{DynamicResource SurfaceBrush}"
                                 BorderBrush="{DynamicResource BorderStrongBrush}"
-                                BorderThickness="1">
+                                BorderThickness="0.75">
                             <Grid>
                                 <Path Data="M 20,47 L 33,34 L 42,43 L 49,36 L 56,47"
                                       Stroke="{DynamicResource PrimaryBrush}"
@@ -147,7 +147,7 @@
                                                 CornerRadius="13"
                                                 Background="{DynamicResource HeroGradientBrush}"
                                                 BorderBrush="{DynamicResource BorderBrush}"
-                                                BorderThickness="1"
+                                                BorderThickness="0.75"
                                                 VerticalAlignment="Center">
                                             <TextBlock Text="IMG"
                                                        Classes="Data"
@@ -222,7 +222,7 @@
                     Padding="18,13"
                     Background="{DynamicResource SubtleSurfaceBrush}"
                     BorderBrush="{DynamicResource BorderBrush}"
-                    BorderThickness="0,1,0,0">
+                    BorderThickness="0,0.5,0,0">
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="16">
                     <StackPanel Spacing="3" VerticalAlignment="Center">
                         <TextBlock Text="{DynamicResource ReadyHint}"

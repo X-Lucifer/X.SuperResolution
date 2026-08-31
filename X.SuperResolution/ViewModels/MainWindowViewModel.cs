@@ -405,6 +405,13 @@ public partial class MainWindowViewModel : ViewModelBase
         _settingsService.SetLanguage(language);
     }
 
+    public string CurrentTheme => _settingsService.Current.Theme;
+
+    public void ChangeTheme(string theme)
+    {
+        _settingsService.SetTheme(theme);
+    }
+
     /// <summary>
     /// 开始处理任务
     /// </summary>

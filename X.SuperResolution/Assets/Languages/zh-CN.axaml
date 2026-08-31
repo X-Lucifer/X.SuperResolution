@@ -53,6 +53,7 @@
     <system:String x:Key="Maximize">最大化或还原</system:String>
     <system:String x:Key="PipelineReady">NCNN / Vulkan 处理管线已就绪</system:String>
     <system:String x:Key="Language">界面语言</system:String>
+    <system:String x:Key="ThemeToggleLabel">切换亮色或暗色主题</system:String>
     <system:String x:Key="EnhanceTab">增强设置</system:String>
     <system:String x:Key="ActivityTab">运行记录</system:String>
     <system:String x:Key="StudioTitle">让每一张图片都更清晰</system:String>

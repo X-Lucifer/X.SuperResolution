@@ -41,26 +41,26 @@
     <Style Selector="Border.Card">
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0.75" />
         <Setter Property="CornerRadius" Value="18" />
         <Setter Property="BoxShadow" Value="0 8 24 0 #0B466275" />
     </Style>
     <Style Selector="Border.InnerPanel">
         <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0.75" />
         <Setter Property="CornerRadius" Value="10" />
     </Style>
     <Style Selector="Border.TaskItem">
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0.75" />
         <Setter Property="CornerRadius" Value="12" />
     </Style>
     <Style Selector="Border.SettingsGroup">
         <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0.75" />
         <Setter Property="CornerRadius" Value="10" />
         <Setter Property="ClipToBounds" Value="True" />
     </Style>
@@ -83,7 +83,7 @@
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0.75" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -121,7 +121,7 @@
     <Style Selector="Button.PrimaryAction">
         <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
-        <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryContentBrush}" />
     </Style>
     <Style Selector="Button.PrimaryAction:pointerover">
         <Setter Property="Background" Value="{DynamicResource PrimaryHoverBrush}" />
@@ -137,23 +137,23 @@
         <Setter Property="Foreground" Value="{DynamicResource TextTertiaryBrush}" />
     </Style>
     <Style Selector="Button.PrimaryAction TextBlock">
-        <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryContentBrush}" />
     </Style>
     <Style Selector="Button.PrimaryAction:disabled TextBlock">
         <Setter Property="Foreground" Value="{DynamicResource TextTertiaryBrush}" />
     </Style>
     <Style Selector="Button.DangerAction">
         <Setter Property="Background" Value="{DynamicResource DangerSurfaceBrush}" />
-        <Setter Property="BorderBrush" Value="#F0D4D8" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DangerBorderBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
     </Style>
     <Style Selector="Button.DangerAction:pointerover">
         <Setter Property="Background" Value="{DynamicResource DangerPressedSurfaceBrush}" />
-        <Setter Property="BorderBrush" Value="#E9C1C7" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DangerBorderHoverBrush}" />
     </Style>
     <Style Selector="Button.DangerAction:pressed">
-        <Setter Property="Background" Value="#F3DCE0" />
-        <Setter Property="BorderBrush" Value="#E4B6BE" />
+        <Setter Property="Background" Value="{DynamicResource DangerPressedSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DangerBorderPressedBrush}" />
     </Style>
     <Style Selector="Button.DangerAction:disabled">
         <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
@@ -219,12 +219,12 @@
         <Setter Property="Background" Value="{DynamicResource PressedSurfaceBrush}" />
     </Style>
     <Style Selector="Button.WindowClose:pointerover">
-        <Setter Property="Background" Value="#D9606C" />
-        <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Background" Value="{DynamicResource WindowCloseHoverBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource OnDangerBrush}" />
     </Style>
     <Style Selector="Button.WindowClose:pressed">
-        <Setter Property="Background" Value="#B84F5B" />
-        <Setter Property="Foreground" Value="#FFFFFF" />
+        <Setter Property="Background" Value="{DynamicResource WindowClosePressedBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource OnDangerBrush}" />
     </Style>
 
     <Style Selector="HyperlinkButton">
@@ -238,6 +238,89 @@
     </Style>
     <Style Selector="ToggleButton:disabled">
         <Setter Property="Cursor" Value="Arrow" />
+    </Style>
+    <Style Selector="ToggleButton.ThemeSwitch">
+        <Setter Property="Width" Value="58" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="MinWidth" Value="58" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0,12,8,12" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid Width="58" Height="30">
+                    <Border Name="ThemeSwitchTrack"
+                            Background="{DynamicResource ThemeToggleTrackBrush}"
+                            BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="0.75"
+                            CornerRadius="15" />
+                    <Border Name="ThemeSwitchThumb"
+                            Width="24"
+                            Height="24"
+                            Margin="3,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="{DynamicResource ThemeToggleThumbBrush}"
+                            CornerRadius="12">
+                        <Border.Transitions>
+                            <Transitions>
+                                <ThicknessTransition Property="Margin" Duration="0:0:0.16" />
+                            </Transitions>
+                        </Border.Transitions>
+                    </Border>
+                    <Grid Margin="7,0" ColumnDefinitions="*,*" IsHitTestVisible="False">
+                        <Path Name="ThemeSunIcon"
+                              Width="13"
+                              Height="13"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
+                              Stretch="Uniform"
+                              Data="M9,0 H11 V3 H9 Z M9,17 H11 V20 H9 Z M0,9 H3 V11 H0 Z M17,9 H20 V11 H17 Z M2.2,2.2 L4.4,4.4 L3,5.8 L0.8,3.6 Z M15.6,15.6 L17.8,17.8 L16.4,19.2 L14.2,17 Z M17.8,2.2 L19.2,3.6 L17,5.8 L15.6,4.4 Z M2.2,17.8 L4.4,15.6 L5.8,17 L3.6,19.2 Z M10,5 A5,5 0 1 0 10,15 A5,5 0 1 0 10,5 Z" />
+                        <Path Grid.Column="1"
+                              Name="ThemeMoonIcon"
+                              Width="13"
+                              Height="13"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Center"
+                              Stretch="Uniform"
+                              Data="M8,2 C4.5,2.9 2,6.1 2,9.9 C2,14.4 5.6,18 10.1,18 C13.9,18 17.1,15.5 18,12 C16.9,13.3 15.2,14.1 13.4,14.1 C9.3,14.1 5.9,10.7 5.9,6.6 C5.9,4.9 6.7,3.2 8,2 Z" />
+                    </Grid>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+    <Style Selector="ToggleButton.ThemeSwitch /template/ Path#ThemeSunIcon">
+        <Setter Property="Fill" Value="{DynamicResource ThemeToggleActiveIconBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.ThemeSwitch /template/ Path#ThemeMoonIcon">
+        <Setter Property="Fill" Value="{DynamicResource ThemeToggleInactiveIconBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.ThemeSwitch:pointerover /template/ Border#ThemeSwitchTrack">
+        <Setter Property="Background" Value="{DynamicResource ThemeToggleTrackHoverBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.ThemeSwitch:pressed /template/ Border#ThemeSwitchTrack">
+        <Setter Property="Background" Value="{DynamicResource PressedSurfaceBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.ThemeSwitch:checked /template/ Border#ThemeSwitchThumb">
+        <Setter Property="Margin" Value="31,0,0,0" />
+    </Style>
+    <Style Selector="ToggleButton.ThemeSwitch:checked /template/ Path#ThemeSunIcon">
+        <Setter Property="Fill" Value="{DynamicResource ThemeToggleInactiveIconBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.ThemeSwitch:checked /template/ Path#ThemeMoonIcon">
+        <Setter Property="Fill" Value="{DynamicResource ThemeToggleActiveIconBrush}" />
+    </Style>
+    <Style Selector="ToggleButton.ThemeSwitch:focus-visible /template/ Border#ThemeSwitchTrack">
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+        <Setter Property="BorderThickness" Value="1.25" />
+    </Style>
+    <Style Selector="ToggleButton.ThemeSwitch:disabled">
+        <Setter Property="Opacity" Value="0.5" />
     </Style>
     <Style Selector="RepeatButton">
         <Setter Property="Cursor" Value="Hand" />
@@ -284,6 +367,7 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="0.75" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
@@ -328,7 +412,7 @@
                                 CornerRadius="11"
                                 Background="{DynamicResource SurfaceBrush}"
                                 BorderBrush="{DynamicResource BorderBrush}"
-                                BorderThickness="1"
+                                BorderThickness="0.75"
                                 BoxShadow="0 8 24 0 #1A304557">
                             <ScrollViewer MaxHeight="300"
                                           HorizontalScrollBarVisibility="Disabled"
@@ -348,6 +432,25 @@
     </Style>
     <Style Selector="ComboBox:disabled">
         <Setter Property="Cursor" Value="Arrow" />
+    </Style>
+    <Style Selector="ComboBox.LanguagePicker">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="9" />
+    </Style>
+    <Style Selector="ComboBox.LanguagePicker:pointerover">
+        <Setter Property="Background" Value="{DynamicResource HoverSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <Style Selector="ComboBox.LanguagePicker:focus">
+        <Setter Property="Background" Value="{DynamicResource HoverSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <Style Selector="ComboBox.LanguagePicker:focus-visible /template/ PathIcon#DropDownGlyph">
+        <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" />
     </Style>
     <Style Selector="ComboBox.InlineField">
         <Setter Property="Width" Value="180" />
@@ -370,7 +473,7 @@
     <Style Selector="ComboBox.InlineField:focus">
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="1.25" />
     </Style>
     <Style Selector="ComboBox.InlineField /template/ PathIcon#DropDownGlyph">
         <Setter Property="Width" Value="9" />
@@ -441,6 +544,7 @@
         <Setter Property="CornerRadius" Value="10" />
         <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="0.75" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryBrush}" />
     </Style>
@@ -485,6 +589,7 @@
     <Style Selector="ToggleSwitch /template/ Border#OuterBorder">
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}" />
+        <Setter Property="BorderThickness" Value="0.75" />
     </Style>
     <Style Selector="ToggleSwitch /template/ Ellipse#SwitchKnobOff">
         <Setter Property="Fill" Value="{DynamicResource TextTertiaryBrush}" />
@@ -512,7 +617,7 @@
                             CornerRadius="11"
                             Background="{DynamicResource ElevatedSurfaceBrush}"
                             BorderBrush="{DynamicResource BorderStrongBrush}"
-                            BorderThickness="1" />
+                            BorderThickness="0.75" />
                     <Canvas Name="PART_SwitchKnob" Width="38" Height="22">
                         <Grid Name="PART_MovingKnobs"
                               Width="0"
@@ -555,7 +660,7 @@
         <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0.75" />
         <Setter Property="CornerRadius" Value="10" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
@@ -644,7 +749,7 @@
         <Setter Property="Cursor" Value="Arrow" />
     </Style>
     <Style Selector="TabItem.InspectorTab:pointerover">
-        <Setter Property="Background" Value="#80FFFFFF" />
+        <Setter Property="Background" Value="{DynamicResource HoverSurfaceBrush}" />
     </Style>
     <Style Selector="TabItem.InspectorTab:selected">
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
@@ -652,7 +757,7 @@
     </Style>
     <Style Selector="TabItem.InspectorTab:focus-visible">
         <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="1.25" />
     </Style>
 
     <Style Selector="Expander.InspectorExpander">
@@ -660,7 +765,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0.75" />
         <Setter Property="CornerRadius" Value="10" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -708,7 +813,7 @@
                         <Border IsVisible="{TemplateBinding IsExpanded}"
                                 Background="{DynamicResource SurfaceBrush}"
                                 BorderBrush="{DynamicResource BorderBrush}"
-                                BorderThickness="0,1,0,0">
+                                BorderThickness="0,0.5,0,0">
                             <ContentPresenter Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               HorizontalContentAlignment="Stretch"
@@ -827,7 +932,7 @@
         <Setter Property="Padding" Value="9,6" />
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderThickness" Value="0.75" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Background="{TemplateBinding Background}"
@@ -844,14 +949,14 @@
     </Style>
     <Style Selector="Button:focus-visible">
         <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderThickness" Value="1.25" />
     </Style>
     <Style Selector="ComboBox:focus">
         <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderThickness" Value="1.25" />
     </Style>
     <Style Selector="RadioButton.EngineSegment:focus-visible">
         <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderThickness" Value="1.25" />
     </Style>
 </Styles>
