@@ -7,17 +7,16 @@
         x:Name="RootWindow"
         Icon="/Assets/logo.ico"
         Title="{DynamicResource MainTitle}"
-        Width="1440"
-        Height="900"
-        MinWidth="1180"
-        MinHeight="760"
+        Width="1360"
+        Height="860"
+        MinWidth="1080"
+        MinHeight="720"
         WindowStartupLocation="CenterScreen"
         WindowDecorations="None"
         CanResize="True"
         UseLayoutRounding="True"
         Background="{DynamicResource AppBackgroundBrush}">
-    <Grid RowDefinitions="48,1,*,31">
-        <!-- Custom Fluent title bar: product controls left, utility/window controls right. -->
+    <Grid RowDefinitions="54,*,32">
         <Border Grid.Row="0"
                 Background="{DynamicResource TitleBarBrush}"
                 BorderBrush="{DynamicResource BorderBrush}"
@@ -27,19 +26,21 @@
                       ColumnDefinitions="Auto,*"
                       Background="Transparent"
                       PointerPressed="TitleBar_OnPointerPressed">
-                    <Grid Width="48" Height="48">
-                        <Border Width="29" Height="29"
-                                CornerRadius="5"
-                                Background="{DynamicResource PrimaryBrush}"
+                    <Grid Width="54" Height="54">
+                        <Border Width="34" Height="34"
+                                CornerRadius="11"
+                                Background="{DynamicResource HeroGradientBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                             <TextBlock Text="X²"
                                        FontFamily="{DynamicResource DataFontFamily}"
-                                       FontSize="11"
+                                       FontSize="12"
                                        FontWeight="Bold"
+                                       Foreground="{DynamicResource PrimaryHoverBrush}"
                                        HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Foreground="White" />
+                                       VerticalAlignment="Center" />
                         </Border>
                     </Grid>
                     <StackPanel Grid.Column="1"
@@ -47,11 +48,11 @@
                                 Spacing="10"
                                 VerticalAlignment="Center">
                         <TextBlock Text="X.SuperResolution"
-                                   FontSize="13"
+                                   FontSize="14"
                                    FontWeight="SemiBold" />
-                        <Border Width="1"
-                                Height="14"
-                                Background="{DynamicResource BorderStrongBrush}" />
+                        <TextBlock Text="/"
+                                   Classes="Tertiary"
+                                   FontSize="11" />
                         <TextBlock Text="{DynamicResource ProductTagline}"
                                    Classes="Muted"
                                    FontSize="11" />
@@ -59,12 +60,31 @@
                 </Grid>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <ComboBox Width="112"
-                              MinHeight="32"
-                              Margin="0,8,6,8"
+                    <Border Margin="0,10,8,10"
+                            Padding="10,0"
+                            CornerRadius="10"
+                            Background="{DynamicResource PrimaryTintBrush}"
+                            VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Spacing="7">
+                            <Border Width="6" Height="6"
+                                    CornerRadius="3"
+                                    Background="{DynamicResource PrimaryBrush}"
+                                    VerticalAlignment="Center" />
+                            <TextBlock Text="VULKAN READY"
+                                       Classes="Data"
+                                       FontSize="8"
+                                       Foreground="{DynamicResource PrimaryHoverBrush}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+
+                    <ComboBox Width="106"
+                              MinHeight="34"
+                              Margin="0,10,4,10"
                               Padding="9,4"
                               BorderThickness="0"
                               Background="Transparent"
+                              AutomationProperties.Name="{DynamicResource Language}"
                               ItemsSource="{Binding LangList}"
                               SelectedValue="{Binding CurrentLang}"
                               DisplayMemberBinding="{Binding Value}"
@@ -74,104 +94,97 @@
 
                     <HyperlinkButton Classes="TitleLink"
                                      NavigateUri="https://github.com/X-Lucifer"
-                                     Margin="0,8,6,8"
+                                     Margin="0,10,4,10"
                                      Content="GitHub" />
 
                     <Button Classes="WindowAction"
                             ToolTip.Tip="{DynamicResource Minimize}"
+                            AutomationProperties.Name="{DynamicResource Minimize}"
                             Click="MinimizeButton_OnClick">
                         <Canvas Width="16" Height="16">
                             <Path Data="M 2,8 L 14,8"
-                                  Stroke="{DynamicResource TextPrimaryBrush}"
-                                  StrokeThickness="1.4" />
+                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                  StrokeThickness="1.3" />
                         </Canvas>
                     </Button>
                     <Button Classes="WindowAction"
                             ToolTip.Tip="{DynamicResource Maximize}"
+                            AutomationProperties.Name="{DynamicResource Maximize}"
                             Click="MaximizeButton_OnClick">
                         <Grid Width="16" Height="16">
                             <Canvas x:Name="MaximizeIcon" Width="16" Height="16">
-                                <Rectangle Canvas.Left="2"
-                                           Canvas.Top="2"
-                                           Width="12"
-                                           Height="12"
+                                <Rectangle Canvas.Left="2" Canvas.Top="2" Width="12" Height="12"
                                            Fill="Transparent"
-                                           Stroke="{DynamicResource TextPrimaryBrush}"
+                                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
                                            StrokeThickness="1.2" />
                             </Canvas>
-                            <Canvas x:Name="RestoreIcon"
-                                    Width="16"
-                                    Height="16"
-                                    IsVisible="False">
-                                <Rectangle Canvas.Left="4"
-                                           Canvas.Top="2"
-                                           Width="10"
-                                           Height="10"
+                            <Canvas x:Name="RestoreIcon" Width="16" Height="16" IsVisible="False">
+                                <Rectangle Canvas.Left="4" Canvas.Top="2" Width="10" Height="10"
                                            Fill="{DynamicResource TitleBarBrush}"
-                                           Stroke="{DynamicResource TextPrimaryBrush}"
+                                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
                                            StrokeThickness="1.2" />
-                                <Rectangle Canvas.Left="2"
-                                           Canvas.Top="4"
-                                           Width="10"
-                                           Height="10"
+                                <Rectangle Canvas.Left="2" Canvas.Top="4" Width="10" Height="10"
                                            Fill="{DynamicResource TitleBarBrush}"
-                                           Stroke="{DynamicResource TextPrimaryBrush}"
+                                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
                                            StrokeThickness="1.2" />
                             </Canvas>
                         </Grid>
                     </Button>
                     <Button Classes="WindowAction WindowClose"
                             ToolTip.Tip="{DynamicResource Exit}"
+                            AutomationProperties.Name="{DynamicResource Exit}"
                             Click="CloseButton_OnClick">
                         <Canvas Width="16" Height="16">
                             <Path Data="M 3,3 L 13,13 M 13,3 L 3,13"
-                                  Stroke="{DynamicResource TextPrimaryBrush}"
-                                  StrokeThickness="1.4" />
+                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                  StrokeThickness="1.3" />
                         </Canvas>
                     </Button>
                 </StackPanel>
             </Grid>
         </Border>
 
-        <!-- Precision rail: blue for configuration, cyan for processing feedback. -->
-        <Border Grid.Row="1" Background="{DynamicResource BorderBrush}">
-            <Border Width="240"
-                    HorizontalAlignment="Left"
-                    Background="{DynamicResource PrimaryBrush}" />
-        </Border>
+        <Grid Grid.Row="1"
+              ColumnDefinitions="*,382"
+              ColumnSpacing="16"
+              Margin="20,18,20,16">
+            <controls:TaskWorkspace Grid.Column="0" />
 
-        <Grid Grid.Row="2"
-              ColumnDefinitions="360,*,340"
-              ColumnSpacing="12"
-              Margin="16,14,16,12">
-            <controls:ProcessingSettingsPanel Grid.Column="0" />
-            <controls:TaskWorkspace Grid.Column="1" />
-            <controls:ActivityPanel Grid.Column="2" />
+            <Border Grid.Column="1" Classes="Card" Padding="14">
+                <TabControl Classes="InspectorTabs">
+                    <TabItem Classes="InspectorTab"
+                             Header="{DynamicResource EnhanceTab}"
+                             AutomationProperties.Name="{DynamicResource EnhanceTab}">
+                        <controls:ProcessingSettingsPanel Margin="0,14,0,0" />
+                    </TabItem>
+                    <TabItem Classes="InspectorTab"
+                             Header="{DynamicResource ActivityTab}"
+                             AutomationProperties.Name="{DynamicResource ActivityTab}">
+                        <controls:ActivityPanel Margin="0,14,0,0" />
+                    </TabItem>
+                </TabControl>
+            </Border>
         </Grid>
 
-        <Border Grid.Row="3"
+        <Border Grid.Row="2"
                 Background="{DynamicResource TitleBarBrush}"
                 BorderBrush="{DynamicResource BorderBrush}"
                 BorderThickness="0,1,0,0">
-            <Grid ColumnDefinitions="*,Auto,*" Margin="16,0">
-                <StackPanel Orientation="Horizontal"
-                            Spacing="7"
-                            VerticalAlignment="Center">
-                    <Border Width="6"
-                            Height="6"
-                            CornerRadius="3"
-                            Background="{DynamicResource AccentBrush}" />
+            <Grid ColumnDefinitions="*,Auto,*" Margin="20,0">
+                <StackPanel Orientation="Horizontal" Spacing="7" VerticalAlignment="Center">
+                    <Border Width="6" Height="6" CornerRadius="3"
+                            Background="{DynamicResource PrimaryBrush}" />
                     <TextBlock Text="{DynamicResource PipelineReady}"
                                Classes="Muted"
                                FontSize="9" />
                 </StackPanel>
                 <TextBlock Grid.Column="1"
-                           Text="Copyright © Lucifer · X SuperResolution"
+                           Text="X SuperResolution"
                            Classes="Tertiary"
                            FontSize="9"
                            VerticalAlignment="Center" />
                 <TextBlock Grid.Column="2"
-                           Text=".NET 10 · AVALONIA · VULKAN"
+                           Text=".NET 10 · AVALONIA · NCNN"
                            Classes="Data Tertiary"
                            FontSize="8"
                            HorizontalAlignment="Right"

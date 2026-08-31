@@ -4,176 +4,102 @@
              xmlns:views="using:X.SuperResolution.Views"
              x:Class="X.SuperResolution.Controls.ActivityPanel"
              x:DataType="vm:MainWindowViewModel">
-    <UserControl.Styles>
-        <Style Selector="TextBlock.SystemLabel">
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="TextAlignment" Value="Right" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="0,0,14,0" />
-        </Style>
-    </UserControl.Styles>
+    <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="14">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="3,0,3,0">
+            <StackPanel Spacing="4">
+                <TextBlock Classes="SectionTitle" Text="{DynamicResource ActivityTab}" />
+                <TextBlock Text="{DynamicResource RunDetailsHint}"
+                           Classes="Muted"
+                           FontSize="10" />
+            </StackPanel>
+            <Border Grid.Column="1"
+                    Width="34" Height="34"
+                    CornerRadius="11"
+                    Background="{DynamicResource AccentTintBrush}"
+                    VerticalAlignment="Center">
+                <Canvas Width="14" Height="14"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <Path Data="M 2,11 L 11,2 M 6,2 L 11,2 L 11,7"
+                          Stroke="{DynamicResource AccentBrush}"
+                          StrokeThickness="1.5"
+                          StrokeLineCap="Round"
+                          StrokeJoin="Round" />
+                </Canvas>
+            </Border>
+        </Grid>
 
-    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="12">
-        <Border Grid.Row="0" Classes="Card" Padding="18">
-            <Grid RowDefinitions="Auto,18,Auto">
+        <Border Grid.Row="1"
+                Classes="SettingsGroup"
+                Padding="15"
+                Background="{DynamicResource HeroGradientBrush}">
+            <Grid RowDefinitions="Auto,13,Auto">
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                    <StackPanel Spacing="4">
-                        <TextBlock Classes="Eyebrow" Text="{DynamicResource RunMonitor}" />
-                        <TextBlock Classes="SectionTitle" Text="{DynamicResource BatchStatus}" />
-                    </StackPanel>
+                    <TextBlock Text="{DynamicResource BatchStatus}"
+                               FontSize="11"
+                               FontWeight="SemiBold" />
                     <Border Grid.Column="1"
-                            Padding="9,5"
-                            CornerRadius="4"
-                            Background="{DynamicResource AccentTintBrush}"
-                            VerticalAlignment="Center">
+                            Padding="8,4"
+                            CornerRadius="8"
+                            Background="{DynamicResource SurfaceBrush}">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <Border Width="6" Height="6"
                                     CornerRadius="3"
-                                    Background="{DynamicResource AccentBrush}"
+                                    Background="{DynamicResource PrimaryBrush}"
                                     VerticalAlignment="Center" />
                             <TextBlock Text="VULKAN"
                                        Classes="Data"
-                                       FontSize="9"
-                                       Foreground="{DynamicResource AccentBrush}" />
+                                       FontSize="8"
+                                       Foreground="{DynamicResource PrimaryHoverBrush}" />
                         </StackPanel>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Row="2" ColumnDefinitions="*,1,*">
-                    <StackPanel Grid.Column="0" Spacing="6">
-                        <TextBlock Text="{DynamicResource BatchElapsed}"
-                                   Classes="FieldLabel" />
+                    <StackPanel Grid.Column="0" Spacing="4">
+                        <TextBlock Text="{DynamicResource BatchElapsed}" Classes="FieldLabel" />
                         <TextBlock Text="{Binding BatchElapsedText}"
                                    Classes="Data"
-                                   FontSize="25"
-                                   FontWeight="SemiBold"
-                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                                   FontSize="22"
+                                   FontWeight="SemiBold" />
                     </StackPanel>
                     <Border Grid.Column="1"
                             Background="{DynamicResource BorderBrush}"
-                            Margin="13,0" />
-                    <StackPanel Grid.Column="2"
-                                Spacing="6"
-                                VerticalAlignment="Center">
-                        <TextBlock Text="{DynamicResource BatchStartTime}"
-                                   Classes="FieldLabel" />
+                            Margin="14,0" />
+                    <StackPanel Grid.Column="2" Spacing="4" VerticalAlignment="Center">
+                        <TextBlock Text="{DynamicResource BatchStartTime}" Classes="FieldLabel" />
                         <TextBlock Text="{Binding BatchStartTimeText}"
-                                   Classes="Data"
-                                   FontSize="10"
-                                   TextWrapping="Wrap"
-                                   Foreground="{DynamicResource TextSecondaryBrush}" />
-                    </StackPanel>
-                </Grid>
-            </Grid>
-        </Border>
-
-        <Border Grid.Row="1" Classes="Card" Padding="18">
-            <Grid RowDefinitions="Auto,15,Auto">
-                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                    <StackPanel Spacing="4">
-                        <TextBlock Classes="Eyebrow" Text="{DynamicResource DeviceProfile}" />
-                        <TextBlock Classes="SectionTitle" Text="{DynamicResource SystemInfo}" />
-                    </StackPanel>
-                    <Border Grid.Column="1"
-                            Width="32"
-                            Height="32"
-                            CornerRadius="4"
-                            Background="{DynamicResource ElevatedSurfaceBrush}"
-                            VerticalAlignment="Center">
-                        <TextBlock Text="HW"
-                                   Classes="Data"
+                                   Classes="Data Muted"
                                    FontSize="9"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Foreground="{DynamicResource TextSecondaryBrush}" />
-                    </Border>
-                </Grid>
-
-                <Grid Grid.Row="2"
-                      ColumnDefinitions="88,*"
-                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
-                      RowSpacing="8">
-                    <TextBlock Grid.Row="0" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource Manufacturer}" />
-                    <SelectableTextBlock Grid.Row="0" Grid.Column="1"
-                                         Text="{Binding SysInfo.ManufacturerName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
-                                         TextTrimming="CharacterEllipsis"
-                                         FontSize="11"
-                                         x:CompileBindings="False" />
-
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="0"
-                               Classes="FieldLabel SystemLabel"
-                               Text="{DynamicResource ProductName}"
-                               VerticalAlignment="Top" />
-                    <SelectableTextBlock Grid.Row="1" Grid.Column="1"
-                                         Text="{Binding SysInfo.ProductName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
-                                         TextWrapping="Wrap"
-                                         ToolTip.Tip="{Binding SysInfo.ProductName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
-                                         VerticalAlignment="Top"
-                                         FontSize="11"
-                                         x:CompileBindings="False" />
-
-                    <TextBlock Grid.Row="2" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource Processor}" />
-                    <SelectableTextBlock Grid.Row="2" Grid.Column="1"
-                                         Text="{Binding CpuInfo.Version, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
-                                         TextTrimming="CharacterEllipsis"
-                                         ToolTip.Tip="{Binding CpuInfo.Version, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
-                                         FontSize="11"
-                                         x:CompileBindings="False" />
-
-                    <TextBlock Grid.Row="3" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource CpuCore}" />
-                    <SelectableTextBlock Grid.Row="3" Grid.Column="1"
-                                         Text="{Binding CpuCore, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
-                                         Classes="Data"
-                                         FontSize="11"
-                                         x:CompileBindings="False" />
-
-                    <TextBlock Grid.Row="4" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource MemorySize}" />
-                    <SelectableTextBlock Grid.Row="4" Grid.Column="1"
-                                         Text="{Binding MemorySize, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
-                                         Classes="Data"
-                                         FontSize="11"
-                                         x:CompileBindings="False" />
-
-                    <TextBlock Grid.Row="5" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource UserName}" />
-                    <SelectableTextBlock Grid.Row="5" Grid.Column="1"
-                                         Text="{Binding UserName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
-                                         FontSize="11"
-                                         x:CompileBindings="False" />
-
-                    <TextBlock Grid.Row="6" Grid.Column="0" Classes="FieldLabel SystemLabel" Text="{DynamicResource SerialNumber}" />
-                    <SelectableTextBlock Grid.Row="6" Grid.Column="1"
-                                         Text="{Binding SysInfo.SerialNumber, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
-                                         Classes="Data"
-                                         TextTrimming="CharacterEllipsis"
-                                         FontSize="10"
-                                         x:CompileBindings="False" />
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Border>
 
-        <Border Grid.Row="2" Classes="Card" MinHeight="170">
+        <Border Grid.Row="2" Classes="SettingsGroup" MinHeight="190">
             <Grid RowDefinitions="Auto,1,*">
-                <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="16,12,8,10">
-                    <StackPanel Orientation="Horizontal" Spacing="9" VerticalAlignment="Center">
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="13,9,6,8">
+                    <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
                         <Border Width="7" Height="7"
                                 CornerRadius="4"
                                 Background="{DynamicResource PrimaryBrush}" />
                         <TextBlock Text="{DynamicResource ActivityLog}"
-                                   FontSize="13"
+                                   FontSize="11"
                                    FontWeight="SemiBold" />
                     </StackPanel>
                     <Button Grid.Column="1"
                             Classes="GhostAction"
                             Content="{DynamicResource ClearLog}"
-                            MinHeight="30"
-                            Padding="10,4"
-                            FontSize="10"
+                            MinHeight="28"
+                            Padding="9,4"
+                            FontSize="9"
                             Command="{Binding ClearLogCommand}" />
                 </Grid>
                 <Border Grid.Row="1" Background="{DynamicResource BorderBrush}" />
                 <TextBox Grid.Row="2"
                          x:Name="InfoTextBox"
+                         Classes="LogViewer"
                          TextChanged="InfoTextBox_OnTextChanged"
                          Text="{Binding LogText, Mode=OneWay}"
                          IsReadOnly="True"
@@ -181,13 +107,120 @@
                          TextWrapping="Wrap"
                          ScrollViewer.VerticalScrollBarVisibility="Auto"
                          BorderThickness="0"
-                         CornerRadius="0,0,5,5"
-                         Padding="15,12"
+                         CornerRadius="0"
+                         Padding="13,10"
                          FontFamily="{DynamicResource DataFontFamily}"
-                         FontSize="10"
+                         FontSize="9"
                          Foreground="{DynamicResource TextSecondaryBrush}"
-                         Background="{DynamicResource SubtleSurfaceBrush}" />
+                         Background="{DynamicResource SurfaceBrush}" />
             </Grid>
         </Border>
+
+        <Expander Grid.Row="3"
+                  Classes="InspectorExpander"
+                  IsExpanded="False"
+                  AutomationProperties.Name="{DynamicResource DeviceDetails}">
+            <Expander.Header>
+                <StackPanel Spacing="2">
+                    <TextBlock Text="{DynamicResource DeviceDetails}"
+                               FontSize="11"
+                               FontWeight="SemiBold" />
+                    <TextBlock Text="{DynamicResource DeviceProfile}"
+                               Classes="Muted"
+                               FontSize="9" />
+                </StackPanel>
+            </Expander.Header>
+            <ScrollViewer MaxHeight="150"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <StackPanel>
+                    <Border Classes="SettingRow">
+                        <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource Manufacturer}" VerticalAlignment="Center" />
+                            <SelectableTextBlock Grid.Column="1"
+                                                 Text="{Binding SysInfo.ManufacturerName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                                 TextTrimming="CharacterEllipsis"
+                                                 FontSize="10"
+                                                 VerticalAlignment="Center"
+                                                 x:CompileBindings="False" />
+                        </Grid>
+                    </Border>
+                    <Border Classes="GroupDivider" />
+                    <Border Classes="SettingRow">
+                        <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource ProductName}" VerticalAlignment="Center" />
+                            <SelectableTextBlock Grid.Column="1"
+                                                 Text="{Binding SysInfo.ProductName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                                 TextWrapping="Wrap"
+                                                 ToolTip.Tip="{Binding SysInfo.ProductName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                                 FontSize="10"
+                                                 VerticalAlignment="Center"
+                                                 x:CompileBindings="False" />
+                        </Grid>
+                    </Border>
+                    <Border Classes="GroupDivider" />
+                    <Border Classes="SettingRow">
+                        <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource Processor}" VerticalAlignment="Center" />
+                            <SelectableTextBlock Grid.Column="1"
+                                                 Text="{Binding CpuInfo.Version, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                                 TextTrimming="CharacterEllipsis"
+                                                 ToolTip.Tip="{Binding CpuInfo.Version, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                                 FontSize="10"
+                                                 VerticalAlignment="Center"
+                                                 x:CompileBindings="False" />
+                        </Grid>
+                    </Border>
+                    <Border Classes="GroupDivider" />
+                    <Border Classes="SettingRow">
+                        <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource CpuCore}" VerticalAlignment="Center" />
+                            <SelectableTextBlock Grid.Column="1"
+                                                 Text="{Binding CpuCore, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                                 Classes="Data"
+                                                 FontSize="10"
+                                                 VerticalAlignment="Center"
+                                                 x:CompileBindings="False" />
+                        </Grid>
+                    </Border>
+                    <Border Classes="GroupDivider" />
+                    <Border Classes="SettingRow">
+                        <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource MemorySize}" VerticalAlignment="Center" />
+                            <SelectableTextBlock Grid.Column="1"
+                                                 Text="{Binding MemorySize, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                                 Classes="Data"
+                                                 FontSize="10"
+                                                 VerticalAlignment="Center"
+                                                 x:CompileBindings="False" />
+                        </Grid>
+                    </Border>
+                    <Border Classes="GroupDivider" />
+                    <Border Classes="SettingRow">
+                        <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource UserName}" VerticalAlignment="Center" />
+                            <SelectableTextBlock Grid.Column="1"
+                                                 Text="{Binding UserName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                                 FontSize="10"
+                                                 VerticalAlignment="Center"
+                                                 x:CompileBindings="False" />
+                        </Grid>
+                    </Border>
+                    <Border Classes="GroupDivider" />
+                    <Border Classes="SettingRow">
+                        <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource SerialNumber}" VerticalAlignment="Center" />
+                            <SelectableTextBlock Grid.Column="1"
+                                                 Text="{Binding SysInfo.SerialNumber, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                                 Classes="Data"
+                                                 TextTrimming="CharacterEllipsis"
+                                                 FontSize="9"
+                                                 VerticalAlignment="Center"
+                                                 x:CompileBindings="False" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Expander>
     </Grid>
 </UserControl>

@@ -5,39 +5,45 @@
              xmlns:views="using:X.SuperResolution.Views"
              x:Class="X.SuperResolution.Controls.ProcessingSettingsPanel"
              x:DataType="vm:MainWindowViewModel">
-    <Border Classes="Card" Padding="18">
-        <Grid RowDefinitions="Auto,16,*">
-            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                <StackPanel Spacing="4">
-                    <TextBlock Classes="Eyebrow" Text="{DynamicResource WorkspaceSettings}" />
-                    <TextBlock Classes="SectionTitle" Text="{DynamicResource ProcessingSettings}" />
-                </StackPanel>
-                <Border Grid.Column="1"
-                        Padding="9,5"
-                        CornerRadius="4"
-                        Background="{DynamicResource PrimaryTintBrush}"
-                        VerticalAlignment="Center">
-                    <TextBlock Text="NCNN · VULKAN"
-                               FontFamily="{DynamicResource DataFontFamily}"
-                               FontSize="9"
-                               FontWeight="SemiBold"
-                               Foreground="{DynamicResource PrimaryHoverBrush}" />
-                </Border>
-            </Grid>
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="3,0,3,14">
+            <StackPanel Spacing="4">
+                <TextBlock Classes="SectionTitle" Text="{DynamicResource ProcessingSettings}" />
+                <TextBlock Classes="Muted"
+                           FontSize="10"
+                           Text="{DynamicResource RecipeHint}" />
+            </StackPanel>
+            <Border Grid.Column="1"
+                    Padding="9,5"
+                    CornerRadius="9"
+                    Background="{DynamicResource PrimaryTintBrush}"
+                    VerticalAlignment="Center">
+                <TextBlock Text="NCNN · GPU"
+                           Classes="Data"
+                           FontSize="8"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryHoverBrush}" />
+            </Border>
+        </Grid>
 
-            <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
-                <StackPanel Spacing="18">
-                    <StackPanel Spacing="8">
-                        <TextBlock Classes="FieldLabel" Text="{DynamicResource EngineName}" />
-                        <UniformGrid Columns="3" Rows="1" ColumnSpacing="7">
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Spacing="15" Margin="2,0,5,3">
+                <StackPanel Spacing="7">
+                    <TextBlock Classes="Eyebrow" Text="{DynamicResource EngineName}" Margin="2,0" />
+                    <Border Classes="SettingsGroup"
+                            Padding="4"
+                            Background="{DynamicResource ElevatedSurfaceBrush}">
+                        <UniformGrid Columns="3" Rows="1" ColumnSpacing="3">
                             <RadioButton Classes="EngineSegment"
-                                         Content="WAIFU2X"
+                                         Content="Waifu2x"
                                          GroupName="EngineGroup"
                                          IsChecked="{Binding IsWaifu2x, Mode=TwoWay}"
                                          Command="{Binding ChangeEngineCommand}"
                                          CommandParameter="{x:Static model:EngineType.waifu2x}" />
                             <RadioButton Classes="EngineSegment"
-                                         Content="REAL-ESRGAN"
+                                         Content="Real-ESRGAN"
                                          GroupName="EngineGroup"
                                          IsChecked="{Binding IsRealESRGAN, Mode=TwoWay}"
                                          Command="{Binding ChangeEngineCommand}"
@@ -49,138 +55,212 @@
                                          Command="{Binding ChangeEngineCommand}"
                                          CommandParameter="{x:Static model:EngineType.srmd}" />
                         </UniformGrid>
-                    </StackPanel>
+                    </Border>
+                </StackPanel>
 
-                    <Border Height="1" Background="{DynamicResource BorderBrush}" />
+                <StackPanel Spacing="7">
+                    <TextBlock Classes="Eyebrow" Text="{DynamicResource ModelAndQuality}" Margin="2,0" />
+                    <Border Classes="SettingsGroup">
+                        <StackPanel>
+                            <Border Classes="SettingRow">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                    <TextBlock Text="{DynamicResource ModelPath}"
+                                               FontSize="11"
+                                               VerticalAlignment="Center" />
+                                    <ComboBox Grid.Column="1"
+                                              Classes="InlineField"
+                                              ItemsSource="{Binding CurrentEngineOption.model_paths}"
+                                              AutomationProperties.Name="{DynamicResource ModelPath}"
+                                              SelectedIndex="{Binding CurrentSelectedModelPathIndex}"
+                                              DisplayMemberBinding="{Binding Value}"
+                                              x:CompileBindings="False" />
+                                </Grid>
+                            </Border>
 
-                    <StackPanel Spacing="11">
-                        <TextBlock Classes="Eyebrow" Text="{DynamicResource ModelAndQuality}" />
-
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="11">
-                            <StackPanel Grid.Column="0" Spacing="6">
-                                <TextBlock Classes="FieldLabel" Text="{DynamicResource ModelPath}" />
-                                <ComboBox ItemsSource="{Binding CurrentEngineOption.model_paths}"
-                                          SelectedIndex="{Binding CurrentSelectedModelPathIndex}"
-                                          DisplayMemberBinding="{Binding Value}"
-                                          x:CompileBindings="False" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Spacing="6"
-                                        IsVisible="{Binding HasModelNameOption}">
-                                <TextBlock Classes="FieldLabel" Text="{DynamicResource ModelName}" />
-                                <ComboBox ItemsSource="{Binding CurrentEngineOption.model_names}"
-                                          SelectedIndex="{Binding CurrentSelectedModelNameIndex}"
-                                          DisplayMemberBinding="{Binding Value}"
-                                          x:CompileBindings="False" />
-                            </StackPanel>
-                        </Grid>
-
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="11">
-                            <StackPanel Grid.Column="0" Spacing="6">
-                                <TextBlock Classes="FieldLabel" Text="{DynamicResource Scale}" />
-                                <ComboBox ItemsSource="{Binding CurrentEngineOption.scales}"
-                                          SelectedIndex="{Binding CurrentSelectedScaleIndex}"
-                                          DisplayMemberBinding="{Binding Value}"
-                                          x:CompileBindings="False" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Spacing="6">
-                                <TextBlock Classes="FieldLabel" Text="{DynamicResource NoiseLevel}" />
-                                <ComboBox ItemsSource="{Binding CurrentEngineOption.noise_levels}"
-                                          SelectedIndex="{Binding CurrentSelectedNoiseLevelIndex}"
-                                          DisplayMemberBinding="{Binding Value}"
-                                          x:CompileBindings="False" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-
-                    <Border Height="1" Background="{DynamicResource BorderBrush}" />
-
-                    <StackPanel Spacing="11">
-                        <TextBlock Classes="Eyebrow" Text="{DynamicResource RuntimeAndOutput}" />
-
-                        <StackPanel Spacing="6">
-                            <TextBlock Classes="FieldLabel" Text="{DynamicResource GpuDevice}" />
-                            <ComboBox ItemsSource="{Binding GpuList, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
-                                      SelectedValue="{Binding SelectedGpuIndex}"
-                                      DisplayMemberBinding="{Binding Value}"
-                                      SelectedValueBinding="{Binding Key}"
-                                      x:CompileBindings="False" />
-                        </StackPanel>
-
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="11">
-                            <StackPanel Grid.Column="0" Spacing="6">
-                                <TextBlock Classes="FieldLabel" Text="{DynamicResource TileSize}" />
-                                <ComboBox ItemsSource="{Binding CurrentEngineOption.tile_sizes}"
-                                          SelectedIndex="{Binding CurrentSelectedTileSizeIndex}"
-                                          DisplayMemberBinding="{Binding Value}"
-                                          x:CompileBindings="False" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Spacing="6">
-                                <TextBlock Classes="FieldLabel" Text="{DynamicResource ThreadCount}" />
-                                <ComboBox ItemsSource="{Binding CurrentEngineOption.thread_counts}"
-                                          SelectedIndex="{Binding CurrentSelectedThreadCountIndex}"
-                                          DisplayMemberBinding="{Binding Value}"
-                                          x:CompileBindings="False" />
-                            </StackPanel>
-                        </Grid>
-
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="11">
-                            <StackPanel Grid.Column="0" Spacing="6">
-                                <TextBlock Classes="FieldLabel" Text="{DynamicResource OutputFormat}" />
-                                <ComboBox ItemsSource="{Binding CurrentEngineOption.output_formats}"
-                                          SelectedIndex="{Binding CurrentSelectedOutputFormatIndex}"
-                                          DisplayMemberBinding="{Binding Value}"
-                                          x:CompileBindings="False" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Spacing="6">
-                                <TextBlock Classes="FieldLabel" Text="{DynamicResource TTA_Mode}" />
-                                    <Border Classes="InnerPanel" Height="36" Padding="10,0">
-                                    <Grid ColumnDefinitions="*,Auto">
-                                        <TextBlock Text="{DynamicResource TtaHint}"
-                                                   Classes="Muted"
+                            <StackPanel IsVisible="{Binding HasModelNameOption}">
+                                <Border Classes="GroupDivider" />
+                                <Border Classes="SettingRow">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                        <TextBlock Text="{DynamicResource ModelName}"
                                                    FontSize="11"
-                                                   TextTrimming="CharacterEllipsis"
                                                    VerticalAlignment="Center" />
-                                        <ToggleSwitch Grid.Column="1"
-                                                      OnContent=""
-                                                      OffContent=""
-                                                      IsChecked="{Binding TtaMode}"
-                                                      VerticalAlignment="Center" />
+                                        <ComboBox Grid.Column="1"
+                                                  Classes="InlineField"
+                                                  ItemsSource="{Binding CurrentEngineOption.model_names}"
+                                                  AutomationProperties.Name="{DynamicResource ModelName}"
+                                                  SelectedIndex="{Binding CurrentSelectedModelNameIndex}"
+                                                  DisplayMemberBinding="{Binding Value}"
+                                                  x:CompileBindings="False" />
                                     </Grid>
                                 </Border>
                             </StackPanel>
-                        </Grid>
 
-                        <StackPanel Spacing="6">
-                            <TextBlock Classes="FieldLabel" Text="{DynamicResource OutputDirectory}" />
-                            <Button Command="{Binding SelectOutputDirectoryCommand}"
-                                    HorizontalContentAlignment="Stretch"
-                                    ToolTip.Tip="{Binding OutputDirectory}">
-                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
-                                    <Border Width="24" Height="24"
-                                            CornerRadius="4"
-                                            Background="{DynamicResource PrimaryTintBrush}">
-                                        <TextBlock Text="↗"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Foreground="{DynamicResource PrimaryHoverBrush}" />
-                                    </Border>
-                                    <TextBlock Grid.Column="1"
-                                               Text="{Binding OutputDirectory}"
-                                               Classes="Data"
-                                               FontSize="10"
-                                               TextTrimming="PrefixCharacterEllipsis"
+                            <Border Classes="GroupDivider" />
+                            <Border Classes="SettingRow">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                    <TextBlock Text="{DynamicResource Scale}"
+                                               FontSize="11"
                                                VerticalAlignment="Center" />
-                                    <TextBlock Grid.Column="2"
-                                               Text="···"
-                                               Classes="Muted"
-                                               FontWeight="Bold"
-                                               VerticalAlignment="Center" />
+                                    <ComboBox Grid.Column="1"
+                                              Classes="InlineField"
+                                              ItemsSource="{Binding CurrentEngineOption.scales}"
+                                              AutomationProperties.Name="{DynamicResource Scale}"
+                                              SelectedIndex="{Binding CurrentSelectedScaleIndex}"
+                                              DisplayMemberBinding="{Binding Value}"
+                                              x:CompileBindings="False" />
                                 </Grid>
-                            </Button>
+                            </Border>
+
+                            <Border Classes="GroupDivider" />
+                            <Border Classes="SettingRow">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                    <TextBlock Text="{DynamicResource NoiseLevel}"
+                                               FontSize="11"
+                                               VerticalAlignment="Center" />
+                                    <ComboBox Grid.Column="1"
+                                              Classes="InlineField"
+                                              ItemsSource="{Binding CurrentEngineOption.noise_levels}"
+                                              AutomationProperties.Name="{DynamicResource NoiseLevel}"
+                                              SelectedIndex="{Binding CurrentSelectedNoiseLevelIndex}"
+                                              DisplayMemberBinding="{Binding Value}"
+                                              x:CompileBindings="False" />
+                                </Grid>
+                            </Border>
                         </StackPanel>
-                    </StackPanel>
+                    </Border>
                 </StackPanel>
-            </ScrollViewer>
-        </Grid>
-    </Border>
+
+                <StackPanel Spacing="7">
+                    <TextBlock Classes="Eyebrow" Text="{DynamicResource SaveResults}" Margin="2,0" />
+                    <Border Classes="SettingsGroup">
+                        <StackPanel>
+                            <Border Classes="SettingRow">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                    <TextBlock Text="{DynamicResource OutputFormat}"
+                                               FontSize="11"
+                                               VerticalAlignment="Center" />
+                                    <ComboBox Grid.Column="1"
+                                              Classes="InlineField"
+                                              ItemsSource="{Binding CurrentEngineOption.output_formats}"
+                                              AutomationProperties.Name="{DynamicResource OutputFormat}"
+                                              SelectedIndex="{Binding CurrentSelectedOutputFormatIndex}"
+                                              DisplayMemberBinding="{Binding Value}"
+                                              x:CompileBindings="False" />
+                                </Grid>
+                            </Border>
+                            <Border Classes="GroupDivider" />
+                            <Border Classes="SettingRow">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                    <TextBlock Text="{DynamicResource OutputDirectory}"
+                                               FontSize="11"
+                                               VerticalAlignment="Center" />
+                                    <Button Grid.Column="1"
+                                            Classes="InlinePicker"
+                                            Command="{Binding SelectOutputDirectoryCommand}"
+                                            AutomationProperties.Name="{DynamicResource OutputDirectory}"
+                                            ToolTip.Tip="{Binding OutputDirectory}">
+                                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="7">
+                                            <TextBlock Text="{Binding OutputDirectory}"
+                                                       Classes="Data"
+                                                       FontSize="9"
+                                                       TextTrimming="PrefixCharacterEllipsis"
+                                                       MaxWidth="165"
+                                                       VerticalAlignment="Center" />
+                                            <TextBlock Grid.Column="1"
+                                                       Text="↗"
+                                                       FontSize="12"
+                                                       Foreground="{DynamicResource PrimaryHoverBrush}"
+                                                       VerticalAlignment="Center" />
+                                        </Grid>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <Expander Classes="InspectorExpander"
+                          IsExpanded="False"
+                          AutomationProperties.Name="{DynamicResource RuntimeAndOutput}">
+                    <Expander.Header>
+                        <StackPanel Spacing="2">
+                            <TextBlock Text="{DynamicResource RuntimeAndOutput}"
+                                       FontSize="11"
+                                       FontWeight="SemiBold" />
+                            <TextBlock Text="{DynamicResource AdvancedHint}"
+                                       Classes="Muted"
+                                       FontSize="9" />
+                        </StackPanel>
+                    </Expander.Header>
+                    <StackPanel>
+                        <Border Classes="SettingRow">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <TextBlock Text="{DynamicResource GpuDevice}"
+                                           FontSize="11"
+                                           VerticalAlignment="Center" />
+                                <ComboBox Grid.Column="1"
+                                          Classes="InlineField"
+                                          MinWidth="190"
+                                          MaxWidth="220"
+                                          ItemsSource="{Binding GpuList, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                          AutomationProperties.Name="{DynamicResource GpuDevice}"
+                                          SelectedValue="{Binding SelectedGpuIndex}"
+                                          DisplayMemberBinding="{Binding Value}"
+                                          SelectedValueBinding="{Binding Key}"
+                                          x:CompileBindings="False" />
+                            </Grid>
+                        </Border>
+                        <Border Classes="GroupDivider" />
+                        <Border Classes="SettingRow">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <TextBlock Text="{DynamicResource TileSize}"
+                                           FontSize="11"
+                                           VerticalAlignment="Center" />
+                                <ComboBox Grid.Column="1"
+                                          Classes="InlineField"
+                                          ItemsSource="{Binding CurrentEngineOption.tile_sizes}"
+                                          AutomationProperties.Name="{DynamicResource TileSize}"
+                                          SelectedIndex="{Binding CurrentSelectedTileSizeIndex}"
+                                          DisplayMemberBinding="{Binding Value}"
+                                          x:CompileBindings="False" />
+                            </Grid>
+                        </Border>
+                        <Border Classes="GroupDivider" />
+                        <Border Classes="SettingRow">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <TextBlock Text="{DynamicResource ThreadCount}"
+                                           FontSize="11"
+                                           VerticalAlignment="Center" />
+                                <ComboBox Grid.Column="1"
+                                          Classes="InlineField"
+                                          ItemsSource="{Binding CurrentEngineOption.thread_counts}"
+                                          AutomationProperties.Name="{DynamicResource ThreadCount}"
+                                          SelectedIndex="{Binding CurrentSelectedThreadCountIndex}"
+                                          DisplayMemberBinding="{Binding Value}"
+                                          x:CompileBindings="False" />
+                            </Grid>
+                        </Border>
+                        <Border Classes="GroupDivider" />
+                        <Border Classes="SettingRow">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <StackPanel Spacing="2" VerticalAlignment="Center">
+                                    <TextBlock Text="{DynamicResource TTA_Mode}" FontSize="11" />
+                                    <TextBlock Text="{DynamicResource TtaHint}"
+                                               Classes="Tertiary"
+                                               FontSize="9" />
+                                </StackPanel>
+                                <ToggleSwitch Grid.Column="1"
+                                              Classes="CompactSwitch"
+                                              AutomationProperties.Name="{DynamicResource TTA_Mode}"
+                                              OnContent=""
+                                              OffContent=""
+                                              IsChecked="{Binding TtaMode}"
+                                              VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

@@ -254,6 +254,10 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<TaskItem> taskList = [];
 
+    public bool HasTasks => TaskList.Count > 0;
+
+    public bool IsQueueEmpty => TaskList.Count == 0;
+
     /// <summary>
     /// 日志文本
     /// </summary>
@@ -885,6 +889,8 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private void NotifyTaskControlStateChanged()
     {
+        OnPropertyChanged(nameof(HasTasks));
+        OnPropertyChanged(nameof(IsQueueEmpty));
         OnPropertyChanged(nameof(CanStartTask));
         OnPropertyChanged(nameof(CanCancelTask));
         OnPropertyChanged(nameof(CanClearTask));
