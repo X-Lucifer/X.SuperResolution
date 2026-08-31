@@ -57,10 +57,6 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="12" />
     </Style>
-    <Style Selector="Border.TaskItem:pointerover">
-        <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}" />
-    </Style>
     <Style Selector="Border.SettingsGroup">
         <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
@@ -73,9 +69,6 @@
         <Setter Property="Padding" Value="13,7" />
         <Setter Property="Background" Value="Transparent" />
     </Style>
-    <Style Selector="Border.SettingRow:pointerover">
-        <Setter Property="Background" Value="{DynamicResource HoverSurfaceBrush}" />
-    </Style>
     <Style Selector="Border.GroupDivider">
         <Setter Property="Height" Value="1" />
         <Setter Property="Margin" Value="13,0" />
@@ -85,10 +78,10 @@
     <Style Selector="Button">
         <Setter Property="MinHeight" Value="38" />
         <Setter Property="Padding" Value="15,8" />
-        <Setter Property="CornerRadius" Value="9" />
+        <Setter Property="CornerRadius" Value="8" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
-        <Setter Property="Background" Value="{DynamicResource ElevatedSurfaceBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Cursor" Value="Hand" />
@@ -110,17 +103,20 @@
         </Setter>
     </Style>
     <Style Selector="Button:pointerover">
-        <Setter Property="Background" Value="{DynamicResource HoverSurfaceBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}" />
     </Style>
     <Style Selector="Button:pressed">
-        <Setter Property="Opacity" Value="0.9" />
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="Background" Value="{DynamicResource PressedSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}" />
     </Style>
     <Style Selector="Button:disabled">
-        <Setter Property="Opacity" Value="0.58" />
-        <Setter Property="Background" Value="{DynamicResource ElevatedSurfaceBrush}" />
-        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextTertiaryBrush}" />
+        <Setter Property="Cursor" Value="Arrow" />
     </Style>
     <Style Selector="Button.PrimaryAction">
         <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
@@ -131,9 +127,13 @@
         <Setter Property="Background" Value="{DynamicResource PrimaryHoverBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHoverBrush}" />
     </Style>
+    <Style Selector="Button.PrimaryAction:pressed">
+        <Setter Property="Background" Value="{DynamicResource PrimaryPressedBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryPressedBrush}" />
+    </Style>
     <Style Selector="Button.PrimaryAction:disabled">
-        <Setter Property="Background" Value="{DynamicResource ElevatedSurfaceBrush}" />
-        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryDisabledBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryDisabledBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextTertiaryBrush}" />
     </Style>
     <Style Selector="Button.PrimaryAction TextBlock">
@@ -143,13 +143,21 @@
         <Setter Property="Foreground" Value="{DynamicResource TextTertiaryBrush}" />
     </Style>
     <Style Selector="Button.DangerAction">
-        <Setter Property="Background" Value="{DynamicResource DangerTintBrush}" />
+        <Setter Property="Background" Value="{DynamicResource DangerSurfaceBrush}" />
         <Setter Property="BorderBrush" Value="#F0D4D8" />
         <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
     </Style>
+    <Style Selector="Button.DangerAction:pointerover">
+        <Setter Property="Background" Value="{DynamicResource DangerPressedSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="#E9C1C7" />
+    </Style>
+    <Style Selector="Button.DangerAction:pressed">
+        <Setter Property="Background" Value="#F3DCE0" />
+        <Setter Property="BorderBrush" Value="#E4B6BE" />
+    </Style>
     <Style Selector="Button.DangerAction:disabled">
-        <Setter Property="Background" Value="{DynamicResource ElevatedSurfaceBrush}" />
-        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextTertiaryBrush}" />
     </Style>
     <Style Selector="Button.GhostAction">
@@ -159,6 +167,10 @@
     </Style>
     <Style Selector="Button.GhostAction:pointerover">
         <Setter Property="Background" Value="{DynamicResource HoverSurfaceBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    </Style>
+    <Style Selector="Button.GhostAction:pressed">
+        <Setter Property="Background" Value="{DynamicResource PressedSurfaceBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
     </Style>
     <Style Selector="Button.GhostAction:disabled">
@@ -172,6 +184,14 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="Button.IconAction:pointerover">
+        <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+    </Style>
+    <Style Selector="Button.IconAction:pressed">
+        <Setter Property="Background" Value="{DynamicResource PressedSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}" />
     </Style>
     <Style Selector="Button.ActionButton">
         <Setter Property="Height" Value="42" />
@@ -195,9 +215,35 @@
     <Style Selector="Button.WindowAction:pointerover">
         <Setter Property="Background" Value="{DynamicResource HoverSurfaceBrush}" />
     </Style>
+    <Style Selector="Button.WindowAction:pressed">
+        <Setter Property="Background" Value="{DynamicResource PressedSurfaceBrush}" />
+    </Style>
     <Style Selector="Button.WindowClose:pointerover">
         <Setter Property="Background" Value="#D9606C" />
         <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+    <Style Selector="Button.WindowClose:pressed">
+        <Setter Property="Background" Value="#B84F5B" />
+        <Setter Property="Foreground" Value="#FFFFFF" />
+    </Style>
+
+    <Style Selector="HyperlinkButton">
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="HyperlinkButton:disabled">
+        <Setter Property="Cursor" Value="Arrow" />
+    </Style>
+    <Style Selector="ToggleButton">
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="ToggleButton:disabled">
+        <Setter Property="Cursor" Value="Arrow" />
+    </Style>
+    <Style Selector="RepeatButton">
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="RepeatButton:disabled">
+        <Setter Property="Cursor" Value="Arrow" />
     </Style>
 
     <Style Selector="HyperlinkButton.TitleLink">
@@ -224,6 +270,10 @@
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="Background" Value="{DynamicResource HoverSurfaceBrush}" />
     </Style>
+    <Style Selector="HyperlinkButton.TitleLink:pressed">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="Background" Value="{DynamicResource PressedSurfaceBrush}" />
+    </Style>
 
     <Style Selector="ComboBox">
         <Setter Property="MinHeight" Value="38" />
@@ -232,7 +282,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Background" Value="{DynamicResource SubtleSurfaceBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="Cursor" Value="Hand" />
@@ -246,9 +296,11 @@
                             CornerRadius="{TemplateBinding CornerRadius}"
                             MinHeight="{TemplateBinding MinHeight}">
                         <Grid ColumnDefinitions="*,24">
-                            <ContentPresenter Content="{TemplateBinding SelectionBoxItem}"
+                            <ContentPresenter Name="SelectionPresenter"
+                                              Content="{TemplateBinding SelectionBoxItem}"
                                               ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                               Margin="{TemplateBinding Padding}"
+                                              ClipToBounds="True"
                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalContentAlignment="Center"
                                               TextElement.Foreground="{TemplateBinding Foreground}" />
@@ -291,10 +343,15 @@
         </Setter>
     </Style>
     <Style Selector="ComboBox:pointerover">
+        <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}" />
     </Style>
+    <Style Selector="ComboBox:disabled">
+        <Setter Property="Cursor" Value="Arrow" />
+    </Style>
     <Style Selector="ComboBox.InlineField">
-        <Setter Property="MinWidth" Value="132" />
+        <Setter Property="Width" Value="180" />
+        <Setter Property="MinWidth" Value="180" />
         <Setter Property="MaxWidth" Value="180" />
         <Setter Property="MinHeight" Value="34" />
         <Setter Property="Height" Value="34" />
@@ -302,13 +359,13 @@
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="HorizontalContentAlignment" Value="Right" />
         <Setter Property="FontSize" Value="11" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
         <Setter Property="CornerRadius" Value="9" />
     </Style>
     <Style Selector="ComboBox.InlineField:pointerover">
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}" />
     </Style>
     <Style Selector="ComboBox.InlineField:focus">
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
@@ -320,6 +377,10 @@
         <Setter Property="Height" Value="9" />
         <Setter Property="Foreground" Value="{DynamicResource TextTertiaryBrush}" />
     </Style>
+    <Style Selector="ComboBox /template/ ContentPresenter#SelectionPresenter TextBlock">
+        <Setter Property="TextWrapping" Value="NoWrap" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
     <Style Selector="ComboBoxItem">
         <Setter Property="MinHeight" Value="34" />
         <Setter Property="Padding" Value="10,7" />
@@ -328,13 +389,18 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Background="{TemplateBinding Background}"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Padding="{TemplateBinding Padding}">
-                    <ContentPresenter Content="{TemplateBinding Content}"
+                    <ContentPresenter Name="ComboItemContent"
+                                      Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      Background="Transparent"
+                                      BorderBrush="Transparent"
+                                      BorderThickness="0"
                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                       VerticalContentAlignment="Center"
                                       TextElement.Foreground="{TemplateBinding Foreground}" />
@@ -343,11 +409,33 @@
         </Setter>
     </Style>
     <Style Selector="ComboBoxItem:pointerover">
-        <Setter Property="Background" Value="{DynamicResource HoverSurfaceBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ComboHoverSurfaceBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryHoverBrush}" />
+    </Style>
+    <Style Selector="ComboBoxItem:pressed">
+        <Setter Property="Background" Value="{DynamicResource SelectionSurfaceBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryHoverBrush}" />
     </Style>
     <Style Selector="ComboBoxItem:selected">
-        <Setter Property="Background" Value="{DynamicResource PrimaryTintBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SelectionSurfaceBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource PrimaryHoverBrush}" />
+    </Style>
+    <Style Selector="ComboBoxItem:selected:pointerover">
+        <Setter Property="Background" Value="{DynamicResource SelectionSurfaceBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryHoverBrush}" />
+    </Style>
+    <Style Selector="ComboBoxItem:disabled">
+        <Setter Property="Cursor" Value="Arrow" />
+    </Style>
+    <Style Selector="ComboBoxItem /template/ ContentPresenter#ComboItemContent,
+                     ComboBoxItem:pointerover /template/ ContentPresenter#ComboItemContent,
+                     ComboBoxItem:pressed /template/ ContentPresenter#ComboItemContent,
+                     ComboBoxItem:selected /template/ ContentPresenter#ComboItemContent,
+                     ComboBoxItem:selected:pointerover /template/ ContentPresenter#ComboItemContent,
+                     ComboBoxItem:selected:pressed /template/ ContentPresenter#ComboItemContent">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
     </Style>
     <Style Selector="TextBox">
         <Setter Property="CornerRadius" Value="10" />
@@ -390,6 +478,9 @@
     <Style Selector="ToggleSwitch">
         <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
         <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="ToggleSwitch:disabled">
+        <Setter Property="Cursor" Value="Arrow" />
     </Style>
     <Style Selector="ToggleSwitch /template/ Border#OuterBorder">
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
@@ -481,6 +572,9 @@
             </ControlTemplate>
         </Setter>
     </Style>
+    <Style Selector="RadioButton.EngineSegment:disabled">
+        <Setter Property="Cursor" Value="Arrow" />
+    </Style>
     <Style Selector="RadioButton.EngineSegment:pointerover">
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
@@ -530,6 +624,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Name="InspectorTabSurface"
@@ -544,6 +639,9 @@
                 </Border>
             </ControlTemplate>
         </Setter>
+    </Style>
+    <Style Selector="TabItem.InspectorTab:disabled">
+        <Setter Property="Cursor" Value="Arrow" />
     </Style>
     <Style Selector="TabItem.InspectorTab:pointerover">
         <Setter Property="Background" Value="#80FFFFFF" />
@@ -579,6 +677,7 @@
                                       Background="Transparent"
                                       BorderThickness="0"
                                       CornerRadius="12"
+                                      Cursor="Hand"
                                       HorizontalAlignment="Stretch"
                                       HorizontalContentAlignment="Stretch">
                             <ToggleButton.Template>
@@ -623,6 +722,9 @@
     <Style Selector="Expander.InspectorExpander /template/ ToggleButton#InspectorExpanderHeader:pointerover">
         <Setter Property="Background" Value="{DynamicResource HoverSurfaceBrush}" />
     </Style>
+    <Style Selector="Expander.InspectorExpander:disabled /template/ ToggleButton#InspectorExpanderHeader">
+        <Setter Property="Cursor" Value="Arrow" />
+    </Style>
     <Style Selector="Expander.InspectorExpander:expanded /template/ PathIcon#InspectorExpanderChevron">
         <Setter Property="Data" Value="M 1,7 L 5,3 L 9,7" />
     </Style>
@@ -641,6 +743,10 @@
     <Style Selector="Button.InlinePicker:pointerover">
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+    </Style>
+    <Style Selector="Button.InlinePicker:pressed">
+        <Setter Property="Background" Value="{DynamicResource PressedSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}" />
     </Style>
 
     <Style Selector="ScrollBar:vertical">
@@ -668,6 +774,7 @@
                                    Width="4"
                                    MinHeight="24"
                                    Background="{DynamicResource BorderStrongBrush}"
+                                   Cursor="Hand"
                                    CornerRadius="2">
                                 <Thumb.Template>
                                     <ControlTemplate>

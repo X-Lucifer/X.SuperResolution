@@ -200,8 +200,6 @@
                                            VerticalAlignment="Center" />
                                 <ComboBox Grid.Column="1"
                                           Classes="InlineField"
-                                          MinWidth="190"
-                                          MaxWidth="220"
                                           ItemsSource="{Binding GpuList, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
                                           AutomationProperties.Name="{DynamicResource GpuDevice}"
                                           SelectedValue="{Binding SelectedGpuIndex}"

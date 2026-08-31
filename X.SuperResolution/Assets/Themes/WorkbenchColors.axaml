@@ -10,11 +10,14 @@
     <Color x:Key="ElevatedSurfaceColor">#F1F6F8</Color>
     <Color x:Key="SubtleSurfaceColor">#F8FAFC</Color>
     <Color x:Key="HoverSurfaceColor">#EDF5F7</Color>
+    <Color x:Key="ComboHoverSurfaceColor">#F0F9F6</Color>
     <Color x:Key="BorderColor">#E1EBF0</Color>
     <Color x:Key="BorderStrongColor">#C9DCE4</Color>
 
     <Color x:Key="PrimaryColor">#58AF95</Color>
     <Color x:Key="PrimaryHoverColor">#459B82</Color>
+    <Color x:Key="PrimaryPressedColor">#3D896F</Color>
+    <Color x:Key="PrimaryDisabledColor">#DDEBE6</Color>
     <Color x:Key="AccentColor">#73A7E8</Color>
     <Color x:Key="PeachColor">#F19CA6</Color>
     <Color x:Key="TextPrimaryColor">#304557</Color>
@@ -23,6 +26,10 @@
     <Color x:Key="DangerColor">#D06D79</Color>
     <Color x:Key="WarningColor">#C58B47</Color>
     <Color x:Key="SuccessColor">#4FA58B</Color>
+    <Color x:Key="PressedSurfaceColor">#E7F0F3</Color>
+    <Color x:Key="SelectionSurfaceColor">#E8F5F1</Color>
+    <Color x:Key="DangerSurfaceColor">#FFF4F5</Color>
+    <Color x:Key="DangerPressedSurfaceColor">#F8E7EA</Color>
 
     <SolidColorBrush x:Key="AppBackgroundBrush" Color="{StaticResource AppBackgroundColor}" />
     <SolidColorBrush x:Key="TitleBarBrush" Color="{StaticResource TitleBarColor}" />
@@ -30,10 +37,13 @@
     <SolidColorBrush x:Key="ElevatedSurfaceBrush" Color="{StaticResource ElevatedSurfaceColor}" />
     <SolidColorBrush x:Key="SubtleSurfaceBrush" Color="{StaticResource SubtleSurfaceColor}" />
     <SolidColorBrush x:Key="HoverSurfaceBrush" Color="{StaticResource HoverSurfaceColor}" />
+    <SolidColorBrush x:Key="ComboHoverSurfaceBrush" Color="{StaticResource ComboHoverSurfaceColor}" />
     <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}" />
     <SolidColorBrush x:Key="BorderStrongBrush" Color="{StaticResource BorderStrongColor}" />
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}" />
     <SolidColorBrush x:Key="PrimaryHoverBrush" Color="{StaticResource PrimaryHoverColor}" />
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="{StaticResource PrimaryPressedColor}" />
+    <SolidColorBrush x:Key="PrimaryDisabledBrush" Color="{StaticResource PrimaryDisabledColor}" />
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
     <SolidColorBrush x:Key="PeachBrush" Color="{StaticResource PeachColor}" />
     <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
@@ -42,6 +52,17 @@
     <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}" />
     <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}" />
     <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}" />
+    <SolidColorBrush x:Key="PressedSurfaceBrush" Color="{StaticResource PressedSurfaceColor}" />
+    <SolidColorBrush x:Key="SelectionSurfaceBrush" Color="{StaticResource SelectionSurfaceColor}" />
+    <SolidColorBrush x:Key="DangerSurfaceBrush" Color="{StaticResource DangerSurfaceColor}" />
+    <SolidColorBrush x:Key="DangerPressedSurfaceBrush" Color="{StaticResource DangerPressedSurfaceColor}" />
+    <!-- Neutralize Fluent's inner ComboBoxItem state layer; the app template paints the single outer surface. -->
+    <SolidColorBrush x:Key="ComboBoxItemBackgroundPointerOver" Color="Transparent" />
+    <SolidColorBrush x:Key="ComboBoxItemBackgroundPressed" Color="Transparent" />
+    <SolidColorBrush x:Key="ComboBoxItemBackgroundSelected" Color="Transparent" />
+    <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPointerOver" Color="Transparent" />
+    <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPressed" Color="Transparent" />
+    <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedDisabled" Color="Transparent" />
     <SolidColorBrush x:Key="PrimaryTintBrush" Color="#1858AF95" />
     <SolidColorBrush x:Key="AccentTintBrush" Color="#1973A7E8" />
     <SolidColorBrush x:Key="PeachTintBrush" Color="#1AF19CA6" />

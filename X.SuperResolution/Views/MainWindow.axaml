@@ -82,8 +82,6 @@
                               MinHeight="34"
                               Margin="0,10,4,10"
                               Padding="9,4"
-                              BorderThickness="0"
-                              Background="Transparent"
                               AutomationProperties.Name="{DynamicResource Language}"
                               ItemsSource="{Binding LangList}"
                               SelectedValue="{Binding CurrentLang}"
