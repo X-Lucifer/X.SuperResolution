@@ -27,6 +27,7 @@ public sealed class AppSettings
                     Directory.CreateDirectory(field);
                 }
             }
+
             return field;
         }
         set;

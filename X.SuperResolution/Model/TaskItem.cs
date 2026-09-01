@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace X.SuperResolution.Model;
+
 // ReSharper disable InconsistentNaming
 public partial class TaskItem : ObservableObject
 {
@@ -73,7 +74,10 @@ public partial class TaskItem : ObservableObject
 
     public void StopTiming(DateTime finish_time)
     {
-        if (StartedAt == null) return;
+        if (StartedAt == null)
+        {
+            return;
+        }
 
         FinishedAt = finish_time;
         UpdateElapsed(finish_time);
@@ -81,7 +85,10 @@ public partial class TaskItem : ObservableObject
 
     public void UpdateElapsed(DateTime now)
     {
-        if (StartedAt == null) return;
+        if (StartedAt == null)
+        {
+            return;
+        }
 
         var end_time = FinishedAt ?? now;
         var elapsed = end_time - StartedAt.Value;
@@ -91,7 +98,9 @@ public partial class TaskItem : ObservableObject
     private static string FormatElapsed(TimeSpan elapsed)
     {
         if (elapsed < TimeSpan.Zero)
+        {
             elapsed = TimeSpan.Zero;
+        }
 
         return $"{(int)elapsed.TotalHours:00}:{elapsed.Minutes:00}:{elapsed.Seconds:00}";
     }

@@ -21,7 +21,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private TaskItem _current_processing_task;
     private NcnnImageProcessor _processor;
     private NcnnImageProcessingTask _current_native_task;
-    private readonly StringBuilder _log_builder = new StringBuilder();
+    private readonly StringBuilder _log_builder = new();
     private long _last_progress_tick;
     private NcnnTaskState? _last_native_state;
     private readonly SettingsService _settingsService;
@@ -32,7 +32,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private DateTime? _batch_start_time;
     private DateTime? _batch_finish_time;
 
-    sealed private class ProcessingSettings
+    private sealed class ProcessingSettings
     {
         public EngineType Engine { get; init; }
         public string ModelPath { get; init; }
@@ -185,25 +185,13 @@ public partial class MainWindowViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(CurrentSelectedThreadCountIndex))]
     private EngineType currentEngine = EngineType.waifu2x;
 
-    public bool IsWaifu2x
-    {
-        get { return CurrentEngine == EngineType.waifu2x; }
-    }
+    public bool IsWaifu2x => CurrentEngine == EngineType.waifu2x;
 
-    public bool IsSrmd
-    {
-        get { return CurrentEngine == EngineType.srmd; }
-    }
+    public bool IsSrmd => CurrentEngine == EngineType.srmd;
 
-    public bool IsRealESRGAN
-    {
-        get { return CurrentEngine == EngineType.RealESRGAN; }
-    }
+    public bool IsRealESRGAN => CurrentEngine == EngineType.RealESRGAN;
 
-    public bool HasModelNameOption
-    {
-        get { return CurrentEngineOption.model_names.Count > 0; }
-    }
+    public bool HasModelNameOption => CurrentEngineOption.model_names.Count > 0;
 
     [ObservableProperty]
     private int currentSelectedNoiseLevelIndex;
@@ -238,13 +226,10 @@ public partial class MainWindowViewModel : ViewModelBase
     [ObservableProperty]
     private string currentLang = "zh-CN";
 
-    public EngineOption CurrentEngineOption
-    {
-        get { return _engine_options[CurrentEngine]; }
-    }
+    public EngineOption CurrentEngineOption => _engine_options[CurrentEngine];
 
     [ObservableProperty]
-    private Dictionary<string, string> langList = new Dictionary<string, string>
+    private Dictionary<string, string> langList = new()
     {
         { "zh-CN", "中文" },
         { "en-US", "English" }
@@ -286,15 +271,9 @@ public partial class MainWindowViewModel : ViewModelBase
         get { return !IsProcessing && TaskList.Any(task => !IsTaskCompleted(task)); }
     }
 
-    public bool CanCancelTask
-    {
-        get { return IsProcessing && _current_task_cts != null; }
-    }
+    public bool CanCancelTask => IsProcessing && _current_task_cts != null;
 
-    public bool CanClearTask
-    {
-        get { return !IsProcessing && TaskList.Count > 0; }
-    }
+    public bool CanClearTask => !IsProcessing && TaskList.Count > 0;
 
     /// <summary>
     /// 切换引擎
@@ -351,7 +330,10 @@ public partial class MainWindowViewModel : ViewModelBase
         try
         {
             var files = await OpenFilePickerAsync();
-            if (files is not { Count: > 0 }) return;
+            if (files is not { Count: > 0 })
+            {
+                return;
+            }
 
             const long maxFileSize = 50L * 1024 * 1024;
             var added_count = 0;
@@ -386,7 +368,9 @@ public partial class MainWindowViewModel : ViewModelBase
             }
 
             if (added_count > 0)
+            {
                 AppendLog($"已添加 {added_count} 个文件");
+            }
 
             NotifyTaskControlStateChanged();
         }
@@ -405,13 +389,19 @@ public partial class MainWindowViewModel : ViewModelBase
         try
         {
             var folders = await OpenFolderPickerAsync(OutputDirectory);
-            if (folders is not { Count: > 0 }) return;
+            if (folders is not { Count: > 0 })
+            {
+                return;
+            }
 
             var path = folders.First().Path.IsFile
                 ? folders.First().Path.LocalPath
                 : folders.First().Path.AbsolutePath;
 
-            if (string.IsNullOrWhiteSpace(path)) return;
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return;
+            }
 
             OutputDirectory = path;
             _settingsService.SetOutputDirectory(OutputDirectory);
@@ -426,7 +416,9 @@ public partial class MainWindowViewModel : ViewModelBase
     public void ChangeLanguage(string language)
     {
         if (string.IsNullOrWhiteSpace(language))
+        {
             return;
+        }
 
         CurrentLang = language;
         _settingsService.SetLanguage(language);
@@ -445,10 +437,16 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanStartTask))]
     private async Task StartTask(CancellationToken token)
     {
-        if (!CanStartTask) return;
+        if (!CanStartTask)
+        {
+            return;
+        }
 
         var settings = CreateProcessingSettings();
-        if (!ValidateProcessingSettings(settings)) return;
+        if (!ValidateProcessingSettings(settings))
+        {
+            return;
+        }
 
         var pending_tasks = TaskList
             .Where(task => !IsTaskCompleted(task))
@@ -481,7 +479,10 @@ public partial class MainWindowViewModel : ViewModelBase
 
             foreach (var task in pending_tasks.Where(task => TaskList.Contains(task)))
             {
-                if (_current_task_cts.IsCancellationRequested) break;
+                if (_current_task_cts.IsCancellationRequested)
+                {
+                    break;
+                }
 
                 task.Status = "处理中...";
                 task.Progress = 0;
@@ -546,7 +547,11 @@ public partial class MainWindowViewModel : ViewModelBase
             _current_task_cts?.Dispose();
             _current_task_cts = null;
 
-            if (_stop_requested) MarkUnfinishedTasksStopped();
+            if (_stop_requested)
+            {
+                MarkUnfinishedTasksStopped();
+            }
+
             StopBatchTiming(DateTime.Now);
             IsProcessing = false;
             NotifyTaskControlStateChanged();
@@ -560,7 +565,10 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanCancelTask))]
     private void CancelTask()
     {
-        if (!CanCancelTask) return;
+        if (!CanCancelTask)
+        {
+            return;
+        }
 
         try
         {
@@ -568,7 +576,11 @@ public partial class MainWindowViewModel : ViewModelBase
             MarkUnfinishedTasksStopped(_current_processing_task);
             _current_task_cts?.Cancel();
             _current_native_task?.Cancel();
-            if (_current_processing_task != null) _current_processing_task.Status = "正在停止";
+            if (_current_processing_task != null)
+            {
+                _current_processing_task.Status = "正在停止";
+            }
+
             AppendLog("已请求停止当前队列");
         }
         catch (Exception ex)
@@ -587,7 +599,10 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanClearTask))]
     private void ClearTask()
     {
-        if (!CanClearTask) return;
+        if (!CanClearTask)
+        {
+            return;
+        }
 
         TaskList.Clear();
         ResetBatchTiming();
@@ -638,7 +653,9 @@ public partial class MainWindowViewModel : ViewModelBase
 
         // 如果输出文件已存在则先删除
         if (File.Exists(output_path))
+        {
             File.Delete(output_path);
+        }
 
         var config = CreateNativeTaskConfig(input_path, output_path, settings);
         var native_task = EnsureProcessor().CreateTask(config);
@@ -784,7 +801,10 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private void StopBatchTiming(DateTime finish_time)
     {
-        if (_batch_start_time == null) return;
+        if (_batch_start_time == null)
+        {
+            return;
+        }
 
         _batch_finish_time = finish_time;
         UpdateTimingDisplays(finish_time);
@@ -829,7 +849,10 @@ public partial class MainWindowViewModel : ViewModelBase
         Dispatcher.UIThread.Post(() =>
         {
             var current_task = _current_processing_task;
-            if (current_task == null) return;
+            if (current_task == null)
+            {
+                return;
+            }
 
             current_task.Progress = CalculateDisplayProgress(e);
             current_task.Status = _stop_requested && e.State == Cancelled
@@ -859,8 +882,15 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private static int CalculateDisplayProgress(NcnnProgressChangedEventArgs e)
     {
-        if (e.State == Completed) return 100;
-        if (e.Percent > 0) return e.Percent;
+        if (e.State == Completed)
+        {
+            return 100;
+        }
+
+        if (e.Percent > 0)
+        {
+            return e.Percent;
+        }
 
         return e.State switch
         {
@@ -903,7 +933,9 @@ public partial class MainWindowViewModel : ViewModelBase
     private static string FormatElapsed(TimeSpan elapsed)
     {
         if (elapsed < TimeSpan.Zero)
+        {
             elapsed = TimeSpan.Zero;
+        }
 
         return $"{(int)elapsed.TotalHours:00}:{elapsed.Minutes:00}:{elapsed.Seconds:00}";
     }

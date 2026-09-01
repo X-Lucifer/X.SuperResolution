@@ -5,6 +5,7 @@
 // ------ Date: 2026-01-24 22:01:05
 
 // ReSharper disable InconsistentNaming
+
 namespace X.SuperResolution.Model;
 
 public class EngineOption

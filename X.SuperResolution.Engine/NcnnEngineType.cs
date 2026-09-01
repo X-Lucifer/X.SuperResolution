@@ -1,4 +1,5 @@
 // ReSharper disable InconsistentNaming
+
 namespace X.SuperResolution.Engine;
 
 /// <summary>

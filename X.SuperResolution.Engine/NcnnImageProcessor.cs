@@ -5,7 +5,7 @@ namespace X.SuperResolution.Engine;
 
 public sealed class NcnnImageProcessor : IDisposable
 {
-    private static readonly object _initialization_lock = new();
+    private static readonly Lock _initialization_lock = new();
     private static int _reference_count;
 
     private bool _disposed;
@@ -39,16 +39,25 @@ public sealed class NcnnImageProcessor : IDisposable
 
     public void Dispose()
     {
-        if (_disposed) return;
+        if (_disposed)
+        {
+            return;
+        }
+
         _disposed = true;
 
         lock (_initialization_lock)
         {
-            if (_reference_count <= 0) return;
+            if (_reference_count <= 0)
+            {
+                return;
+            }
 
             _reference_count--;
             if (_reference_count == 0)
+            {
                 NcnnImageProc_Deinit();
+            }
         }
     }
 
@@ -69,6 +78,7 @@ public sealed class NcnnImageProcessor : IDisposable
                 {
                     throw new DllNotFoundException("缺少DLL运行库, 请使用完整安装包, 并安装最新的显卡驱动（需要 Vulkan 支持）", exception);
                 }
+
                 if (result != 0)
                 {
                     throw new InvalidOperationException($"NcnnImageProc_Init failed with code {result}");
@@ -109,7 +119,9 @@ public sealed class NcnnImageProcessingTask : IDisposable, IAsyncDisposable
 
         var result = NcnnImageProc_StartTask(TaskId);
         if (result != 0)
+        {
             throw new InvalidOperationException($"NcnnImageProc_StartTask failed with code {result}");
+        }
     }
 
     public async Task<NcnnTaskState> StartAndWaitAsync(CancellationToken cancellation_token)
@@ -128,20 +140,26 @@ public sealed class NcnnImageProcessingTask : IDisposable, IAsyncDisposable
         while (true)
         {
             if (cancellation_token.IsCancellationRequested)
+            {
                 cancellation_requested = true;
+            }
 
             if (_completion_source.Task.IsCompleted)
             {
                 var state = await _completion_source.Task.ConfigureAwait(false);
                 if (cancellation_requested && state == NcnnTaskState.Cancelled)
+                {
                     throw new OperationCanceledException(cancellation_token);
+                }
 
                 return state;
             }
 
             var current_state = GetStatus();
             if (IsTerminalState(current_state))
+            {
                 Complete(current_state);
+            }
 
             await Task.Delay(100, cancellation_token).ConfigureAwait(false);
         }
@@ -153,7 +171,9 @@ public sealed class NcnnImageProcessingTask : IDisposable, IAsyncDisposable
 
         var result = NcnnImageProc_PauseTask(TaskId);
         if (result != 0)
+        {
             throw new InvalidOperationException($"NcnnImageProc_PauseTask failed with code {result}");
+        }
     }
 
     public void Resume()
@@ -162,12 +182,18 @@ public sealed class NcnnImageProcessingTask : IDisposable, IAsyncDisposable
 
         var result = NcnnImageProc_ResumeTask(TaskId);
         if (result != 0)
+        {
             throw new InvalidOperationException($"NcnnImageProc_ResumeTask failed with code {result}");
+        }
     }
 
     public void Cancel()
     {
-        if (Volatile.Read(ref _disposed) != 0) return;
+        if (Volatile.Read(ref _disposed) != 0)
+        {
+            return;
+        }
+
         _ = NcnnImageProc_CancelTask(TaskId);
     }
 
@@ -211,13 +237,15 @@ public sealed class NcnnImageProcessingTask : IDisposable, IAsyncDisposable
     public async ValueTask DisposeAsync()
     {
         if (Interlocked.Exchange(ref _disposed, 1) != 0)
+        {
             return;
+        }
 
         try
         {
             NcnnImageProc_SetCallback(TaskId, null, IntPtr.Zero);
 
-            if (!IsTerminalState(_last_state)) 
+            if (!IsTerminalState(_last_state))
             {
                 _ = NcnnImageProc_CancelTask(TaskId);
             }
@@ -230,7 +258,9 @@ public sealed class NcnnImageProcessingTask : IDisposable, IAsyncDisposable
         finally
         {
             if (_self_handle.IsAllocated)
+            {
                 _self_handle.Free();
+            }
 
             _config_memory.Dispose();
         }
@@ -241,9 +271,13 @@ public sealed class NcnnImageProcessingTask : IDisposable, IAsyncDisposable
         _last_state = state;
 
         if (state == NcnnTaskState.Failed)
+        {
             _completion_source.TrySetException(new InvalidOperationException(GetLastError()));
+        }
         else
+        {
             _completion_source.TrySetResult(state);
+        }
     }
 
     private void OnProgress(NcnnProgressInfoNative info)
@@ -271,17 +305,23 @@ public sealed class NcnnImageProcessingTask : IDisposable, IAsyncDisposable
         }
 
         if (IsTerminalState(info.state))
+        {
             Complete(info.state);
+        }
     }
 
     private static void OnNativeProgress(ref NcnnProgressInfoNative info, IntPtr user_data)
     {
         if (user_data == IntPtr.Zero)
+        {
             return;
+        }
 
         var handle = GCHandle.FromIntPtr(user_data);
         if (handle.Target is NcnnImageProcessingTask task)
+        {
             task.OnProgress(info);
+        }
     }
 
     private static bool IsTerminalState(NcnnTaskState state)
@@ -329,7 +369,9 @@ internal sealed class NativeTaskConfigMemory : IDisposable
     public void Dispose()
     {
         foreach (var pointer in _allocated_strings)
+        {
             Marshal.FreeHGlobal(pointer);
+        }
 
         _allocated_strings.Clear();
     }
@@ -337,7 +379,9 @@ internal sealed class NativeTaskConfigMemory : IDisposable
     private IntPtr AllocateString(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
+        {
             return IntPtr.Zero;
+        }
 
         var pointer = Marshal.StringToHGlobalUni(value);
         _allocated_strings.Add(pointer);
@@ -395,16 +439,22 @@ internal static partial class NcnnImageProcNative
     public static void SetDllDirectory(string directory)
     {
         if (string.IsNullOrWhiteSpace(directory))
+        {
             return;
+        }
 
         if (!SetDllDirectoryW(directory))
+        {
             throw new InvalidOperationException($"SetDllDirectoryW failed with Win32 error {Marshal.GetLastWin32Error()}");
+        }
     }
 
     public static void PrepareNativeDependencies()
     {
         if (!OperatingSystem.IsWindows())
+        {
             throw new PlatformNotSupportedException("NCNN Vulkan 引擎当前只支持 Windows x64。");
+        }
 
         if (RuntimeInformation.ProcessArchitecture != Architecture.X64)
         {
@@ -430,7 +480,9 @@ internal static partial class NcnnImageProcNative
             : NativeLibrary.TryLoad(library_name, out handle);
 
         if (!loaded)
+        {
             throw new DllNotFoundException(error_message);
+        }
 
         NativeLibrary.Free(handle);
     }

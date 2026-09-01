@@ -24,7 +24,10 @@ public class ViewLocator : IDataTemplate
         var view_type = _cache.GetOrAdd(view_model_type, type =>
         {
             var name_space = type.Namespace;
-            if (name_space is null) return null;
+            if (name_space is null)
+            {
+                return null;
+            }
 
             var name = type.Name;
             var view_name_space = name_space.Replace("ViewModel", "View", StringComparison.Ordinal);
@@ -34,7 +37,10 @@ public class ViewLocator : IDataTemplate
 
             var view = _current_assembly.GetType(full_name);
 
-            if (view is not null) return view;
+            if (view is not null)
+            {
+                return view;
+            }
 
             view_name = name.Replace("ViewModel", "Content", StringComparison.Ordinal);
             view = _current_assembly.GetType($"{view_name_space}.{view_name}");
@@ -42,7 +48,10 @@ public class ViewLocator : IDataTemplate
             return view;
         });
 
-        if (view_type is null) return new TextBlock { Text = "View not found: " + view_model_type.FullName };
+        if (view_type is null)
+        {
+            return new TextBlock { Text = "View not found: " + view_model_type.FullName };
+        }
 
         var control = (Control)Activator.CreateInstance(view_type)!;
         control.DataContext = param;

@@ -115,7 +115,7 @@ public partial class MainWindow : Window
         }
     }
 
-    sealed private class HardwareInfo
+    private sealed class HardwareInfo
     {
         public Dictionary<int, string> GpuList { get; init; }
         public SystemInformation SysInfo { get; init; }

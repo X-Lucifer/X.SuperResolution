@@ -5,6 +5,7 @@
 // ------ Date: 2026-01-24 22:01:53
 
 using System.ComponentModel;
+
 // ReSharper disable InconsistentNaming
 namespace X.SuperResolution.Model;
 
@@ -16,15 +17,18 @@ public enum ImageFormat
     /// <summary>
     /// jpg
     /// </summary>
-    [Description("jpg")] jpg = 1 << 0,
+    [Description("jpg")]
+    jpg = 1 << 0,
 
     /// <summary>
     /// png
     /// </summary>
-    [Description("png")] png = 1 << 1,
+    [Description("png")]
+    png = 1 << 1,
 
     /// <summary>
     /// webp
     /// </summary>
-    [Description("webp")] webp = 1 << 2
+    [Description("webp")]
+    webp = 1 << 2
 }
