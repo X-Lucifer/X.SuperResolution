@@ -64,11 +64,6 @@
             <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPressed" Color="Transparent" />
             <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedDisabled" Color="Transparent" />
 
-            <LinearGradientBrush x:Key="HeroGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Offset="0" Color="#EBF9F4" />
-                <GradientStop Offset="0.58" Color="#F3F8FD" />
-                <GradientStop Offset="1" Color="#FFF5F6" />
-            </LinearGradientBrush>
         </ResourceDictionary>
 
         <!-- Night studio: soft midnight blue, misty slate and restrained periwinkle. -->
@@ -130,11 +125,6 @@
             <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedPressed" Color="Transparent" />
             <SolidColorBrush x:Key="ComboBoxItemBackgroundSelectedDisabled" Color="Transparent" />
 
-            <LinearGradientBrush x:Key="HeroGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
-                <GradientStop Offset="0" Color="#252B48" />
-                <GradientStop Offset="0.58" Color="#1D2B40" />
-                <GradientStop Offset="1" Color="#332633" />
-            </LinearGradientBrush>
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

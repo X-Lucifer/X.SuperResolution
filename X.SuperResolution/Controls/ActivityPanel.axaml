@@ -14,7 +14,7 @@
             </StackPanel>
             <Border Grid.Column="1"
                     Width="34" Height="34"
-                    CornerRadius="11"
+                    CornerRadius="8"
                     Background="{DynamicResource AccentTintBrush}"
                     VerticalAlignment="Center">
                 <Canvas Width="14" Height="14"
@@ -32,7 +32,7 @@
         <Border Grid.Row="1"
                 Classes="SettingsGroup"
                 Padding="15"
-                Background="{DynamicResource HeroGradientBrush}">
+                Background="{DynamicResource ElevatedSurfaceBrush}">
             <Grid RowDefinitions="Auto,13,Auto">
                 <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
                     <TextBlock Text="{DynamicResource BatchStatus}"
@@ -40,7 +40,7 @@
                                FontWeight="SemiBold" />
                     <Border Grid.Column="1"
                             Padding="8,4"
-                            CornerRadius="8"
+                            CornerRadius="6"
                             Background="{DynamicResource SurfaceBrush}">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <Border Width="6" Height="6"
@@ -136,7 +136,8 @@
                 <StackPanel>
                     <Border Classes="SettingRow">
                         <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
-                            <TextBlock Classes="FieldLabel" Text="{DynamicResource Manufacturer}" VerticalAlignment="Center" />
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource Manufacturer}"
+                                       VerticalAlignment="Center" />
                             <SelectableTextBlock Grid.Column="1"
                                                  Text="{Binding SysInfo.ManufacturerName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
                                                  TextTrimming="CharacterEllipsis"
@@ -148,7 +149,8 @@
                     <Border Classes="GroupDivider" />
                     <Border Classes="SettingRow">
                         <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
-                            <TextBlock Classes="FieldLabel" Text="{DynamicResource ProductName}" VerticalAlignment="Center" />
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource ProductName}"
+                                       VerticalAlignment="Center" />
                             <SelectableTextBlock Grid.Column="1"
                                                  Text="{Binding SysInfo.ProductName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
                                                  TextWrapping="Wrap"
@@ -161,7 +163,8 @@
                     <Border Classes="GroupDivider" />
                     <Border Classes="SettingRow">
                         <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
-                            <TextBlock Classes="FieldLabel" Text="{DynamicResource Processor}" VerticalAlignment="Center" />
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource Processor}"
+                                       VerticalAlignment="Center" />
                             <SelectableTextBlock Grid.Column="1"
                                                  Text="{Binding CpuInfo.Version, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
                                                  TextTrimming="CharacterEllipsis"
@@ -186,7 +189,8 @@
                     <Border Classes="GroupDivider" />
                     <Border Classes="SettingRow">
                         <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
-                            <TextBlock Classes="FieldLabel" Text="{DynamicResource MemorySize}" VerticalAlignment="Center" />
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource MemorySize}"
+                                       VerticalAlignment="Center" />
                             <SelectableTextBlock Grid.Column="1"
                                                  Text="{Binding MemorySize, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
                                                  Classes="Data"
@@ -198,7 +202,8 @@
                     <Border Classes="GroupDivider" />
                     <Border Classes="SettingRow">
                         <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
-                            <TextBlock Classes="FieldLabel" Text="{DynamicResource UserName}" VerticalAlignment="Center" />
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource UserName}"
+                                       VerticalAlignment="Center" />
                             <SelectableTextBlock Grid.Column="1"
                                                  Text="{Binding UserName, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
                                                  FontSize="10"
@@ -209,7 +214,8 @@
                     <Border Classes="GroupDivider" />
                     <Border Classes="SettingRow">
                         <Grid ColumnDefinitions="98,*" ColumnSpacing="8">
-                            <TextBlock Classes="FieldLabel" Text="{DynamicResource SerialNumber}" VerticalAlignment="Center" />
+                            <TextBlock Classes="FieldLabel" Text="{DynamicResource SerialNumber}"
+                                       VerticalAlignment="Center" />
                             <SelectableTextBlock Grid.Column="1"
                                                  Text="{Binding SysInfo.SerialNumber, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
                                                  Classes="Data"

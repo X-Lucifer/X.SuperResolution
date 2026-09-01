@@ -15,7 +15,7 @@
             </StackPanel>
             <Border Grid.Column="1"
                     Padding="9,5"
-                    CornerRadius="9"
+                    CornerRadius="6"
                     Background="{DynamicResource PrimaryTintBrush}"
                     VerticalAlignment="Center">
                 <TextBlock Text="NCNN · GPU"

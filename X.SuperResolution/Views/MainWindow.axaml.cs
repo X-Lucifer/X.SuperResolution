@@ -59,6 +59,17 @@ public partial class MainWindow : Window
         ThemeToggle.IsChecked = Application.Current?.RequestedThemeVariant == Avalonia.Styling.ThemeVariant.Dark;
     }
 
+    protected override void OnDataContextChanged(EventArgs e)
+    {
+        base.OnDataContextChanged(e);
+        if (DataContext is MainWindowViewModel vm &&
+            GpuList.Count > 0 &&
+            !GpuList.ContainsKey(vm.SelectedGpuIndex))
+        {
+            vm.SelectedGpuIndex = GpuList.Keys.First();
+        }
+    }
+
     private static HardwareInfo DetectHardware()
     {
         var computer = new Computer
@@ -84,6 +95,7 @@ public partial class MainWindow : Window
                     {
                         continue;
                     }
+
                     gpu_list.Add(index, gpu.Name);
                     index++;
                 }
@@ -113,7 +125,7 @@ public partial class MainWindow : Window
 
     private void Lang_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var code = ((ComboBox)sender).SelectedValue!.ToString();
+        var code = ((ComboBox)sender).SelectedValue?.ToString();
         if (string.IsNullOrWhiteSpace(code))
         {
             return;

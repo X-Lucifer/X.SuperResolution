@@ -56,8 +56,9 @@ public partial class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel(SettingsService settings_service)
     {
         _settingsService = settings_service;
-        CurrentLang = _settingsService.Current.Language;
+        CurrentLang = GetDefaultLanguage(_settingsService.Current.Language);
         OutputDirectory = _settingsService.Current.OutputDirectory;
+        ResetEngineSelections(CurrentEngine);
         _processing_timer = new DispatcherTimer
         {
             Interval = TimeSpan.FromSeconds(1)
@@ -186,73 +187,71 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public bool IsWaifu2x
     {
-        get
-        {
-            return CurrentEngine == EngineType.waifu2x;
-        }
+        get { return CurrentEngine == EngineType.waifu2x; }
     }
 
     public bool IsSrmd
     {
-        get
-        {
-            return CurrentEngine == EngineType.srmd;
-        }
+        get { return CurrentEngine == EngineType.srmd; }
     }
 
     public bool IsRealESRGAN
     {
-        get
-        {
-            return CurrentEngine == EngineType.RealESRGAN;
-        }
+        get { return CurrentEngine == EngineType.RealESRGAN; }
     }
 
     public bool HasModelNameOption
     {
-        get
-        {
-            return CurrentEngineOption.model_names.Count > 0;
-        }
+        get { return CurrentEngineOption.model_names.Count > 0; }
     }
 
-    [ObservableProperty] private int currentSelectedNoiseLevelIndex;
+    [ObservableProperty]
+    private int currentSelectedNoiseLevelIndex;
 
-    [ObservableProperty] private int currentSelectedScaleIndex;
+    [ObservableProperty]
+    private int currentSelectedScaleIndex;
 
-    [ObservableProperty] private int currentSelectedModelPathIndex;
+    [ObservableProperty]
+    private int currentSelectedModelPathIndex;
 
-    [ObservableProperty] private int currentSelectedModelNameIndex;
+    [ObservableProperty]
+    private int currentSelectedModelNameIndex;
 
-    [ObservableProperty] private int currentSelectedOutputFormatIndex;
+    [ObservableProperty]
+    private int currentSelectedOutputFormatIndex;
 
-    [ObservableProperty] private int currentSelectedTileSizeIndex;
+    [ObservableProperty]
+    private int currentSelectedTileSizeIndex;
 
-    [ObservableProperty] private int currentSelectedThreadCountIndex;
+    [ObservableProperty]
+    private int currentSelectedThreadCountIndex;
 
-    [ObservableProperty] private int selectedGpuIndex;
+    [ObservableProperty]
+    private int selectedGpuIndex;
 
-    [ObservableProperty] private bool ttaMode;
+    [ObservableProperty]
+    private bool ttaMode;
 
-    [ObservableProperty] private string outputDirectory = AppContext.BaseDirectory;
+    [ObservableProperty]
+    private string outputDirectory = AppContext.BaseDirectory;
 
-    [ObservableProperty] private string currentLang = "zh-CN";
+    [ObservableProperty]
+    private string currentLang = "zh-CN";
 
     public EngineOption CurrentEngineOption
     {
-        get
-        {
-            return _engine_options[CurrentEngine];
-        }
+        get { return _engine_options[CurrentEngine]; }
     }
 
-    [ObservableProperty] private Dictionary<string, string> langList = new Dictionary<string, string>
+    [ObservableProperty]
+    private Dictionary<string, string> langList = new Dictionary<string, string>
     {
         { "zh-CN", "中文" },
         { "en-US", "English" }
     };
 
-    [ObservableProperty] private ObservableCollection<TaskItem> taskList = [];
+    [ObservableProperty]
+    private ObservableCollection<TaskItem> taskList = [];
 
     public bool HasTasks => TaskList.Count > 0;
 
@@ -261,22 +260,26 @@ public partial class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// 日志文本
     /// </summary>
-    [ObservableProperty] private string logText = string.Empty;
+    [ObservableProperty]
+    private string logText = string.Empty;
 
     /// <summary>
     /// 当前批次点击开始任务时的时间
     /// </summary>
-    [ObservableProperty] private string batchStartTimeText = "--";
+    [ObservableProperty]
+    private string batchStartTimeText = "--";
 
     /// <summary>
     /// 当前批次全部子任务累计耗时
     /// </summary>
-    [ObservableProperty] private string batchElapsedText = "00:00:00";
+    [ObservableProperty]
+    private string batchElapsedText = "00:00:00";
 
     /// <summary>
     /// 是否正在处理任务
     /// </summary>
-    [ObservableProperty] private bool isProcessing;
+    [ObservableProperty]
+    private bool isProcessing;
 
     public bool CanStartTask
     {
@@ -285,18 +288,12 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public bool CanCancelTask
     {
-        get
-        {
-            return IsProcessing && _current_task_cts != null;
-        }
+        get { return IsProcessing && _current_task_cts != null; }
     }
 
     public bool CanClearTask
     {
-        get
-        {
-            return !IsProcessing && TaskList.Count > 0;
-        }
+        get { return !IsProcessing && TaskList.Count > 0; }
     }
 
     /// <summary>
@@ -306,13 +303,43 @@ public partial class MainWindowViewModel : ViewModelBase
     private void ChangeEngine(EngineType type)
     {
         CurrentEngine = type;
-        CurrentSelectedNoiseLevelIndex = 0;
-        CurrentSelectedScaleIndex = type == EngineType.RealESRGAN ? 2 : 0;
-        CurrentSelectedModelPathIndex = 0;
-        CurrentSelectedModelNameIndex = 0;
-        CurrentSelectedOutputFormatIndex = 0;
-        CurrentSelectedTileSizeIndex = 0;
-        CurrentSelectedThreadCountIndex = 0;
+        ResetEngineSelections(type);
+    }
+
+    private string GetDefaultLanguage(string language)
+    {
+        if (!string.IsNullOrWhiteSpace(language) && LangList.ContainsKey(language))
+        {
+            return language;
+        }
+
+        return LangList.Keys.FirstOrDefault() ?? "zh-CN";
+    }
+
+    private void ResetEngineSelections(EngineType type)
+    {
+        var option = _engine_options[type];
+        CurrentSelectedNoiseLevelIndex = GetDefaultSelectionIndex(option.noise_levels);
+        CurrentSelectedScaleIndex = GetDefaultSelectionIndex(
+            option.scales,
+            type == EngineType.RealESRGAN ? 2 : 0);
+        CurrentSelectedModelPathIndex = GetDefaultSelectionIndex(option.model_paths);
+        CurrentSelectedModelNameIndex = GetDefaultSelectionIndex(option.model_names);
+        CurrentSelectedOutputFormatIndex = GetDefaultSelectionIndex(option.output_formats);
+        CurrentSelectedTileSizeIndex = GetDefaultSelectionIndex(option.tile_sizes);
+        CurrentSelectedThreadCountIndex = GetDefaultSelectionIndex(option.thread_counts);
+    }
+
+    private static int GetDefaultSelectionIndex(
+        IReadOnlyCollection<KeyValuePair<int, string>> options,
+        int preferred_index = 0)
+    {
+        if (options.Count == 0)
+        {
+            return -1;
+        }
+
+        return preferred_index >= 0 && preferred_index < options.Count ? preferred_index : 0;
     }
 
     /// <summary>
@@ -920,7 +947,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private static async Task<IReadOnlyCollection<IStorageFile>> OpenFilePickerAsync()
     {
-        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || desktop.MainWindow?.StorageProvider is not {} provider)
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || desktop.MainWindow?.StorageProvider is not { } provider)
         {
             throw new NullReferenceException("Missing StorageProvider instance.");
         }
@@ -942,7 +969,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     private static async Task<IReadOnlyCollection<IStorageFolder>> OpenFolderPickerAsync(string suggested_path)
     {
-        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || desktop.MainWindow?.StorageProvider is not {} provider)
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || desktop.MainWindow?.StorageProvider is not { } provider)
         {
             throw new NullReferenceException("Missing StorageProvider instance.");
         }
