@@ -1,26 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net10.0</TargetFramework>
-        <Nullable>disable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <ApplicationIcon>Assets\logo.ico</ApplicationIcon>
-        <Deterministic>false</Deterministic>
-        <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-        <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-        <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
-        <AssemblyVersion>1.0.*</AssemblyVersion>
-        <Copyright>Copyright © Lucifer All rights reserved.</Copyright>
-        <RepositoryUrl>https://github.com/X-Lucifer</RepositoryUrl>
-        <Company>X Lucifer</Company>
-        <Authors>Lucifer</Authors>
-        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-        <EnableRequestDelegateGenerator>true</EnableRequestDelegateGenerator>
         <AvaloniaCompileEnable>true</AvaloniaCompileEnable>
     </PropertyGroup>
 
@@ -29,16 +13,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="12.1.0" />
-        <PackageReference Include="Avalonia.Desktop" Version="12.1.0" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.0" />
-        <PackageReference Include="DiskInfoToolkit" Version="2.1.2" />
-        <PackageReference Include="HarfBuzzSharp" Version="14.2.1.1" />
-        <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6"/>
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-        <PackageReference Include="SkiaSharp" Version="4.150.1" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
-        <PackageReference Include="Tmds.DBus.Protocol" Version="0.94.2"/>
+        <PackageReference Include="Avalonia"/>
+        <PackageReference Include="Avalonia.Desktop"/>
+        <PackageReference Include="Avalonia.Themes.Fluent"/>
+        <PackageReference Include="DiskInfoToolkit"/>
+        <PackageReference Include="HarfBuzzSharp"/>
+        <PackageReference Include="LibreHardwareMonitorLib"/>
+        <PackageReference Include="CommunityToolkit.Mvvm"/>
+        <PackageReference Include="SkiaSharp"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
+        <PackageReference Include="Tmds.DBus.Protocol"/>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\X.SuperResolution.Engine\X.SuperResolution.Engine.csproj"/>

@@ -1,0 +1,20 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>disable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Deterministic>false</Deterministic>
+        <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+        <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+        <AssemblyVersion>1.0.*</AssemblyVersion>
+        <Copyright>Copyright © Lucifer All rights reserved.</Copyright>
+        <RepositoryUrl>https://github.com/X-Lucifer</RepositoryUrl>
+        <Company>X Lucifer</Company>
+        <Authors>Lucifer</Authors>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <EnableRequestDelegateGenerator>true</EnableRequestDelegateGenerator>
+    </PropertyGroup>
+</Project>
