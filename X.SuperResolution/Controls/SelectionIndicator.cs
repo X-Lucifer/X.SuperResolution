@@ -19,10 +19,10 @@ public sealed class SelectionIndicator : Decorator
     public static readonly StyledProperty<double> ItemSpacingProperty =
         AvaloniaProperty.Register<SelectionIndicator, double>(nameof(ItemSpacing), validate: value => double.IsFinite(value) && value >= 0);
 
-    private Size _arrangedSize;
-    private double _itemPitch;
-    private double _targetOffset = double.NaN;
-    private bool _hasLayout;
+    private Size _arranged_size;
+    private double _item_pitch;
+    private double _target_offset = double.NaN;
+    private bool _has_layout;
 
     static SelectionIndicator()
     {
@@ -53,23 +53,23 @@ public sealed class SelectionIndicator : Decorator
         set => SetValue(ItemSpacingProperty, value);
     }
 
-    protected override Size MeasureOverride(Size availableSize)
+    protected override Size MeasureOverride(Size available_size)
     {
-        Child?.Measure(availableSize);
+        Child?.Measure(available_size);
         return default;
     }
 
-    protected override Size ArrangeOverride(Size finalSize)
+    protected override Size ArrangeOverride(Size final_size)
     {
-        var width = Math.Max(0, (finalSize.Width - (ItemCount - 1) * ItemSpacing) / ItemCount);
+        var width = Math.Max(0, (final_size.Width - (ItemCount - 1) * ItemSpacing) / ItemCount);
         var pitch = width + ItemSpacing;
-        var resized = !_hasLayout || finalSize != _arrangedSize || pitch != _itemPitch;
-        _arrangedSize = finalSize;
-        _itemPitch = pitch;
-        Child?.Arrange(new Rect(0, 0, width, finalSize.Height));
+        var resized = !_has_layout || final_size != _arranged_size || pitch != _item_pitch;
+        _arranged_size = final_size;
+        _item_pitch = pitch;
+        Child?.Arrange(new Rect(0, 0, width, final_size.Height));
         MoveIndicator(animate: !resized);
-        _hasLayout = true;
-        return finalSize;
+        _has_layout = true;
+        return final_size;
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -77,10 +77,10 @@ public sealed class SelectionIndicator : Decorator
         base.OnPropertyChanged(change);
         if (change.Property == ChildProperty)
         {
-            _hasLayout = false;
-            _targetOffset = double.NaN;
+            _has_layout = false;
+            _target_offset = double.NaN;
         }
-        else if (change.Property == SelectedIndexProperty && _hasLayout)
+        else if (change.Property == SelectedIndexProperty && _has_layout)
         {
             MoveIndicator(animate: true);
         }
@@ -92,11 +92,11 @@ public sealed class SelectionIndicator : Decorator
             return;
 
         surface.IsVisible = SelectedIndex >= 0 && SelectedIndex < ItemCount;
-        var offset = Math.Clamp(SelectedIndex, 0, ItemCount - 1) * _itemPitch;
-        if (animate && offset.Equals(_targetOffset))
+        var offset = Math.Clamp(SelectedIndex, 0, ItemCount - 1) * _item_pitch;
+        if (animate && offset.Equals(_target_offset))
             return;
 
-        _targetOffset = offset;
+        _target_offset = offset;
         var transform = TransformOperations.Parse($"translateX({offset.ToString(CultureInfo.InvariantCulture)}px)");
         if (animate)
         {

@@ -6,6 +6,11 @@
         <entry key="X.SuperResolution/App.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
         <entry key="X.SuperResolution/Assets/Languages/en-US.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
         <entry key="X.SuperResolution/Assets/Languages/zh-CN.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
+        <entry key="X.SuperResolution/Assets/Themes/WorkbenchColors.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
+        <entry key="X.SuperResolution/Assets/Themes/WorkbenchStyles.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
+        <entry key="X.SuperResolution/Controls/ActivityPanel.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
+        <entry key="X.SuperResolution/Controls/ProcessingSettingsPanel.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
+        <entry key="X.SuperResolution/Controls/TaskWorkspace.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
         <entry key="X.SuperResolution/Views/MainWindow.axaml" value="X.SuperResolution/X.SuperResolution.csproj" />
       </map>
     </option>
