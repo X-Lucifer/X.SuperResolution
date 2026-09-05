@@ -51,7 +51,6 @@
     <system:String x:Key="ActivityLog">Activity log</system:String>
     <system:String x:Key="Minimize">Minimize</system:String>
     <system:String x:Key="Maximize">Maximize or restore</system:String>
-    <system:String x:Key="PipelineReady">NCNN / Vulkan pipeline ready</system:String>
     <system:String x:Key="Language">Interface language</system:String>
     <system:String x:Key="ThemeToggleLabel">Switch between light and dark theme</system:String>
     <system:String x:Key="EnhanceTab">Enhance</system:String>

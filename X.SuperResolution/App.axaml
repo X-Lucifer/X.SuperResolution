@@ -18,13 +18,13 @@
         <FluentTheme DensityStyle="Compact">
             <FluentTheme.Palettes>
                 <ColorPaletteResources x:Key="Light"
-                                       Accent="#58AF95"
+                                       Accent="#34765A"
                                        RegionColor="#FFFFFF"
-                                       ErrorText="#D06D79" />
+                                       ErrorText="#AB525A" />
                 <ColorPaletteResources x:Key="Dark"
-                                       Accent="#91A8F7"
-                                       RegionColor="#1A1F2B"
-                                       ErrorText="#F18F9F" />
+                                       Accent="#73B892"
+                                       RegionColor="#292929"
+                                       ErrorText="#E8A2AB" />
             </FluentTheme.Palettes>
         </FluentTheme>
         <StyleInclude Source="avares://X.SuperResolution/Assets/Themes/WorkbenchStyles.axaml" />

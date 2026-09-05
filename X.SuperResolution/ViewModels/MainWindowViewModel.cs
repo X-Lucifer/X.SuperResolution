@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Reflection;
 using System.Text;
 using System.Collections.Frozen;
 using Avalonia;
@@ -18,6 +19,9 @@ namespace X.SuperResolution.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
+    public static string Copyright { get; } = typeof(MainWindowViewModel).Assembly
+        .GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright ?? string.Empty;
+
     private TaskItem _current_processing_task;
     private NcnnImageProcessor _processor;
     private NcnnImageProcessingTask _current_native_task;
@@ -175,6 +179,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(IsWaifu2x))]
     [NotifyPropertyChangedFor(nameof(IsSrmd))]
     [NotifyPropertyChangedFor(nameof(IsRealESRGAN))]
+    [NotifyPropertyChangedFor(nameof(EngineSelectionIndex))]
     [NotifyPropertyChangedFor(nameof(HasModelNameOption))]
     [NotifyPropertyChangedFor(nameof(CurrentEngineOption))]
     [NotifyPropertyChangedFor(nameof(CurrentSelectedModelNameIndex))]
@@ -190,6 +195,13 @@ public partial class MainWindowViewModel : ViewModelBase
     public bool IsSrmd => CurrentEngine == EngineType.srmd;
 
     public bool IsRealESRGAN => CurrentEngine == EngineType.RealESRGAN;
+
+    public int EngineSelectionIndex => CurrentEngine switch
+    {
+        EngineType.RealESRGAN => 1,
+        EngineType.srmd => 2,
+        _ => 0
+    };
 
     public bool HasModelNameOption => CurrentEngineOption.model_names.Count > 0;
 

@@ -16,11 +16,10 @@
         CanResize="True"
         UseLayoutRounding="True"
         Background="{DynamicResource AppBackgroundBrush}">
-    <Grid RowDefinitions="54,*,32">
+    <Grid x:Name="WindowSurface" RowDefinitions="54,*,36"
+          Background="{DynamicResource AppBackgroundBrush}">
         <Border Grid.Row="0"
-                Background="{DynamicResource TitleBarBrush}"
-                BorderBrush="{DynamicResource BorderBrush}"
-                BorderThickness="0,0,0,1">
+                Background="{DynamicResource TitleBarBrush}">
             <Grid ColumnDefinitions="*,Auto">
                 <Grid Grid.Column="0"
                       ColumnDefinitions="Auto,*"
@@ -29,14 +28,14 @@
                     <Grid Width="54" Height="54">
                         <Border Width="34" Height="34"
                                 CornerRadius="8"
-                                Background="{DynamicResource PrimaryTintBrush}"
+                                Background="{DynamicResource PrimaryBrush}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                             <TextBlock Text="X²"
                                        FontFamily="{DynamicResource DataFontFamily}"
                                        FontSize="12"
                                        FontWeight="Bold"
-                                       Foreground="{DynamicResource PrimaryHoverBrush}"
+                                       Foreground="{DynamicResource PrimaryContentBrush}"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center" />
                         </Border>
@@ -58,24 +57,6 @@
                 </Grid>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <Border Margin="0,10,8,10"
-                            Padding="10,0"
-                            CornerRadius="6"
-                            Background="{DynamicResource SuccessTintBrush}"
-                            VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" Spacing="7">
-                            <Border Width="6" Height="6"
-                                    CornerRadius="3"
-                                    Background="{DynamicResource SuccessBrush}"
-                                    VerticalAlignment="Center" />
-                            <TextBlock Text="VULKAN READY"
-                                       Classes="Data"
-                                       FontSize="8"
-                                       Foreground="{DynamicResource SuccessBrush}"
-                                       VerticalAlignment="Center" />
-                        </StackPanel>
-                    </Border>
-
                     <ToggleButton x:Name="ThemeToggle"
                                   Classes="ThemeSwitch"
                                   AutomationProperties.AutomationId="ThemeToggle"
@@ -149,6 +130,7 @@
         </Border>
 
         <Grid Grid.Row="1"
+              x:Name="WorkbenchEntrance"
               ColumnDefinitions="*,382"
               ColumnSpacing="16"
               Margin="20,18,20,16">
@@ -171,29 +153,12 @@
         </Grid>
 
         <Border Grid.Row="2"
-                Background="{DynamicResource TitleBarBrush}"
-                BorderBrush="{DynamicResource BorderBrush}"
-                BorderThickness="0,1,0,0">
-            <Grid ColumnDefinitions="*,Auto,*" Margin="20,0">
-                <StackPanel Orientation="Horizontal" Spacing="7" VerticalAlignment="Center">
-                    <Border Width="6" Height="6" CornerRadius="3"
-                            Background="{DynamicResource SuccessBrush}" />
-                    <TextBlock Text="{DynamicResource PipelineReady}"
-                               Classes="Muted"
-                               FontSize="9" />
-                </StackPanel>
-                <TextBlock Grid.Column="1"
-                           Text="X SuperResolution"
-                           Classes="Tertiary"
-                           FontSize="9"
-                           VerticalAlignment="Center" />
-                <TextBlock Grid.Column="2"
-                           Text=".NET 10 · AVALONIA · NCNN"
-                           Classes="Data Tertiary"
-                           FontSize="8"
-                           HorizontalAlignment="Right"
-                           VerticalAlignment="Center" />
-            </Grid>
+                Background="{DynamicResource TitleBarBrush}">
+            <TextBlock Text="{x:Static vm:MainWindowViewModel.Copyright}"
+                       Classes="Tertiary"
+                       FontSize="10"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
         </Border>
     </Grid>
 </Window>

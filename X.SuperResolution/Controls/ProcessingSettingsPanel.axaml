@@ -3,6 +3,7 @@
              xmlns:vm="using:X.SuperResolution.ViewModels"
              xmlns:model="using:X.SuperResolution.Model"
              xmlns:views="using:X.SuperResolution.Views"
+             xmlns:controls="using:X.SuperResolution.Controls"
              x:Class="X.SuperResolution.Controls.ProcessingSettingsPanel"
              x:DataType="vm:MainWindowViewModel">
     <Grid RowDefinitions="Auto,*">
@@ -13,17 +14,6 @@
                            FontSize="10"
                            Text="{DynamicResource RecipeHint}" />
             </StackPanel>
-            <Border Grid.Column="1"
-                    Padding="9,5"
-                    CornerRadius="6"
-                    Background="{DynamicResource PrimaryTintBrush}"
-                    VerticalAlignment="Center">
-                <TextBlock Text="NCNN · GPU"
-                           Classes="Data"
-                           FontSize="8"
-                           FontWeight="SemiBold"
-                           Foreground="{DynamicResource PrimaryHoverBrush}" />
-            </Border>
         </Grid>
 
         <ScrollViewer Grid.Row="1"
@@ -35,26 +25,34 @@
                     <Border Classes="SettingsGroup"
                             Padding="4"
                             Background="{DynamicResource ElevatedSurfaceBrush}">
-                        <UniformGrid Columns="3" Rows="1" ColumnSpacing="3">
-                            <RadioButton Classes="EngineSegment"
-                                         Content="Waifu2x"
-                                         GroupName="EngineGroup"
-                                         IsChecked="{Binding IsWaifu2x, Mode=TwoWay}"
-                                         Command="{Binding ChangeEngineCommand}"
-                                         CommandParameter="{x:Static model:EngineType.waifu2x}" />
-                            <RadioButton Classes="EngineSegment"
-                                         Content="Real-ESRGAN"
-                                         GroupName="EngineGroup"
-                                         IsChecked="{Binding IsRealESRGAN, Mode=TwoWay}"
-                                         Command="{Binding ChangeEngineCommand}"
-                                         CommandParameter="{x:Static model:EngineType.RealESRGAN}" />
-                            <RadioButton Classes="EngineSegment"
-                                         Content="SRMD"
-                                         GroupName="EngineGroup"
-                                         IsChecked="{Binding IsSrmd, Mode=TwoWay}"
-                                         Command="{Binding ChangeEngineCommand}"
-                                         CommandParameter="{x:Static model:EngineType.srmd}" />
-                        </UniformGrid>
+                        <Grid>
+                            <controls:SelectionIndicator ItemCount="3" ItemSpacing="3"
+                                                         SelectedIndex="{Binding EngineSelectionIndex}">
+                                <Border Classes="SelectionPill"
+                                        Background="{DynamicResource SelectionSurfaceBrush}"
+                                        CornerRadius="6" />
+                            </controls:SelectionIndicator>
+                            <UniformGrid Columns="3" Rows="1" ColumnSpacing="3">
+                                <RadioButton Classes="EngineSegment"
+                                             Content="Waifu2x"
+                                             GroupName="EngineGroup"
+                                             IsChecked="{Binding IsWaifu2x, Mode=TwoWay}"
+                                             Command="{Binding ChangeEngineCommand}"
+                                             CommandParameter="{x:Static model:EngineType.waifu2x}" />
+                                <RadioButton Classes="EngineSegment"
+                                             Content="Real-ESRGAN"
+                                             GroupName="EngineGroup"
+                                             IsChecked="{Binding IsRealESRGAN, Mode=TwoWay}"
+                                             Command="{Binding ChangeEngineCommand}"
+                                             CommandParameter="{x:Static model:EngineType.RealESRGAN}" />
+                                <RadioButton Classes="EngineSegment"
+                                             Content="SRMD"
+                                             GroupName="EngineGroup"
+                                             IsChecked="{Binding IsSrmd, Mode=TwoWay}"
+                                             Command="{Binding ChangeEngineCommand}"
+                                             CommandParameter="{x:Static model:EngineType.srmd}" />
+                            </UniformGrid>
+                        </Grid>
                     </Border>
                 </StackPanel>
 
@@ -169,7 +167,7 @@
                                             <TextBlock Grid.Column="1"
                                                        Text="↗"
                                                        FontSize="12"
-                                                       Foreground="{DynamicResource PrimaryHoverBrush}"
+                                                       Foreground="{DynamicResource AccentTextBrush}"
                                                        VerticalAlignment="Center" />
                                         </Grid>
                                     </Button>
@@ -200,7 +198,7 @@
                                            VerticalAlignment="Center" />
                                 <ComboBox Grid.Column="1"
                                           Classes="InlineField"
-                                          ItemsSource="{Binding GpuList, RelativeSource={RelativeSource AncestorType=views:MainWindow}}"
+                                          ItemsSource="{Binding GpuList, RelativeSource={RelativeSource AncestorType=views:MainWindow, Tree=Logical}}"
                                           AutomationProperties.Name="{DynamicResource GpuDevice}"
                                           SelectedValue="{Binding SelectedGpuIndex}"
                                           DisplayMemberBinding="{Binding Value}"

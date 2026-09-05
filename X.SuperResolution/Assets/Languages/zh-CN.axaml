@@ -51,7 +51,6 @@
     <system:String x:Key="ActivityLog">处理日志</system:String>
     <system:String x:Key="Minimize">最小化</system:String>
     <system:String x:Key="Maximize">最大化或还原</system:String>
-    <system:String x:Key="PipelineReady">NCNN / Vulkan 处理管线已就绪</system:String>
     <system:String x:Key="Language">界面语言</system:String>
     <system:String x:Key="ThemeToggleLabel">切换亮色或暗色主题</system:String>
     <system:String x:Key="EnhanceTab">增强设置</system:String>

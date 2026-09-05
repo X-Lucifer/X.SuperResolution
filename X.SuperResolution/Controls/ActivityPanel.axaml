@@ -47,10 +47,9 @@
                                     CornerRadius="3"
                                     Background="{DynamicResource PrimaryBrush}"
                                     VerticalAlignment="Center" />
-                            <TextBlock Text="VULKAN"
-                                       Classes="Data"
-                                       FontSize="8"
-                                       Foreground="{DynamicResource PrimaryHoverBrush}" />
+                            <TextBlock Text="{DynamicResource RunMonitor}"
+                                       FontSize="9"
+                                       Foreground="{DynamicResource AccentTextBrush}" />
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -107,7 +106,7 @@
                          TextWrapping="Wrap"
                          ScrollViewer.VerticalScrollBarVisibility="Auto"
                          BorderThickness="0"
-                         CornerRadius="0"
+                         CornerRadius="0,0,9,9"
                          Padding="13,10"
                          FontFamily="{DynamicResource DataFontFamily}"
                          FontSize="9"
